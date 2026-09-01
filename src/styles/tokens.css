@@ -1,18 +1,6 @@
-/**
- * Guerra Solut — tokens de cor.
- * Fonte única da paleta. Ver `DESIGN.md` para a doutrina de utilização.
- *
- * Duas escalas primitivas (vermelho e neutro) e, por cima, os tokens
- * semânticos. Componentes usam SEMPRE os semânticos (`--gs-bg`, `--gs-brand`,
- * …) e nunca os degraus da escala directamente.
- */
-
 :root {
   color-scheme: light;
 
-  /* ── Escala vermelha ────────────────────────────────────────────────────
-     Matiz 29,2° em OKLCH — a matiz exacta do logótipo. Cromaticidade no
-     máximo do gamut sRGB em cada degrau. O 500 é o vermelho do logótipo. */
   --gs-red-50: #fff2ef;
   --gs-red-100: #ffe4e0;
   --gs-red-200: #ffbfb4;
@@ -25,14 +13,9 @@
   --gs-red-900: #550000;
   --gs-red-950: #340000;
 
-  /* Duas superfícies vermelhas muito escuras, só para o tema escuro. */
   --gs-red-wash-dark: #220806;
   --gs-red-wash-dark-edge: #40140f;
 
-  /* ── Escala neutra ──────────────────────────────────────────────────────
-     Cromaticidade zero. Cinzento é cinzento — nenhum degrau é temperado
-     com vermelho. O contraste entre marca e suporte é o que sustenta a
-     identidade de três cores. */
   --gs-ink-0: #ffffff;
   --gs-ink-50: #fafafa;
   --gs-ink-100: #f5f5f5;
@@ -48,51 +31,36 @@
   --gs-ink-975: #141414;
   --gs-ink-1000: #0a0a0a;
 
-  /* ── Funcionais ─────────────────────────────────────────────────────────
-     Não são cores de marca. O verde é imposto pelo WhatsApp e leva SEMPRE
-     texto preto (branco sobre #25d366 dá 1,98:1 — ilegível). O âmbar existe
-     só para alertas de sistema e nunca aparece em conteúdo editorial. */
   --gs-green-whatsapp: #25d366;
-  /* O mesmo verde escurecido 12% — o hover do controlo de WhatsApp. Fixo,
-     porque a cor de origem também é fixa: é imposta pela plataforma. */
   --gs-green-whatsapp-dark: #21ba5a;
   --gs-amber-600: #b45309;
   --gs-amber-400: #fbbf24;
 
-  /* ═══ Tokens semânticos — TEMA CLARO ═══════════════════════════════════ */
-
-  /* Superfícies */
   --gs-bg: var(--gs-ink-0);
   --gs-bg-subtle: var(--gs-ink-50);
   --gs-surface: var(--gs-ink-0);
   --gs-surface-raised: var(--gs-ink-0);
   --gs-surface-sunken: var(--gs-ink-100);
 
-  /* Traços */
   --gs-border: var(--gs-ink-200);
   --gs-border-strong: var(--gs-ink-300);
 
-  /* Texto */
   --gs-text: var(--gs-ink-1000);
   --gs-text-muted: var(--gs-ink-700);
   --gs-text-subtle: var(--gs-ink-600);
 
-  /* Marca — preenchimentos. O 500 é constante nos dois temas. */
   --gs-brand: var(--gs-red-500);
   --gs-brand-hover: var(--gs-red-600);
   --gs-brand-active: var(--gs-red-700);
   --gs-on-brand: var(--gs-ink-0);
 
-  /* Marca — vermelho como texto, link ou ícone pequeno. */
   --gs-accent: var(--gs-red-600);
   --gs-accent-hover: var(--gs-red-700);
 
-  /* Vermelho lavado — etiquetas, avisos, o cartão do serviço âncora. */
   --gs-wash: var(--gs-red-50);
   --gs-wash-edge: var(--gs-red-100);
   --gs-wash-text: var(--gs-red-600);
 
-  /* Bloco invertido — a secção preta dentro do tema claro. */
   --gs-inverse-bg: var(--gs-ink-1000);
   --gs-inverse-surface: var(--gs-ink-950);
   --gs-inverse-text: var(--gs-ink-50);
@@ -100,19 +68,12 @@
   --gs-inverse-border: var(--gs-ink-900);
   --gs-inverse-accent: var(--gs-red-400);
 
-  /* A chapa fotográfica — ESCURA NOS DOIS TEMAS, e por isso declarada uma
-     única vez: os blocos do tema escuro abaixo não a redeclaram, tal como
-     não redeclaram `--gs-brand`. As fotografias da empresa são recortes de
-     figura clara (capacete e camisa brancos); sobre uma chapa clara a figura
-     dissolvia-se. Não confundir com `--gs-inverse-*`, que inverte com o
-     tema — esta não inverte, é sempre a chapa preta. */
   --gs-plate: var(--gs-ink-1000);
   --gs-plate-edge: var(--gs-ink-800);
   --gs-plate-line: rgb(255 255 255 / 0.05);
   --gs-plate-text: var(--gs-ink-50);
   --gs-plate-text-muted: var(--gs-ink-400);
 
-  /* Estado */
   --gs-focus: var(--gs-red-500);
   --gs-success: var(--gs-green-whatsapp);
   --gs-success-hover: var(--gs-green-whatsapp-dark);
@@ -121,24 +82,16 @@
   --gs-danger: var(--gs-red-600);
   --gs-danger-wash: var(--gs-red-50);
 
-  /* Profundidade — sempre deslocamento mais desfoque, nunca um halo. */
   --gs-shadow-panel: 0 12px 28px -10px rgb(10 10 10 / 0.18),
     0 2px 6px -2px rgb(10 10 10 / 0.1);
   --gs-shadow-rail: 0 6px 18px -14px rgb(10 10 10 / 0.5);
 
-  /* Superfícies do browser — desenhadas, não herdadas. */
   --gs-selection-bg: var(--gs-red-500);
   --gs-selection-text: var(--gs-ink-0);
   --gs-caret: var(--gs-red-600);
   --gs-scrollbar-thumb: var(--gs-ink-300);
   --gs-scrollbar-track: var(--gs-ink-100);
 
-  /* ═══ Tokens de forma — iguais nos dois temas ══════════════════════════
-     Não dependem da luz, por isso vivem só aqui e não se repetem abaixo. */
-
-  /* Tipografia. As duas famílias são servidas do próprio domínio pela
-     configuração `fonts` do Astro, que define `--gs-font-display`
-     (Archivo) e `--gs-font-body` (Inter) com os respectivos fallbacks. */
   --gs-font-ui: var(--gs-font-body), system-ui, -apple-system, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   --gs-font-title: var(--gs-font-display), var(--gs-font-ui);
@@ -149,8 +102,6 @@
   --gs-size-md: 1rem;
   --gs-size-lg: 1.125rem;
 
-  /* Escala editorial. Fluida porque um título de cartaz não pode saltar de
-     degrau em degrau: cresce com a coluna, entre o telemóvel e o 1440. */
   --gs-size-xl: 1.25rem;
   --gs-size-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
   --gs-size-h2: clamp(1.875rem, 1.35rem + 2.4vw, 2.75rem);
@@ -161,13 +112,10 @@
   --gs-leading-snug: 1.35;
   --gs-leading-normal: 1.6;
 
-  /* O tracking negativo pára em -0,03em; a etiqueta em maiúsculas é o
-     único sítio onde o espacejamento abre, porque as maiúsculas pedem. */
   --gs-track-tight: -0.02em;
   --gs-track-display: -0.03em;
   --gs-track-label: 0.08em;
 
-  /* Espaço — base de 4px. */
   --gs-space-1: 0.25rem;
   --gs-space-2: 0.5rem;
   --gs-space-3: 0.75rem;
@@ -180,22 +128,17 @@
   --gs-space-16: 4rem;
   --gs-space-20: 5rem;
 
-  /* Respiração vertical de uma secção de página. */
   --gs-section-y: clamp(2.75rem, 6vw, 5rem);
 
-  /* Raios. Controlos pequenos são quase rectos — são interruptores de
-     painel, não pastilhas. O painel suspenso é a única peça com 12px. */
   --gs-radius-sm: 4px;
   --gs-radius-md: 6px;
   --gs-radius-lg: 12px;
 
-  /* Medidas da calha. O cabeçalho é a primeira peça a fixá-las. */
   --gs-header-h: 3.75rem;
   --gs-tap: 2.75rem;
   --gs-page-max: 82.5rem;
   --gs-page-pad: clamp(1rem, 4vw, 2.5rem);
 
-  /* Movimento. Saída exponencial a partir de um estado já visível. */
   --gs-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --gs-dur-fast: 120ms;
   --gs-dur: 200ms;
@@ -206,12 +149,6 @@
     --gs-header-h: 4.5rem;
   }
 }
-
-/* ═══ Tokens semânticos — TEMA ESCURO ═════════════════════════════════════
-   Os dois blocos seguintes são idênticos e têm de ser editados em conjunto.
-   O CSS não permite partilhar um bloco entre uma media query e um selector
-   de atributo; a duplicação é o preço de o toggle manual poder vencer a
-   preferência do sistema em ambos os sentidos. */
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
@@ -322,11 +259,6 @@
     0 2px 8px -2px rgb(0 0 0 / 0.5);
   --gs-shadow-rail: 0 6px 20px -12px rgb(0 0 0 / 0.9);
 }
-
-/* ═══ Aplicação base ══════════════════════════════════════════════════════
-   O mínimo para que os tokens tenham efeito. As superfícies que o browser
-   desenha por nós — selecção, cursor, barra de deslocamento, anel de foco —
-   entram aqui e não ficam por defeito. */
 
 body {
   background-color: var(--gs-bg);

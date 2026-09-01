@@ -1,12 +1,4 @@
-/**
- * Perguntas frequentes (`PRODUCTS.md` §5).
- *
- * Fonte única das perguntas visíveis em `/faq/`, do resumo da home e do nó
- * `FAQPage` de dados estruturados. O `FAQPage` só se emite onde as respostas
- * estão de facto no HTML — ver `lib/schema.ts`.
- */
 export interface Pergunta {
-  /** Âncora estável, usada em `id` e em ligações directas. */
   id: string;
   pergunta: string;
   resposta: string;

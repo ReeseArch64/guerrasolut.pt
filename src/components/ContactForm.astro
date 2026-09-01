@@ -1,24 +1,11 @@
 ---
-/**
- * Formulário de contacto (`PRODUCTS.md` §7).
- *
- * Não submete para servidor: compõe a mensagem e abre o WhatsApp. É uma das
- * ilhas de interactividade autorizadas — e mesmo assim degrada, porque sem
- * JavaScript o `action` abre a conversa do WhatsApp na mesma, apenas sem a
- * mensagem preenchida.
- *
- * Três campos, três linhas: um formulário de obra pede-se em pé, no
- * telemóvel, e cada campo a mais é um pedido a menos.
- */
 import Icon from './Icon.astro';
 import { SERVICES } from '../config/services';
 import { CONTACT } from '../config/site';
 import { whatsappUrl } from '../lib/whatsapp';
 
 interface Props {
-  /** Nome do serviço pré-seleccionado (páginas de serviço). */
   preselect?: string;
-  /** `id` do título que dá nome à região do formulário. */
   labelledby?: string;
 }
 
@@ -26,7 +13,6 @@ const { preselect, labelledby } = Astro.props;
 
 const OPCOES = [...SERVICES.map((s) => s.name), 'Outro serviço'];
 ---
-
 <form
   class="form"
   id="gs-formulario"
@@ -114,9 +100,6 @@ const OPCOES = [...SERVICES.map((s) => s.name), 'Outro serviço'];
 </form>
 
 <script>
-  // A única razão para haver JavaScript nesta página: compor a mensagem.
-  // `wa.me` só aceita um parâmetro `text`, e um formulário GET não o
-  // consegue montar a partir de três campos.
   const form = document.getElementById('gs-formulario') as HTMLFormElement | null;
 
   form?.addEventListener('submit', (evento) => {
@@ -167,7 +150,6 @@ const OPCOES = [...SERVICES.map((s) => s.name), 'Outro serviço'];
     color: var(--gs-text-muted);
   }
 
-  /* Campos como poços de painel: rectos, fundos, com traço forte. */
   .campo__controlo {
     inline-size: 100%;
     min-block-size: var(--gs-tap);
@@ -202,8 +184,6 @@ const OPCOES = [...SERVICES.map((s) => s.name), 'Outro serviço'];
     background: var(--gs-surface);
   }
 
-  /* O `select` desenha-se por inteiro: a seta do sistema não pertence a
-     nenhum sistema de design. */
   .campo__poco {
     position: relative;
     display: grid;
@@ -224,7 +204,6 @@ const OPCOES = [...SERVICES.map((s) => s.name), 'Outro serviço'];
     color: var(--gs-text-subtle);
   }
 
-  /* Um erro nunca se distingue só por cor: leva ícone e frase. */
   .campo__erro {
     display: none;
     align-items: center;

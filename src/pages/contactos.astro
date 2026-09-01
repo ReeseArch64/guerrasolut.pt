@@ -1,11 +1,4 @@
 ---
-/**
- * Contactos (`/contactos/`) — `PRODUCTS.md` §6.5.
- *
- * NAP completo com cada canal accionável (`tel:`, `mailto:`, `wa.me`), o
- * formulário da §7 em página e a área de actuação. É a única rota do site
- * sem bloco de CTA final: o fim do caminho já está aqui.
- */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import ContactForm from '../components/ContactForm.astro';
@@ -22,7 +15,6 @@ const title = 'Falar com a Guerra Solut';
 const description =
   'Telefone, WhatsApp e e-mail da Guerra Solut. Resposta em menos de 2 horas, urgências 24h e visita técnica gratuita em todo o Portugal continental.';
 ---
-
 <BaseLayout
   title={title}
   description={description}
@@ -146,8 +138,6 @@ const description =
     gap: var(--gs-space-10);
   }
 
-  /* ── Canais ──────────────────────────────────────────────────────────── */
-
   .canais {
     display: grid;
     border-block-start: 1px solid var(--gs-border);
@@ -164,8 +154,6 @@ const description =
     text-decoration: none;
   }
 
-  /* O deslize é do conteúdo, não da linha: o fio vermelho tem de ficar
-     colado à aresta, e `translate` não obriga o browser a refazer o layout. */
   .canal :global(.canal__icon),
   .canal__corpo {
     transition: translate var(--gs-dur) var(--gs-ease);
@@ -176,7 +164,6 @@ const description =
     translate: var(--gs-space-3) 0;
   }
 
-  /* A corrente marca o canal que a empresa quer que use primeiro. */
   .canal__fio {
     position: absolute;
     inset-block: 0;
@@ -222,14 +209,12 @@ const description =
     transition: color var(--gs-dur-fast) var(--gs-ease);
   }
 
-  /* Um telefone que muda de largura conforme os dígitos parece mal composto. */
   .canal__valor--numero {
     font-size: 1.5rem;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.01em;
   }
 
-  /* O e-mail é longo: em ecrã estreito parte-se em vez de transbordar. */
   .canal__valor--email {
     font-size: var(--gs-size-md);
     overflow-wrap: anywhere;
@@ -243,8 +228,6 @@ const description =
     font-size: var(--gs-size-sm);
     color: var(--gs-text-subtle);
   }
-
-  /* ── Pedido ──────────────────────────────────────────────────────────── */
 
   .pedido {
     padding: var(--gs-space-6);
@@ -278,8 +261,6 @@ const description =
       align-items: start;
     }
   }
-
-  /* ── Zonas ───────────────────────────────────────────────────────────── */
 
   .zonas {
     margin-block-start: var(--gs-section-y);

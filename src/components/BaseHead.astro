@@ -1,23 +1,15 @@
 ---
-/**
- * Metadados de `<head>` partilhados por todas as páginas: título, canónico,
- * robots, ícones, Open Graph, Twitter e dados estruturados.
- */
 import { Font } from 'astro:assets';
 import { SITE } from '../config/site';
 import { absoluteUrl, pageTitle } from '../lib/seo';
 
 interface Props {
-  /** Título específico da página. Omitido na home (usa o título por defeito). */
   title?: string;
   description?: string;
-  /** Imagem de partilha. Caminho do site ou URL absoluto. */
   image?: string;
   imageAlt?: string;
-  /** Retira a página do índice (ex.: 404, páginas de agradecimento). */
   noindex?: boolean;
   ogType?: 'website' | 'article' | 'profile';
-  /** Nós JSON-LD a emitir nesta página. */
   schemas?: Record<string, unknown>[];
 }
 
@@ -35,13 +27,10 @@ const resolvedTitle = pageTitle(title);
 const canonical = absoluteUrl(Astro.url.pathname);
 const ogImage = absoluteUrl(image);
 ---
-
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Fontes self-hosted. Só o Archivo faz `preload`: é o que desenha o
-     wordmark e os títulos, e o único a bloquear a leitura do primeiro ecrã. -->
 <Font cssVariable="--gs-font-display" preload />
 <Font cssVariable="--gs-font-body" />
 
@@ -59,7 +48,6 @@ const ogImage = absoluteUrl(image);
   )
 }
 
-<!-- Ícones e PWA -->
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/icons/favicon-32x32.png" type="image/png" sizes="32x32" />
@@ -81,7 +69,6 @@ const ogImage = absoluteUrl(image);
   content={SITE.themeColor.dark}
 />
 
-<!-- Open Graph -->
 <meta property="og:type" content={ogType} />
 <meta property="og:site_name" content={SITE.name} />
 <meta property="og:locale" content={SITE.ogLocale} />
@@ -94,7 +81,6 @@ const ogImage = absoluteUrl(image);
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={imageAlt} />
 
-<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={resolvedTitle} />
 <meta name="twitter:description" content={description} />

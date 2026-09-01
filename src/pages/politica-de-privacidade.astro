@@ -1,15 +1,4 @@
 ---
-/**
- * Política de privacidade (`/politica-de-privacidade/`) — `PRODUCTS.md` §6.7.
- *
- * O texto descreve o que este site faz de facto: é estático, não tem
- * backend, não usa cookies nem analítica, e o formulário compõe uma mensagem
- * de WhatsApp em vez de submeter dados para um servidor (§7).
- *
- * O que a lei exige e o cliente ainda não forneceu — sede e NIF (§14.1) — e
- * o que ainda não está decidido — alojamento (§14.7) e analítica (§14.6) —
- * fica assinalado em `.legal__pendente`, não inventado.
- */
 import LegalLayout from '../layouts/LegalLayout.astro';
 import Icon from '../components/Icon.astro';
 import { CONTACT, SITE } from '../config/site';
@@ -25,7 +14,6 @@ const sections = [
   { id: 'direitos', label: 'Os seus direitos' },
 ];
 ---
-
 <LegalLayout
   title="Política de privacidade"
   description="Como a Guerra Solut trata os dados pessoais de quem a contacta: que dados recolhe, para quê, durante quanto tempo e quais são os seus direitos ao abrigo do RGPD."

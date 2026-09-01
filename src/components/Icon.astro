@@ -1,11 +1,4 @@
 ---
-/**
- * Conjunto de ícones do site. Um só ficheiro, uma só grelha (24×24) e um só
- * traço (1,75px, extremidades redondas) — a coerência é o ponto.
- *
- * Decorativos por defeito (`aria-hidden`). Passar `title` transforma o ícone
- * em imagem com nome acessível, para quando o controlo não tem texto.
- */
 export type IconName =
   | 'pesquisa'
   | 'telefone'
@@ -23,7 +16,6 @@ export type IconName =
 
 interface Props {
   name: IconName;
-  /** Lado do quadrado, em px. Múltiplos de 2 mantêm o traço nítido. */
   size?: number;
   title?: string;
   class?: string;
@@ -55,7 +47,6 @@ const PATHS: Record<IconName, string[]> = {
   aviso: ['M12 3.6 21.2 19.6H2.8Z', 'M12 9.6v4.2', 'M12 16.8h.01'],
 };
 ---
-
 <svg
   class={className}
   width={size}

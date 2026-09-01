@@ -1,35 +1,19 @@
 ---
-/**
- * Herói da home — «a chapa».
- *
- * A coluna de texto vive na folha branca; a fotografia vive numa chapa preta
- * com grelha técnica, marcada pela mesma corrente vermelha de 2px que o
- * cabeçalho usa para dizer onde estamos. A chapa é escura nos dois temas
- * (`--gs-plate-*`): a figura é um recorte de capacete e camisa brancos.
- *
- * Copy de `PRODUCTS.md` §6.1 (herói) e §3 (bullets). Zero JavaScript.
- */
 import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
 import { CONTACT, SITE } from '../config/site';
 import tecnico from '../assets/hero/tecnico-recorte.png';
-// Recorte só do estaleiro (canto superior esquerdo de `obra-estaleiro.png`):
-// o enquadramento completo repete a mesma figura que já está na chapa, e ver
-// a mesma pessoa duas vezes lê-se como erro.
 import estaleiro from '../assets/hero/obra-estaleiro-detalhe.png';
 
-/** «+351 964 148 843» → «964 148 843», que é como se lê em Portugal. */
 const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
 const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.slice(0, 2)} h`;
 
-/** `PRODUCTS.md` §3, «Bullets do herói». */
 const PROVAS = [
   'Visita técnica gratuita',
   'Eletricistas certificados',
   'Garantia por escrito',
 ];
 ---
-
 <section class="hero" aria-labelledby="hero-titulo">
   <div class="gs-shell hero__grid">
     <div class="hero__text">
@@ -140,13 +124,9 @@ const PROVAS = [
     padding-block-end: var(--gs-section-y);
   }
 
-  /* Sem isto, a largura fixa da chapa entra no `min-content` da coluna e
-     empurra a grelha para fora do ecrã pequeno. */
   .hero__grid > * {
     min-inline-size: 0;
   }
-
-  /* ── Coluna de texto ─────────────────────────────────────────────────── */
 
   .eyebrow {
     display: flex;
@@ -161,7 +141,6 @@ const PROVAS = [
     color: var(--gs-accent);
   }
 
-  /* A mesma corrente do cabeçalho, deitada. */
   .eyebrow__wire {
     inline-size: 2rem;
     block-size: 2px;
@@ -219,8 +198,6 @@ const PROVAS = [
     flex: none;
   }
 
-  /* ── Acções ──────────────────────────────────────────────────────────── */
-
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
@@ -228,8 +205,6 @@ const PROVAS = [
     margin-block-start: var(--gs-space-8);
   }
 
-  /* Em coluna estreita as duas acções ficam à mesma largura: é a diferença
-     entre um alvo confortável e um botão a metade do polegar. */
   @media (max-width: 29.99rem) {
     .hero__actions {
       display: grid;
@@ -269,8 +244,6 @@ const PROVAS = [
     white-space: nowrap;
   }
 
-  /* ── A chapa ─────────────────────────────────────────────────────────── */
-
   .chapa {
     position: relative;
     overflow: hidden;
@@ -284,7 +257,6 @@ const PROVAS = [
     background: var(--gs-plate);
   }
 
-  /* A corrente entra pela esquerda da chapa, como no cabeçalho. */
   .chapa__fio {
     position: absolute;
     z-index: 4;
@@ -295,7 +267,6 @@ const PROVAS = [
     transform-origin: top center;
   }
 
-  /* Grelha técnica de 2,5rem — o fundo de caderno de obra. */
   .chapa__grelha {
     position: absolute;
     inset: 0;
@@ -303,8 +274,6 @@ const PROVAS = [
       linear-gradient(to right, var(--gs-plate-line) 1px, transparent 1px),
       linear-gradient(to bottom, var(--gs-plate-line) 1px, transparent 1px);
     background-size: 2.5rem 2.5rem;
-    /* Estes dois valores são paragens de opacidade de uma máscara, não cores
-       da paleta: a grelha existe atrás da figura e apaga-se para as bordas. */
     mask-image: radial-gradient(
       115% 85% at 70% 15%,
       rgb(0 0 0 / 1) 30%,
@@ -315,7 +284,6 @@ const PROVAS = [
   .chapa :global(.chapa__figura) {
     position: absolute;
     z-index: 2;
-    /* Começa abaixo da faixa de legenda. */
     inset: 3rem 0 0;
     inline-size: 100%;
     block-size: calc(100% - 3rem);
@@ -323,10 +291,6 @@ const PROVAS = [
     object-position: right bottom;
   }
 
-  /* A legenda da chapa, como o bloco de título de um desenho técnico: uma
-     faixa própria, fechada por um fio de 1px. A figura começa por baixo
-     dela — assim a legenda nunca passa por cima do capacete em coluna
-     estreita, e o fio dá à chapa a mesma gramática do cabeçalho. */
   .chapa__etiqueta {
     position: absolute;
     z-index: 3;
@@ -347,7 +311,6 @@ const PROVAS = [
     color: var(--gs-plate-text-muted);
   }
 
-  /* O plano de detalhe: a obra que a figura está a dirigir. */
   .chapa__detalhe {
     position: absolute;
     z-index: 3;
@@ -367,8 +330,6 @@ const PROVAS = [
     aspect-ratio: 4 / 3;
     object-fit: cover;
   }
-
-  /* ── A faixa de resposta ─────────────────────────────────────────────── */
 
   .faixa {
     border-block: 1px solid var(--gs-wash-edge);
@@ -405,8 +366,6 @@ const PROVAS = [
     color: var(--gs-text-muted);
   }
 
-  /* ── A partir de 64rem o herói abre em duas colunas ──────────────────── */
-
   @media (min-width: 64rem) {
     .hero__grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 0.78fr);
@@ -430,8 +389,6 @@ const PROVAS = [
       inset-inline-start: var(--gs-space-5);
     }
   }
-
-  /* ── O único movimento autoral: a corrente a chegar ──────────────────── */
 
   @media (prefers-reduced-motion: no-preference) {
     .eyebrow__wire {

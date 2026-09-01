@@ -1,15 +1,4 @@
 ---
-/**
- * Pesquisa (`/pesquisa/`) — destino do formulário do cabeçalho (`SEARCH`).
- *
- * O índice inteiro do site vai no HTML, já legível e navegável: sem
- * JavaScript, esta página é o directório completo de tudo o que existe. Com
- * JavaScript — cerca de uma dúzia de linhas — os mesmos itens filtram-se ao
- * escrever, sem pedir nada ao servidor.
- *
- * `noindex`: uma página de resultados não pertence ao índice da Google, mas
- * as ligações que dá devem ser seguidas.
- */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import CtaFinal from '../components/CtaFinal.astro';
@@ -24,7 +13,6 @@ interface Entrada {
   titulo: string;
   resumo: string;
   href: string;
-  /** Palavras extra que devem encontrar esta entrada. */
   termos: string[];
 }
 
@@ -103,7 +91,6 @@ const entradas: Entrada[] = [
   })),
 ];
 
-/** Sem acentos e em minúsculas: «eletricas» tem de encontrar «Elétricas». */
 const normalizar = (texto: string) =>
   texto
     .normalize('NFD')
@@ -119,7 +106,6 @@ const indice = entradas.map((entrada) => ({
 
 const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
 ---
-
 <BaseLayout
   title="Pesquisar no site"
   description="Encontre um serviço, uma página ou uma resposta no site da Guerra Solut."
@@ -212,8 +198,6 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
 </BaseLayout>
 
 <script>
-  // Toda a informação já está no HTML; isto só a filtra. Sem pedidos ao
-  // servidor, sem índice remoto, sem biblioteca.
   const campo = document.getElementById('gs-pesquisa') as HTMLInputElement | null;
   const estado = document.getElementById('gs-pesquisa-estado');
   const vazio = document.getElementById('gs-vazio');
@@ -240,7 +224,6 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
         if (corresponde) visiveis += 1;
       }
 
-      // Um grupo sem resultados desaparece com o seu título.
       for (const grupo of grupos) {
         grupo.hidden = !grupo.querySelector<HTMLElement>('.achado:not([hidden])');
       }
@@ -256,7 +239,6 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
       }
     };
 
-    // O `?q=` do cabeçalho chega por URL; a partir daí é ao escrever.
     const inicial = new URLSearchParams(window.location.search).get('q') ?? '';
     if (inicial) {
       campo.value = inicial;
@@ -271,14 +253,11 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
       window.history.replaceState(null, '', url);
     });
 
-    // Com JavaScript activo o filtro já correu: recarregar não acrescenta nada.
     campo.form?.addEventListener('submit', (evento) => evento.preventDefault());
   }
 </script>
 
 <style>
-  /* ── O campo ─────────────────────────────────────────────────────────── */
-
   .busca {
     position: relative;
     display: flex;
@@ -325,7 +304,6 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
     outline: none;
   }
 
-  /* O `x` do `type=search` no WebKit não segue nenhuma paleta; fora. */
   .busca__input::-webkit-search-cancel-button {
     appearance: none;
   }
@@ -361,8 +339,6 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
     font-size: var(--gs-size-sm);
     color: var(--gs-text-subtle);
   }
-
-  /* ── Resultados ──────────────────────────────────────────────────────── */
 
   .resultados {
     padding-block-end: var(--gs-section-y);
@@ -429,8 +405,6 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
     color: var(--gs-text-muted);
   }
 
-  /* ── Vazio ───────────────────────────────────────────────────────────── */
-
   .vazio {
     padding: var(--gs-space-8) 0;
     max-inline-size: 52ch;
@@ -460,8 +434,6 @@ const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
       display: grid;
     }
   }
-
-  /* ── Nota de cobertura ───────────────────────────────────────────────── */
 
   .cobertura {
     display: flex;

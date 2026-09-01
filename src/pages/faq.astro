@@ -1,12 +1,4 @@
 ---
-/**
- * Perguntas frequentes (`/faq/`) — `PRODUCTS.md` §6.6.
- *
- * As seis perguntas da §5 completas e visíveis no HTML — é essa a condição
- * para emitir `FAQPage`. O acordeão é `<details>` nativo com `name`
- * partilhado: abre uma de cada vez, sem uma linha de JavaScript, e funciona
- * com o teclado.
- */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import CtaFinal from '../components/CtaFinal.astro';
@@ -21,7 +13,6 @@ const title = 'Perguntas frequentes';
 const description =
   'Orçamentos, prazos de resposta, zonas cobertas, garantias, facturação e contratos com empresas e condomínios — as dúvidas que nos colocam mais vezes.';
 ---
-
 <BaseLayout
   title={title}
   description={description}
@@ -90,8 +81,6 @@ const description =
     align-items: start;
   }
 
-  /* ── O acordeão ──────────────────────────────────────────────────────── */
-
   .acordeao {
     border-block-start: 1px solid var(--gs-border);
   }
@@ -113,7 +102,6 @@ const description =
     transition: color var(--gs-dur-fast) var(--gs-ease);
   }
 
-  /* O triângulo do sistema não pertence a nenhum sistema de design. */
   .questao__cabeca::-webkit-details-marker {
     display: none;
   }
@@ -151,7 +139,6 @@ const description =
     color: var(--gs-accent);
   }
 
-  /* A corrente marca a pergunta aberta — a mesma marcação do cabeçalho. */
   .questao[open]::before {
     content: '';
     position: absolute;
@@ -181,8 +168,6 @@ const description =
       padding-inline-start: 0;
     }
   }
-
-  /* ── Cartão de apoio ─────────────────────────────────────────────────── */
 
   .apoio__caixa {
     padding: var(--gs-space-6);
