@@ -1,0 +1,9 @@
+// Configuração do projecto na Cloudflare Pages.
+//
+// `pages_build_output_dir` é o que a Cloudflare publica — o resultado de
+// `npm run build`. Com este ficheiro, `wrangler pages deploy` (sem argumentos)
+// publica a pasta certa no projecto certo.
+{
+  "name": "guerrasolut",
+  "pages_build_output_dir": "dist"
+}

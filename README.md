@@ -142,6 +142,38 @@ breakpoints) em [`PRODUCTS.md`](./PRODUCTS.md).
 
 ---
 
+## Deploy
+
+O site é publicado na **Cloudflare Pages** (projecto `guerrasolut`), com o
+domínio `guerrasolut.pt` na Cloudflare como zona de DNS.
+
+| Definição | Valor |
+| --- | --- |
+| Repositório | `ReeseArch64/guerrasolut.pt` (branch de produção: `main`) |
+| Comando de build | `npm run build` |
+| Directório publicado | `dist` |
+| Versão do Node | `22.12.0` (`.node-version`) |
+| Domínio principal | `www.guerrasolut.pt` |
+| Apex | `guerrasolut.pt` → redirecciona 301 para `www` (Redirect Rule na zona) |
+
+Cada `push` para `main` dispara um build e uma publicação; qualquer outra branch
+gera uma pré-visualização em `<branch>.guerrasolut.pages.dev`.
+
+| Ficheiro | Papel |
+| --- | --- |
+| [`wrangler.jsonc`](./wrangler.jsonc) | Nome do projecto e directório publicado |
+| [`.node-version`](./.node-version) | Versão do Node usada no build da Cloudflare |
+| [`public/_headers`](./public/_headers) | Cache dos assets com hash e cabeçalhos de segurança |
+
+Publicação manual, quando for preciso contornar o Git:
+
+```sh
+npm run build
+npx wrangler pages deploy
+```
+
+---
+
 ## Convenções
 
 - **Português de Portugal** em todo o conteúdo do site e nas mensagens de commit.
