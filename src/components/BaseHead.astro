@@ -3,6 +3,7 @@
  * Metadados de `<head>` partilhados por todas as páginas: título, canónico,
  * robots, ícones, Open Graph, Twitter e dados estruturados.
  */
+import { Font } from 'astro:assets';
 import { SITE } from '../config/site';
 import { absoluteUrl, pageTitle } from '../lib/seo';
 
@@ -38,6 +39,11 @@ const ogImage = absoluteUrl(image);
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Fontes self-hosted. Só o Archivo faz `preload`: é o que desenha o
+     wordmark e os títulos, e o único a bloquear a leitura do primeiro ecrã. -->
+<Font cssVariable="--gs-font-display" preload />
+<Font cssVariable="--gs-font-body" />
 
 <title>{resolvedTitle}</title>
 <meta name="description" content={description} />

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { SITE } from './src/config/site';
 
@@ -9,6 +9,35 @@ export default defineConfig({
   // dados estruturados e sitemap.
   site: SITE.url,
   output: 'static',
+
+  // Self-host das duas famílias: o Astro descarrega os `woff2` no build e
+  // serve-os do próprio domínio. Zero ligações a fonts.googleapis.com.
+  fonts: [
+    {
+      name: 'Archivo',
+      cssVariable: '--gs-font-display',
+      provider: fontProviders.google(),
+      weights: [600, 700, 800],
+      // O português europeu cabe todo no subconjunto `latin`, incluindo os
+      // travessões e o ponto médio. `latin-ext` seria peso morto.
+      subsets: ['latin'],
+      styles: ['normal'],
+      display: 'swap',
+      fallbacks: ['Archivo Fallback', 'system-ui', 'sans-serif'],
+    },
+    {
+      name: 'Inter',
+      cssVariable: '--gs-font-body',
+      provider: fontProviders.google(),
+      weights: [400, 500, 600],
+      // O português europeu cabe todo no subconjunto `latin`, incluindo os
+      // travessões e o ponto médio. `latin-ext` seria peso morto.
+      subsets: ['latin'],
+      styles: ['normal'],
+      display: 'swap',
+      fallbacks: ['Inter Fallback', 'system-ui', 'sans-serif'],
+    },
+  ],
   trailingSlash: 'always',
   build: { format: 'directory' },
   integrations: [

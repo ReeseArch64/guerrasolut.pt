@@ -105,12 +105,76 @@
   --gs-danger: var(--gs-red-600);
   --gs-danger-wash: var(--gs-red-50);
 
+  /* Profundidade — sempre deslocamento mais desfoque, nunca um halo. */
+  --gs-shadow-panel: 0 12px 28px -10px rgb(10 10 10 / 0.18),
+    0 2px 6px -2px rgb(10 10 10 / 0.1);
+  --gs-shadow-rail: 0 6px 18px -14px rgb(10 10 10 / 0.5);
+
   /* Superfícies do browser — desenhadas, não herdadas. */
   --gs-selection-bg: var(--gs-red-500);
   --gs-selection-text: var(--gs-ink-0);
   --gs-caret: var(--gs-red-600);
   --gs-scrollbar-thumb: var(--gs-ink-300);
   --gs-scrollbar-track: var(--gs-ink-100);
+
+  /* ═══ Tokens de forma — iguais nos dois temas ══════════════════════════
+     Não dependem da luz, por isso vivem só aqui e não se repetem abaixo. */
+
+  /* Tipografia. As duas famílias são servidas do próprio domínio pela
+     configuração `fonts` do Astro, que define `--gs-font-display`
+     (Archivo) e `--gs-font-body` (Inter) com os respectivos fallbacks. */
+  --gs-font-ui: var(--gs-font-body), system-ui, -apple-system, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --gs-font-title: var(--gs-font-display), var(--gs-font-ui);
+
+  --gs-size-xs: 0.75rem;
+  --gs-size-sm: 0.8125rem;
+  --gs-size-base: 0.9375rem;
+  --gs-size-md: 1rem;
+  --gs-size-lg: 1.125rem;
+
+  --gs-leading-tight: 1.1;
+  --gs-leading-snug: 1.35;
+  --gs-leading-normal: 1.6;
+
+  /* O tracking negativo pára em -0,03em; a etiqueta em maiúsculas é o
+     único sítio onde o espacejamento abre, porque as maiúsculas pedem. */
+  --gs-track-tight: -0.02em;
+  --gs-track-label: 0.08em;
+
+  /* Espaço — base de 4px. */
+  --gs-space-1: 0.25rem;
+  --gs-space-2: 0.5rem;
+  --gs-space-3: 0.75rem;
+  --gs-space-4: 1rem;
+  --gs-space-5: 1.25rem;
+  --gs-space-6: 1.5rem;
+  --gs-space-8: 2rem;
+  --gs-space-10: 2.5rem;
+  --gs-space-12: 3rem;
+
+  /* Raios. Controlos pequenos são quase rectos — são interruptores de
+     painel, não pastilhas. O painel suspenso é a única peça com 12px. */
+  --gs-radius-sm: 4px;
+  --gs-radius-md: 6px;
+  --gs-radius-lg: 12px;
+
+  /* Medidas da calha. O cabeçalho é a primeira peça a fixá-las. */
+  --gs-header-h: 3.75rem;
+  --gs-tap: 2.75rem;
+  --gs-page-max: 82.5rem;
+  --gs-page-pad: clamp(1rem, 4vw, 2.5rem);
+
+  /* Movimento. Saída exponencial a partir de um estado já visível. */
+  --gs-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gs-dur-fast: 120ms;
+  --gs-dur: 200ms;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gs-header-h: 4.5rem;
+  }
 }
 
 /* ═══ Tokens semânticos — TEMA ESCURO ═════════════════════════════════════
@@ -167,6 +231,10 @@
     --gs-caret: var(--gs-red-400);
     --gs-scrollbar-thumb: var(--gs-ink-800);
     --gs-scrollbar-track: var(--gs-ink-975);
+
+    --gs-shadow-panel: 0 12px 32px -8px rgb(0 0 0 / 0.7),
+      0 2px 8px -2px rgb(0 0 0 / 0.5);
+    --gs-shadow-rail: 0 6px 20px -12px rgb(0 0 0 / 0.9);
   }
 }
 
@@ -217,6 +285,10 @@
   --gs-caret: var(--gs-red-400);
   --gs-scrollbar-thumb: var(--gs-ink-800);
   --gs-scrollbar-track: var(--gs-ink-975);
+
+  --gs-shadow-panel: 0 12px 32px -8px rgb(0 0 0 / 0.7),
+    0 2px 8px -2px rgb(0 0 0 / 0.5);
+  --gs-shadow-rail: 0 6px 20px -12px rgb(0 0 0 / 0.9);
 }
 
 /* ═══ Aplicação base ══════════════════════════════════════════════════════
