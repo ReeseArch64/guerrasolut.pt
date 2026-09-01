@@ -1,13 +1,4 @@
 ---
-/**
- * Bloco de CTA final — «o bloco invertido».
- *
- * A secção preta que corta a página clara antes do rodapé. Fecha todas as
- * rotas excepto `/contactos/`, onde o formulário já é o fim do caminho.
- *
- * Copy de `PRODUCTS.md` §6.1 («CTA final»). Zero JavaScript: as três acções
- * são ligações reais — página de contacto, WhatsApp e telefone.
- */
 import Icon from './Icon.astro';
 import { CONTACT } from '../config/site';
 import { whatsappUrl } from '../lib/whatsapp';
@@ -15,7 +6,6 @@ import { whatsappUrl } from '../lib/whatsapp';
 interface Props {
   title?: string;
   text?: string;
-  /** Mensagem já composta para o WhatsApp (usada nas páginas de serviço). */
   whatsappMessage?: string;
 }
 
@@ -27,7 +17,6 @@ const {
 
 const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
 ---
-
 <section class="cta" aria-labelledby="cta-final-titulo">
   <div class="gs-shell cta__grid">
     <div class="cta__texto">
@@ -92,7 +81,6 @@ const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
     align-content: center;
   }
 
-  /* O telefone é a terceira via: sem preenchimento, com o traço do bloco. */
   .cta__telefone {
     display: inline-flex;
     align-items: center;

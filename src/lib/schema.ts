@@ -1,9 +1,3 @@
-/**
- * Construtores de dados estruturados (JSON-LD) — `PRODUCTS.md` §11.
- *
- * Todos os nós partilham `@id` estáveis para que o Google os ligue entre
- * páginas: a empresa é declarada uma vez e referenciada por `@id` no resto.
- */
 import { SITE, CONTACT, DISTRICTS, SOCIAL } from '../config/site';
 import { SERVICES, type Service } from '../config/services';
 import { absoluteUrl } from './seo';
@@ -21,14 +15,6 @@ const WEEK = [
   'Sunday',
 ];
 
-/**
- * A empresa. `Electrician` + `GeneralContractor` reflectem as duas actividades
- * — a eletricidade é a especialidade âncora.
- *
- * Sem morada pública nem NIF, o nó fica limitado a `addressCountry: PT`; assim
- * que o cliente fornecer a sede, acrescentar `streetAddress`, `postalCode`,
- * `addressLocality` e `geo` (`PRODUCTS.md` §13/§14).
- */
 export function organizationSchema() {
   return {
     '@context': 'https://schema.org',
@@ -102,12 +88,10 @@ export function organizationSchema() {
         description: service.description,
       },
     })),
-    // `sameAs` fica de fora enquanto não houver perfis oficiais confirmados.
     ...(SOCIAL.length > 0 ? { sameAs: SOCIAL } : {}),
   };
 }
 
-/** O site enquanto entidade. Sem `SearchAction` — não há pesquisa interna. */
 export function webSiteSchema() {
   return {
     '@context': 'https://schema.org',
@@ -121,7 +105,6 @@ export function webSiteSchema() {
   };
 }
 
-/** Um serviço concreto, para a respectiva página dedicada. */
 export function serviceSchema(service: Service) {
   const url = absoluteUrl(`/servicos/${service.slug}`);
   return {
@@ -140,10 +123,6 @@ export function serviceSchema(service: Service) {
   };
 }
 
-/**
- * Migalhas de pão. Só usar em páginas internas e apenas se o percurso estiver
- * também visível na página.
- */
 export function breadcrumbSchema(items: { name: string; path: string }[]) {
   return {
     '@context': 'https://schema.org',
@@ -157,10 +136,6 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
   };
 }
 
-/**
- * FAQ. Só emitir em páginas onde as perguntas e respostas estão de facto
- * visíveis no HTML — caso contrário a Google trata como spam de marcação.
- */
 export function faqSchema(items: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',
@@ -176,10 +151,6 @@ export function faqSchema(items: { question: string; answer: string }[]) {
   };
 }
 
-/**
- * O índice de serviços como lista ordenada de itens. Só faz sentido em
- * `/servicos/`, onde os oito serviços estão visíveis no HTML.
- */
 export function serviceListSchema() {
   return {
     '@context': 'https://schema.org',

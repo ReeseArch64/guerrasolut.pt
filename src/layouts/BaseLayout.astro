@@ -1,8 +1,4 @@
 ---
-/**
- * Esqueleto de todas as páginas: documento, metadados, a calha do topo e o
- * rodapé. Os CTAs flutuantes entram quando forem construídos.
- */
 import type { ComponentProps } from 'astro/types';
 import BaseHead from '../components/BaseHead.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -13,7 +9,6 @@ import '../styles/base.css';
 
 type Props = ComponentProps<typeof BaseHead>;
 ---
-
 <!doctype html>
 <html lang={SITE.locale}>
   <head>

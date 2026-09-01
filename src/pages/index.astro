@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/HomeHero.astro';
 import { organizationSchema, webSiteSchema } from '../lib/schema';
 ---
-
 <BaseLayout schemas={[organizationSchema(), webSiteSchema()]}>
   <main id="conteudo">
     <HomeHero />

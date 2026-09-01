@@ -1,12 +1,4 @@
 ---
-/**
- * Índice de serviços (`/servicos/`) — `PRODUCTS.md` §6.2.
- *
- * A grelha é o esquema do quadro: oito circuitos numerados, cada um com o
- * seu fio, o seu nome e as suas chapas de identificação. Os dois serviços
- * destacados (§2) ocupam o dobro da largura; o serviço âncora leva o lavado
- * vermelho e a etiqueta «Especialidade principal».
- */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import CtaFinal from '../../components/CtaFinal.astro';
@@ -21,7 +13,6 @@ const title = 'Serviços de eletricidade, construção e remodelação';
 const description =
   'Instalações elétricas, construção civil, remodelação, pintura, pladur, canalização, climatização e controlo de acessos — equipa própria em todo o Portugal continental.';
 ---
-
 <BaseLayout
   title={title}
   description={description}
@@ -118,8 +109,6 @@ const description =
 </BaseLayout>
 
 <style>
-  /* ── A grelha de circuitos ───────────────────────────────────────────── */
-
   .grelha {
     display: grid;
     gap: var(--gs-space-4);
@@ -147,8 +136,6 @@ const description =
     border-color: var(--gs-border-strong);
   }
 
-  /* A corrente na aresta de cima: cinzenta em repouso, vermelha e aberta
-     quando o cartão está debaixo do cursor ou do foco. */
   .circuito__fio {
     position: absolute;
     inset-block-start: 0;
@@ -207,8 +194,6 @@ const description =
     line-height: var(--gs-leading-tight);
   }
 
-  /* O cartão inteiro é alvo, mas o link continua a ser o link: é ele que o
-     teclado alcança e o leitor de ecrã anuncia. */
   .circuito__link {
     color: var(--gs-text);
     text-decoration: none;
@@ -231,7 +216,6 @@ const description =
     color: var(--gs-text-muted);
   }
 
-  /* As chapas de identificação do circuito. */
   .chapas {
     display: flex;
     flex-wrap: wrap;
@@ -289,7 +273,6 @@ const description =
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    /* Os dois destacados ocupam o dobro da largura (`PRODUCTS.md` §2). */
     .circuito--largo {
       grid-column: span 2;
     }
@@ -302,8 +285,6 @@ const description =
       padding: var(--gs-space-8);
     }
   }
-
-  /* ── O processo ──────────────────────────────────────────────────────── */
 
   .processo {
     margin-block-start: var(--gs-section-y);
@@ -336,8 +317,6 @@ const description =
     counter-reset: passo;
   }
 
-  /* Aqui os números não são decoração: são a ordem do processo, e é isso
-     que o leitor precisa de saber. */
   .passo {
     padding-block-start: var(--gs-space-4);
     border-block-start: 2px solid var(--gs-border-strong);

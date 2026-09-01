@@ -1,14 +1,4 @@
 ---
-/**
- * Cabeçalho global — «a calha».
- *
- * Uma barra fixa com divisórias a fio e um único segmento vermelho a marcar
- * a página actual, como a corrente num quadro elétrico. Zero JavaScript: o
- * painel de serviços abre por `:hover` / `:focus-within` e a folha mobile é
- * um `<details>`.
- *
- * Ver `PRODUCTS.md` §8 e `.impeccable/surfaces/src-components-siteheader-astro.md`.
- */
 import { Image } from 'astro:assets';
 import marca from '../assets/marca-guerra-solut.png';
 import Icon from './Icon.astro';
@@ -18,11 +8,9 @@ import { NAV, SEARCH, isActive } from '../config/nav';
 
 const path = Astro.url.pathname;
 
-/** «+351 964 148 843» → «964 148 843», que é como se lê em Portugal. */
 const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
 const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.slice(0, 2)} h`;
 ---
-
 <a class="gs-skip" href="#conteudo">Saltar para o conteúdo</a>
 
 <header class="rail">
@@ -230,8 +218,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
 </header>
 
 <style>
-  /* ── A calha ─────────────────────────────────────────────────────────── */
-
   .rail {
     position: sticky;
     inset-block-start: 0;
@@ -240,7 +226,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     background: var(--gs-bg);
   }
 
-  /* O vidro só entra onde o desfoque existe mesmo; sem ele, fundo opaco. */
   @supports (backdrop-filter: blur(1px)) {
     .rail {
       background: color-mix(in srgb, var(--gs-bg) 86%, transparent);
@@ -248,7 +233,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     }
   }
 
-  /* A sombra só aparece depois de a página descolar do topo. */
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
       .rail {
@@ -275,8 +259,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     block-size: var(--gs-header-h);
   }
 
-  /* ── Marca ───────────────────────────────────────────────────────────── */
-
   .brand {
     display: flex;
     align-items: center;
@@ -286,9 +268,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     color: var(--gs-text);
   }
 
-  /* `Icon` e `Image` são componentes: o hash de âmbito do Astro não chega
-     aos seus elementos, por isso estes selectores atravessam a fronteira a
-     partir de um elemento que já é local. */
   .brand :global(.brand__mark) {
     inline-size: 2.625rem;
     block-size: 2.625rem;
@@ -313,8 +292,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     color: var(--gs-accent);
     margin-inline-start: 0.3em;
   }
-
-  /* ── Navegação de secretária ─────────────────────────────────────────── */
 
   .nav {
     display: none;
@@ -359,7 +336,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     font-weight: 600;
   }
 
-  /* O fio: cinzento a antecipar, vermelho onde a corrente está mesmo. */
   .nav__link::after {
     content: '';
     position: absolute;
@@ -390,8 +366,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
   .nav__item--panel:focus-within :global(.nav__chevron) {
     rotate: 180deg;
   }
-
-  /* ── Painel de serviços ──────────────────────────────────────────────── */
 
   .panel {
     display: none;
@@ -491,8 +465,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
   .panel__all:hover {
     color: var(--gs-accent-hover);
   }
-
-  /* ── Ferramentas: pesquisa, telefone, acção ──────────────────────────── */
 
   .tools {
     display: none;
@@ -616,8 +588,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
   .cta--block {
     inline-size: 100%;
   }
-
-  /* ── Barra em ecrã pequeno ───────────────────────────────────────────── */
 
   .search-link {
     display: none;
@@ -790,8 +760,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     color: var(--gs-text-subtle);
   }
 
-  /* ── A partir de 64rem a calha abre ──────────────────────────────────── */
-
   @media (min-width: 64rem) {
     .nav,
     .tools {
@@ -835,7 +803,6 @@ const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.sl
     }
   }
 
-  /* Com largura a sobrar, a barra ganha o campo de pesquisa e o horário. */
   @media (min-width: 80rem) {
     .nav__link {
       padding-inline: var(--gs-space-3);

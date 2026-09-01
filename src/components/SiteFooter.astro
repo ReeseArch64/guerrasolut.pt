@@ -1,13 +1,4 @@
 ---
-/**
- * Rodapé global — «o esquema do quadro».
- *
- * A última peça de cada página: a lista completa de circuitos (serviços),
- * a empresa, os contactos accionáveis e a área coberta. Divisórias a fio,
- * nomes em Archivo, e um único segmento vermelho a abrir a chapa.
- *
- * Copy de `PRODUCTS.md` §6.8. Zero JavaScript — o ano é resolvido no build.
- */
 import { Image } from 'astro:assets';
 import marca from '../assets/marca-guerra-solut.png';
 import Icon from './Icon.astro';
@@ -30,7 +21,6 @@ const LEGAIS = [
   { label: 'Termos e condições', href: '/termos/' },
 ];
 ---
-
 <footer class="foot">
   <div class="gs-shell">
     <div class="foot__grid">
@@ -166,8 +156,6 @@ const LEGAIS = [
     padding-block: var(--gs-section-y) var(--gs-space-10);
   }
 
-  /* ── Marca ───────────────────────────────────────────────────────────── */
-
   .foot__brand {
     display: inline-flex;
     align-items: center;
@@ -212,8 +200,6 @@ const LEGAIS = [
     padding-inline: var(--gs-space-5);
     font-size: var(--gs-size-base);
   }
-
-  /* ── Colunas ─────────────────────────────────────────────────────────── */
 
   .foot__titulo {
     margin: 0 0 var(--gs-space-4);
@@ -287,8 +273,6 @@ const LEGAIS = [
     color: var(--gs-text-subtle);
   }
 
-  /* ── Onde trabalhamos ────────────────────────────────────────────────── */
-
   .zonas {
     padding-block: var(--gs-space-6);
     border-block-start: 1px solid var(--gs-border);
@@ -303,7 +287,6 @@ const LEGAIS = [
     list-style: none;
   }
 
-  /* Etiquetas rectas, como as chapas de identificação de um quadro. */
   .zonas__item {
     padding: 0.3rem var(--gs-space-3);
     border: 1px solid var(--gs-border);
@@ -322,8 +305,6 @@ const LEGAIS = [
     font-size: var(--gs-size-sm);
     color: var(--gs-text-subtle);
   }
-
-  /* ── Base ────────────────────────────────────────────────────────────── */
 
   .foot__base {
     display: flex;
@@ -351,7 +332,6 @@ const LEGAIS = [
     text-decoration: underline;
   }
 
-  /* Em ecrã pequeno as duas ligações legais repetidas na base são ruído. */
   .foot__legal {
     display: none;
   }

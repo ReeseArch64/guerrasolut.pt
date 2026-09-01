@@ -1,15 +1,4 @@
 ---
-/**
- * Sobre (`/sobre/`) — `PRODUCTS.md` §6.4.
- *
- * Desenvolve os dois parágrafos da home com história, equipa por
- * especialidade, certificações e âmbito geográfico. Os diferenciadores da §3
- * entram como um esquema de circuitos numerado — não como cartões: são cinco
- * compromissos, e o que importa é lê-los em sequência.
- *
- * Sem fotografias reais da empresa (§13, lacuna assumida): a chapa mostra a
- * ilustração de obra, e nenhum número não verificável entra na página (§15).
- */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
@@ -25,7 +14,6 @@ const title = 'Mais de uma década ao serviço da sua obra';
 const description =
   'A Guerra Solut nasceu das instalações elétricas e é hoje uma empresa portuguesa de serviços técnicos e construção civil, com equipa própria em todo o território continental.';
 ---
-
 <BaseLayout
   title={title}
   description={description}
@@ -202,8 +190,6 @@ const description =
 </BaseLayout>
 
 <style>
-  /* ── Peças partilhadas pelas secções desta página ────────────────────── */
-
   .titulo {
     margin: 0;
     font-size: var(--gs-size-h2);
@@ -221,8 +207,6 @@ const description =
     line-height: var(--gs-leading-snug);
     color: var(--gs-text-muted);
   }
-
-  /* ── A empresa ───────────────────────────────────────────────────────── */
 
   .empresa__grid {
     display: grid;
@@ -272,8 +256,6 @@ const description =
     color: var(--gs-accent);
   }
 
-  /* A chapa, com a mesma gramática do herói: fundo escuro nos dois temas,
-     bloco de título fechado por um fio, corrente na aresta. */
   .chapa {
     position: relative;
     overflow: hidden;
@@ -348,8 +330,6 @@ const description =
     }
   }
 
-  /* ── Os cinco compromissos ───────────────────────────────────────────── */
-
   .compromisso {
     margin-block-start: var(--gs-section-y);
     border-block-start: 1px solid var(--gs-border);
@@ -364,8 +344,6 @@ const description =
     border-block-start: 1px solid var(--gs-border);
   }
 
-  /* Linhas de uma lista, não cartões: cinco compromissos lêem-se em
-     sequência, e a divisória a fio é a gramática da casa. */
   .razao {
     display: grid;
     grid-template-columns: 3rem minmax(0, 1fr);
@@ -412,8 +390,6 @@ const description =
       margin: 0;
     }
   }
-
-  /* ── Equipa e especialidades ─────────────────────────────────────────── */
 
   .equipa__grid {
     display: grid;
@@ -465,7 +441,6 @@ const description =
     transition: color var(--gs-dur-fast) var(--gs-ease);
   }
 
-  /* Só o nome desliza; a seta fica onde está, e nada refaz o layout. */
   .especialidades__link > span {
     transition: translate var(--gs-dur) var(--gs-ease);
   }
@@ -495,8 +470,6 @@ const description =
       align-items: start;
     }
   }
-
-  /* ── Garantias ───────────────────────────────────────────────────────── */
 
   .garantias {
     border-block-start: 1px solid var(--gs-border);

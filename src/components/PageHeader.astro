@@ -1,32 +1,18 @@
 ---
-/**
- * Cabeçalho de página interna — «o bloco de título».
- *
- * É a peça que abre todas as rotas fora da home, com a mesma gramática da
- * chapa do herói: uma faixa fechada por um fio de 1px, com as migalhas em
- * Archivo maiúsculo, e a corrente vermelha de 2px a marcar o início.
- *
- * As migalhas visíveis são condição para emitir `BreadcrumbList` — quem usa
- * este componente passa os mesmos `crumbs` ao `breadcrumbSchema`.
- */
 interface Crumb {
   name: string;
-  /** Caminho com barra final. O último item não leva `path`. */
   path?: string;
 }
 
 interface Props {
   title: string;
-  /** Parágrafo de entrada. Opcional — as páginas legais abrem só com a data. */
   lead?: string;
   crumbs: Crumb[];
-  /** Etiqueta curta à direita da faixa (ex.: «6 perguntas»). */
   meta?: string;
 }
 
 const { title, lead, crumbs, meta } = Astro.props;
 ---
-
 <header class="head">
   <div class="gs-shell">
     <div class="head__band">
@@ -63,7 +49,6 @@ const { title, lead, crumbs, meta } = Astro.props;
     padding-block: var(--gs-space-6) var(--gs-section-y);
   }
 
-  /* A faixa do bloco de título: fio em baixo, migalhas em cima. */
   .head__band {
     position: relative;
     display: flex;
@@ -75,7 +60,6 @@ const { title, lead, crumbs, meta } = Astro.props;
     border-block-end: 1px solid var(--gs-border);
   }
 
-  /* A corrente: os primeiros 3rem do fio são vermelhos. */
   .head__wire {
     position: absolute;
     inset-block-end: -1px;
@@ -149,7 +133,6 @@ const { title, lead, crumbs, meta } = Astro.props;
     color: var(--gs-text-muted);
   }
 
-  /* O único gesto: a corrente a chegar, como no herói. */
   @media (prefers-reduced-motion: no-preference) {
     .head__wire {
       animation: corrente-x 520ms var(--gs-ease) both;

@@ -1,18 +1,10 @@
-/**
- * Catálogo de serviços (`PRODUCTS.md` §2).
- *
- * `id` é o identificador curto usado no site antigo; `slug` é o segmento de
- * URL definido na arquitectura de rotas (`PRODUCTS.md` §11).
- */
 export interface Service {
   id: string;
   slug: string;
   name: string;
   description: string;
   tags: string[];
-  /** Cartão de largura dupla na grelha. */
   featured?: boolean;
-  /** Serviço âncora: especialidade de origem e prioridade de SEO. */
   primary?: boolean;
 }
 

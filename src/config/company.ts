@@ -1,19 +1,9 @@
-/**
- * Conteúdo institucional da empresa — o que não é serviço nem contacto.
- * Processo (`PRODUCTS.md` §4), diferenciadores e bullets (§3).
- *
- * Vive aqui pela mesma razão que `site.ts`: é copy contratada, usada em mais
- * do que uma página, e não se reescreve à mão dentro de um componente.
- */
-
 export interface Passo {
-  /** Número do passo, composto com `tabular-nums`. */
   numero: string;
   titulo: string;
   descricao: string;
 }
 
-/** `PRODUCTS.md` §4 — «Como trabalhamos». */
 export const PROCESSO: Passo[] = [
   {
     numero: '01',
@@ -46,7 +36,6 @@ export interface Diferenciador {
   descricao: string;
 }
 
-/** `PRODUCTS.md` §3 — «Porquê a Guerra Solut». */
 export const DIFERENCIADORES: Diferenciador[] = [
   {
     titulo: 'Certificados e seguros',
@@ -75,7 +64,6 @@ export const DIFERENCIADORES: Diferenciador[] = [
   },
 ];
 
-/** `PRODUCTS.md` §3 — bullets da secção «Sobre». */
 export const BULLETS_SOBRE = [
   'Técnicos certificados e com experiência comprovada',
   'Orçamentos fechados, sem custos inesperados no fim',

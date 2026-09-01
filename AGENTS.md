@@ -91,22 +91,11 @@ de execução.
 
 ## Contribuição
 
-As regras de **ramos** (só `main` e `develop`, sem ramos por funcionalidade) e
-a **convenção de mensagens de commit** (Conventional Commits, validados pelo
-commitlint) vivem no `CONTRIBUTING.md`. É a fonte única dessas regras — ler
-antes do primeiro commit e alterar apenas lá.
-
-## Desenvolvimento
-
-Arrancar o servidor de desenvolvimento em background:
-
-```
-astro dev --background
-```
-
-Gerir com `astro dev stop`, `astro dev status` e `astro dev logs`.
-
-Antes de dar trabalho por terminado: `npm run build` tem de passar.
+As regras de **ramos** (só `main` e `develop`, sem ramos por funcionalidade), a
+**convenção de mensagens de commit** (Conventional Commits, validados pelo
+commitlint) e o **fluxo de desenvolvimento** (servidor local, validação antes
+de dar trabalho por terminado) vivem no `CONTRIBUTING.md`. É a fonte única
+dessas regras — ler antes do primeiro commit e alterar apenas lá.
 
 ## Documentação do Astro
 
