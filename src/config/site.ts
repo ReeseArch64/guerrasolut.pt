@@ -7,7 +7,7 @@ export const SITE = {
   url: 'https://www.guerrasolut.pt',
   name: 'Guerra Solut',
   legalName: 'Guerra Solut, Unipessoal Lda.',
-  foundingDate: '2012',
+  foundingDate: '2025',
   priceRange: '€€',
   locale: 'pt-PT',
   /** Formato exigido pelo Open Graph. */

@@ -10,7 +10,7 @@ construído em Astro com foco em **SEO** e **responsividade**.
 >
 > Todo o conteúdo abaixo é a **especificação viva deste site**, não a descrição
 > de um site externo. Os dados foram extraídos da versão anterior (bundle
-> JavaScript, `manifest.json` e JSON-LD do `index.html`) em 2026-09-01 e, a
+> JavaScript, `manifest.json` e JSON-LD do `index.html`) em 2025-09-01 e, a
 > partir daqui, a fonte de verdade é este documento em conjunto com
 > `src/config/site.ts`.
 
@@ -23,7 +23,7 @@ construído em Astro com foco em **SEO** e **responsividade**.
 | Nome comercial | Guerra Solut |
 | Razão social | Guerra Solut, Unipessoal Lda. |
 | Domínio | `https://www.guerrasolut.pt/` (este site — ver `SITE.url` em `src/config/site.ts`) |
-| Ano de fundação | 2012 |
+| Ano de fundação | 2025 |
 | Sector | Instalações elétricas + construção civil (`Electrician`, `GeneralContractor`) |
 | Especialidade de origem | Instalações elétricas |
 | Posicionamento | Empresa portuguesa de serviços técnicos e construção civil, com equipa própria multidisciplinar, ao serviço de particulares, empresas e condomínios |
@@ -187,7 +187,7 @@ Cartão de apoio: **"Ficou alguma dúvida?"** — Explique-nos o caso e damos-lh
 
 - **Eyebrow:** Sobre a Guerra Solut
 - **H2:** Mais de uma década **ao seu serviço**
-- **P1:** A **Guerra Solut** nasceu das instalações elétricas e é hoje uma empresa portuguesa de serviços técnicos e construção civil, ao serviço de particulares, empresas e condomínios em todo o território continental desde 2012.
+- **P1:** A **Guerra Solut** nasceu das instalações elétricas e é hoje uma empresa portuguesa de serviços técnicos e construção civil, ao serviço de particulares, empresas e condomínios em todo o território continental desde 2025.
 - **P2:** Com equipa própria e multidisciplinar, entregamos obras completas — do projecto ao acabamento — com o mesmo rigor numa pequena reparação ou numa remodelação integral.
 - **Link:** `Conhecer a empresa` → `/sobre/`
 
@@ -230,7 +230,7 @@ a partir da §2 e das palavras-chave da §12:
 ### 6.4 Sobre (`/sobre/`)
 
 - **H1:** Mais de uma década ao serviço da sua obra
-- Desenvolve os dois parágrafos de 6.1 com: história desde 2012, equipa própria
+- Desenvolve os dois parágrafos de 6.1 com: história desde 2025, equipa própria
   por especialidade, certificações e seguro, âmbito geográfico.
 - Inclui os diferenciadores da §3 e os bullets da §3.
 - Fotografias reais quando existirem (§13).
@@ -258,7 +258,7 @@ a partir da §2 e das palavras-chave da §12:
 
 ### 6.8 Rodapé (em todas as páginas)
 
-- **Descrição:** Especialistas em instalações elétricas, construção civil e remodelação. Rigor, prazos cumpridos e garantia por escrito desde 2012.
+- **Descrição:** Especialistas em instalações elétricas, construção civil e remodelação. Rigor, prazos cumpridos e garantia por escrito desde 2025.
 - **Colunas:** Serviços (8 links para `/servicos/{slug}/`) · Empresa (`/sobre/`, `/faq/`, `/contactos/`, legais) · Contactos (telefone, email, horário, "Portugal continental")
 - **Bloco:** "Onde trabalhamos" com os 10 distritos
 - **Copyright:** © {ano} [ReeseArch64](https://www.reesearch64.tech) · Todos os direitos reservados.
@@ -568,9 +568,9 @@ pedido pelos clientes nesse caminho fixo.
 
 | # | Decisão | Data |
 | --- | --- | --- |
-| 1 | A versão anterior do site é **fonte de dados da empresa apenas** — não é base de design nem de estrutura. Construção de raiz, a publicar no mesmo domínio, substituindo-a. | 2026-09-01 |
-| 2 | **Sem secção de testemunhos** e **sem bloco de estatísticas** (500+ clientes, 1000+ obras, 4,9★). Nenhum número não verificável entra no site. Prova social por certificações, garantia por escrito e fotografias reais de obras. Sem `Review`/`AggregateRating`. | 2026-09-01 |
-| 3 | **Copyright do rodapé mantém-se ReeseArch64** (autoria do desenvolvimento), com ano dinâmico. | 2026-09-01 |
-| 4 | **URLs com barra final** (`trailingSlash: 'always'`, `build.format: 'directory'`). Canónicos, sitemap e ligações internas seguem esta forma. | 2026-09-01 |
-| 5 | **`sameAs` fica vazio** até o cliente confirmar os perfis oficiais — não se inventam links de redes sociais. | 2026-09-01 |
-| 6 | **Site multipágina, não landing page com âncoras.** Cada tema tem rota própria (§11) com `<h1>`, metadados, canónico e entrada no sitemap próprios. A home resume e encaminha; a navegação principal aponta para páginas, não para `#`. | 2026-09-01 |
+| 1 | A versão anterior do site é **fonte de dados da empresa apenas** — não é base de design nem de estrutura. Construção de raiz, a publicar no mesmo domínio, substituindo-a. | 2025-09-01 |
+| 2 | **Sem secção de testemunhos** e **sem bloco de estatísticas** (500+ clientes, 1000+ obras, 4,9★). Nenhum número não verificável entra no site. Prova social por certificações, garantia por escrito e fotografias reais de obras. Sem `Review`/`AggregateRating`. | 2025-09-01 |
+| 3 | **Copyright do rodapé mantém-se ReeseArch64** (autoria do desenvolvimento), com ano dinâmico. | 2025-09-01 |
+| 4 | **URLs com barra final** (`trailingSlash: 'always'`, `build.format: 'directory'`). Canónicos, sitemap e ligações internas seguem esta forma. | 2025-09-01 |
+| 5 | **`sameAs` fica vazio** até o cliente confirmar os perfis oficiais — não se inventam links de redes sociais. | 2025-09-01 |
+| 6 | **Site multipágina, não landing page com âncoras.** Cada tema tem rota própria (§11) com `<h1>`, metadados, canónico e entrada no sitemap próprios. A home resume e encaminha; a navegação principal aponta para páginas, não para `#`. | 2025-09-01 |
