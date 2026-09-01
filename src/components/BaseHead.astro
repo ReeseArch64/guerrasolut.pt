@@ -1,0 +1,104 @@
+---
+/**
+ * Metadados de `<head>` partilhados por todas as páginas: título, canónico,
+ * robots, ícones, Open Graph, Twitter e dados estruturados.
+ */
+import { SITE } from '../config/site';
+import { absoluteUrl, pageTitle } from '../lib/seo';
+
+interface Props {
+  /** Título específico da página. Omitido na home (usa o título por defeito). */
+  title?: string;
+  description?: string;
+  /** Imagem de partilha. Caminho do site ou URL absoluto. */
+  image?: string;
+  imageAlt?: string;
+  /** Retira a página do índice (ex.: 404, páginas de agradecimento). */
+  noindex?: boolean;
+  ogType?: 'website' | 'article' | 'profile';
+  /** Nós JSON-LD a emitir nesta página. */
+  schemas?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = SITE.ogImage,
+  imageAlt = SITE.ogImageAlt,
+  noindex = false,
+  ogType = 'website',
+  schemas = [],
+} = Astro.props;
+
+const resolvedTitle = pageTitle(title);
+const canonical = absoluteUrl(Astro.url.pathname);
+const ogImage = absoluteUrl(image);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{resolvedTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{
+  noindex ? (
+    <meta name="robots" content="noindex, follow" />
+  ) : (
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+  )
+}
+
+<!-- Ícones e PWA -->
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/icons/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/icons/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="application-name" content={SITE.name} />
+<meta name="apple-mobile-web-app-title" content={SITE.name} />
+<meta name="msapplication-TileColor" content={SITE.brandColor} />
+<meta name="msapplication-config" content="/browserconfig.xml" />
+<meta
+  name="theme-color"
+  media="(prefers-color-scheme: light)"
+  content={SITE.themeColor.light}
+/>
+<meta
+  name="theme-color"
+  media="(prefers-color-scheme: dark)"
+  content={SITE.themeColor.dark}
+/>
+
+<!-- Open Graph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content={SITE.ogLocale} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={resolvedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={resolvedTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
+{
+  schemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+  ))
+}

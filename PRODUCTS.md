@@ -436,16 +436,22 @@ tratadas como *doorway pages* pela Google.
 
 ### Existentes
 
+Os ícones estão todos em `/icons/`; só o `favicon.ico` fica na raiz, porque é
+pedido pelos clientes nesse caminho fixo.
+
 | Ficheiro | Uso |
 | --- | --- |
-| `/logo-full.png` | OG image, marca completa |
+| `/logo-full.png` | Marca completa (logótipo em JSON-LD) |
 | `/logo-simple.png` | Header, rodapé, watermark |
-| `/favicon.svg`, `/favicon.ico`, `/favicon-{16,32,96}x96.png` | Favicons |
-| `/apple-touch-icon.png`, `/apple-icon-{152,180}x180.png` | iOS |
-| `/android-icon-{36,48,72,96,144,192}x{...}.png` | Android |
-| `/web-app-manifest-{192,512}x{...}.png` | PWA maskable |
-| `/ms-icon-144x144.png` | Windows tile |
+| `/og-image.png` | Imagem de partilha 1200×630 (provisória, gerada a partir do logótipo) |
+| `/favicon.ico` | Favicon legado, 16/32/48 px |
+| `/icons/favicon.svg`, `/icons/favicon-{16,32,96}x{...}.png` | Favicons |
+| `/icons/apple-touch-icon.png`, `/icons/apple-icon-*.png` | iOS |
+| `/icons/android-icon-*.png` | Android |
+| `/icons/web-app-manifest-{192,512}x{...}.png` | PWA maskable |
+| `/icons/ms-icon-*.png` | Tiles Windows (`/browserconfig.xml`) |
 | `/manifest.json` | PWA |
+| `/robots.txt` | Indexação + localização do sitemap |
 
 ### Em falta — a pedir ao cliente
 
@@ -455,7 +461,8 @@ tratadas como *doorway pages* pela Google.
 - [ ] NIF e morada de sede (obrigatório para `LocalBusiness` e para cumprimento legal em PT)
 - [ ] Links de redes sociais (`sameAs`) — Facebook, Instagram, LinkedIn
 - [ ] URL do Google Business Profile
-- [ ] Imagem OG dedicada (1200×630) diferente do logótipo
+- [ ] Imagem OG dedicada (1200×630) com fotografia real — a actual é o
+      logótipo sobre fundo escuro, suficiente para arrancar mas fraca em CTR
 
 ---
 
@@ -478,3 +485,5 @@ tratadas como *doorway pages* pela Google.
 | 1 | O site antigo é **fonte de dados da empresa apenas** — não é base de design nem de estrutura. Construção de raiz. | 2026-09-01 |
 | 2 | **Sem secção de testemunhos** e **sem bloco de estatísticas** (500+ clientes, 1000+ obras, 4,9★). Nenhum número não verificável entra no site. Prova social por certificações, garantia por escrito e fotografias reais de obras. Sem `Review`/`AggregateRating`. | 2026-09-01 |
 | 3 | **Copyright do rodapé mantém-se ReeseArch64** (autoria do desenvolvimento), com ano dinâmico. | 2026-09-01 |
+| 4 | **URLs com barra final** (`trailingSlash: 'always'`, `build.format: 'directory'`). Canónicos, sitemap e ligações internas seguem esta forma. | 2026-09-01 |
+| 5 | **`sameAs` fica vazio** até o cliente confirmar os perfis oficiais — não se inventam links de redes sociais. | 2026-09-01 |

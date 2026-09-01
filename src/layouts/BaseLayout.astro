@@ -1,0 +1,22 @@
+---
+/**
+ * Esqueleto de todas as páginas. Só trata do documento e dos metadados —
+ * o header, o rodapé e os CTAs persistentes entram quando forem construídos.
+ */
+import type { ComponentProps } from 'astro/types';
+import BaseHead from '../components/BaseHead.astro';
+import { SITE } from '../config/site';
+
+type Props = ComponentProps<typeof BaseHead>;
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <BaseHead {...Astro.props} />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

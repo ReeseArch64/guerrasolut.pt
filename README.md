@@ -9,10 +9,11 @@ Reconstrução do site actual em Astro, com foco em **SEO** e **responsividade**
 
 ## Estado
 
-🚧 **Arranque.** O projecto tem, neste momento, o scaffold do Astro e a
-especificação de produto. Ainda não há implementação.
+🚧 **Arranque.** Está montada a base técnica de SEO — layout base, metadados,
+dados estruturados, `manifest.json`, `robots.txt` e `sitemap.xml`. O design e o
+conteúdo das páginas ainda não estão implementados.
 
-Próximo passo: montar o layout base, os tokens de design e a home.
+Próximo passo: tokens de design, header/rodapé e as secções da home.
 
 ---
 
@@ -72,12 +73,56 @@ npm install
 .
 ├── .agents/skills/     # Skills de agentes (impeccable)
 ├── public/             # Assets estáticos servidos tal como estão
+│   ├── icons/          # Favicons, ícones PWA e tiles Windows
+│   ├── manifest.json   # PWA
+│   ├── robots.txt      # Indexação + localização do sitemap
+│   └── og-image.png    # Imagem de partilha 1200×630
 ├── src/
+│   ├── components/     # BaseHead.astro (metadados de <head>)
+│   ├── config/         # site.ts (empresa) e services.ts (catálogo)
+│   ├── layouts/        # BaseLayout.astro
+│   ├── lib/            # seo.ts (URLs) e schema.ts (JSON-LD)
 │   └── pages/          # Cada ficheiro .astro é uma rota
+├── astro.config.ts     # site, trailingSlash e integração do sitemap
 ├── AGENTS.md           # Instruções para agentes de IA
 ├── PRODUCTS.md         # Especificação de produto
 └── skills-lock.json    # Lock das skills instaladas
 ```
+
+---
+
+## SEO
+
+Toda a configuração parte de dois ficheiros de dados:
+[`src/config/site.ts`](./src/config/site.ts) (identidade, contactos, distritos)
+e [`src/config/services.ts`](./src/config/services.ts) (catálogo).
+
+| Peça | Onde |
+| --- | --- |
+| Título, descrição, canónico, robots, Open Graph, Twitter, ícones | `src/components/BaseHead.astro` |
+| JSON-LD (`Electrician` + `GeneralContractor`, `WebSite`, `Service`, `BreadcrumbList`, `FAQPage`) | `src/lib/schema.ts` |
+| `sitemap-index.xml` (gerado no build) | `@astrojs/sitemap` em `astro.config.ts` |
+| `robots.txt`, `manifest.json`, `browserconfig.xml` | `public/` |
+
+Uma página nova só precisa de usar o `BaseLayout` e passar o que a distingue:
+
+```astro
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { serviceSchema } from '../lib/schema';
+---
+
+<BaseLayout
+  title="Instalações Elétricas"
+  description="…"
+  schemas={[serviceSchema(servico)]}
+>
+  …
+</BaseLayout>
+```
+
+> ⚠️ `FAQPage` e `BreadcrumbList` só devem ser emitidos em páginas onde o
+> conteúdo correspondente está visível no HTML.
 
 ---
 
