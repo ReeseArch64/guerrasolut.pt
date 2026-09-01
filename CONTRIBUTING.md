@@ -1,65 +1,69 @@
-# Contribuir para a Guerra Solut
+# Contributing to Guerra Solut
 
-Este ficheiro é a **fonte única** das regras de contribuição: ramos, convenção
-de commits e validação. Quando alguma destas regras mudar, edita-se aqui e em
-mais lado nenhum — o `AGENTS.md` e o `README.md` apenas apontam para cá.
+This file is the **single source of truth** for the contribution rules:
+branches, commit convention, development and validation. When any of these
+rules change, edit them here and nowhere else — `AGENTS.md` and `README.md`
+only point back to this file.
 
-Antes de escrever código, ler o `AGENTS.md` (contexto do projecto e regras
-técnicas) e o `PRODUCTS.md` (especificação de produto).
+Before writing code, read `AGENTS.md` (project context and technical rules)
+and `PRODUCTS.md` (product specification).
 
-## Ramos
+## Branches
 
-Só existem **dois ramos**, ambos permanentes:
+There are only **two branches**, both permanent:
 
-| Ramo | Papel |
+| Branch | Role |
 | --- | --- |
-| `main` | Produção. É o que está publicado em `https://www.guerrasolut.pt`. |
-| `develop` | Integração. É onde o trabalho do dia-a-dia é commitado. |
+| `main` | Production. This is what is published at `https://www.guerrasolut.pt`. |
+| `develop` | Integration. This is where day-to-day work is committed. |
 
-**Não há ramos por funcionalidade, correcção ou tarefa** — nada de
-`feat/…`, `fix/…`, `chore/…`. O trabalho é commitado directamente em
-`develop`, em commits pequenos e coerentes, e chega a `main` por *merge* de
-`develop` quando estiver pronto a publicar.
+**There are no feature, fix or task branches** — no `feat/…`, `fix/…`,
+`chore/…`. Work is committed directly to `develop`, in small and coherent
+commits, and reaches `main` by *merging* `develop` when it is ready to ship.
 
 ```
-develop ──●──●──●──●─────────► (trabalho corrente)
+develop ──●──●──●──●─────────► (current work)
                     ╲
-main ────────────────●───────► (publicação)
+main ────────────────●───────► (release)
 ```
 
-Regras práticas:
+Practical rules:
 
-- Nunca commitar directamente em `main` — excepto uma correcção urgente em
-  produção, que tem de ser imediatamente trazida de volta a `develop`.
-- Não reescrever o histórico de `main` nem de `develop` depois de publicado
-  (`push --force` está fora de questão).
-- `main` tem de estar sempre num estado publicável: `npm run build` passa.
+- **Every modification is covered by commits.** No work is left uncommitted in
+  the working tree: files created, changed or removed go into small, coherent
+  commits, on the same day they are made. A task is only finished when
+  `git status` is clean.
+- Never commit directly to `main` — except for an urgent production fix, which
+  must be brought back to `develop` immediately.
+- Do not rewrite the history of `main` or `develop` once published
+  (`push --force` is out of the question).
+- `main` must always be in a shippable state: `npm run build` passes.
 
-## Convenção de commits
+## Commit convention
 
-As mensagens seguem os **Conventional Commits** e são validadas pelo
-commitlint (`commitlint.config.cjs`, sobre `@commitlint/config-conventional`).
+Messages follow **Conventional Commits** and are validated by commitlint
+(`commitlint.config.cjs`, on top of `@commitlint/config-conventional`).
 
 ```text
-<tipo>(<âmbito opcional>): <assunto>
+<type>(<optional scope>): <subject>
 
-<corpo opcional>
+<optional body>
 ```
 
-- **Tipos permitidos:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`,
-  `test`, `build`, `ci`, `chore`, `revert`. Obrigatório e em minúsculas.
-- **Âmbito** opcional, em minúsculas: `feat(home):`, `chore(deploy):`.
-- **Assunto** obrigatório, sem ponto final.
-- **Cabeçalho** com um máximo de 100 caracteres.
-- **Corpo** separado do cabeçalho por uma linha em branco; usar para explicar
-  o *porquê*, não o *como*.
-- **Português europeu** (pt-PT), no imperativo, na norma anterior ao acordo
-  ortográfico — «projecto», «objectivo», «actual» —, como no resto do
-  repositório.
-- **Sem co-autoria.** As mensagens não levam linhas `Co-Authored-By:` nem
-  qualquer outra atribuição a agentes ou ferramentas.
+- **Allowed types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`,
+  `test`, `build`, `ci`, `chore`, `revert`. Required and lowercase.
+- **Scope** optional, lowercase: `feat(home):`, `chore(deploy):`.
+- **Subject** required, with no trailing period.
+- **Header** limited to 100 characters.
+- **Body** separated from the header by a blank line; use it to explain the
+  *why*, not the *how*.
+- **European Portuguese** (pt-PT), in the imperative, in the spelling that
+  predates the orthographic agreement — «projecto», «objectivo», «actual» —,
+  as in the rest of the repository.
+- **No co-authorship.** Messages carry no `Co-Authored-By:` lines and no other
+  attribution to agents or tools.
 
-Exemplos:
+Examples:
 
 ```text
 feat(servicos): construir as oito páginas de serviço
@@ -67,16 +71,26 @@ fix(header): corrigir o foco do menu em teclado
 docs: registar as decisões de âmbito no PRODUCTS.md
 ```
 
-## Validação
+## Development
 
-Validar o histórico completo localmente, tal como faz a integração contínua:
+Start the development server in the background:
+
+```
+astro dev --background
+```
+
+Manage it with `astro dev stop`, `astro dev status` and `astro dev logs`.
+
+## Validation
+
+Validate the full history locally, exactly as continuous integration does:
 
 ```
 npx commitlint --from=$(git rev-list --max-parents=0 HEAD) --to=HEAD --verbose
 ```
 
-O workflow `.github/workflows/commitlint.yml` corre este mesmo comando em cada
-`push` e `pull_request`: **todo** o histórico tem de passar, não apenas os
-commits novos.
+The `.github/workflows/commitlint.yml` workflow runs this same command on every
+`push` and `pull_request`: **all** of the history must pass, not just the new
+commits.
 
-Antes de dar trabalho por terminado, `npm run build` tem de passar.
+Before calling work done, `npm run build` must pass.
