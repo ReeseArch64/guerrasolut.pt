@@ -70,30 +70,7 @@ Opção adicional no formulário de contacto: **Outro serviço**.
 
 ---
 
-## 3. Prova social e números
-
-**Decisão:** o site **não terá secção de testemunhos.** A prova social assenta
-em números, certificações, garantia por escrito e fotografias reais de obras.
-
-### Estatísticas (bloco do herói)
-
-| Valor | Legenda |
-| --- | --- |
-| `500+` | Clientes satisfeitos |
-| `12+` | Anos de experiência |
-| `1000+` | Obras concluídas |
-| `<2h` | Resposta a pedidos |
-
-Selos flutuantes na secção "Sobre": `+1000 obras concluídas` e `Desde 2012 a construir em Portugal`.
-
-> ⚠️ **A validar com o cliente:** estes números vêm do site antigo e não estão
-> verificados. Números não verificáveis não devem ir para dados estruturados.
-
-> ℹ️ O site antigo exibia um badge de **4,9 ★**. Sem testemunhos, uma
-> classificação sem origem visível não se sustenta. Só faz sentido se vier de
-> avaliações reais do Google Business Profile — ver §15.
-
-## 4. Diferenciadores ("Porquê a Guerra Solut")
+## 3. Diferenciadores ("Porquê a Guerra Solut")
 
 Cinco razões pelas quais condomínios, empresas e famílias voltam a contratar-nos.
 
@@ -118,7 +95,7 @@ Cinco razões pelas quais condomínios, empresas e famílias voltam a contratar-
 
 ---
 
-## 5. Processo ("Como trabalhamos")
+## 4. Processo ("Como trabalhamos")
 
 Um processo simples e transparente, para saber sempre em que ponto está o seu projecto.
 
@@ -131,7 +108,7 @@ Um processo simples e transparente, para saber sempre em que ponto está o seu p
 
 ---
 
-## 6. FAQ
+## 5. FAQ
 
 Fonte directa para o bloco `FAQPage` de dados estruturados.
 
@@ -157,7 +134,7 @@ Cartão de apoio: **"Ficou alguma dúvida?"** — Explique-nos o caso e damos-lh
 
 ---
 
-## 7. Copy das secções
+## 6. Copy das secções
 
 ### Herói (`#topo`)
 
@@ -218,7 +195,7 @@ Cartão de apoio: **"Ficou alguma dúvida?"** — Explique-nos o caso e damos-lh
 
 ---
 
-## 8. Formulário de contacto
+## 7. Formulário de contacto
 
 Modal ("drawer" em mobile, diálogo em desktop) que **não submete para servidor** —
 compõe uma mensagem e abre o WhatsApp.
@@ -252,11 +229,11 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 
 > 💡 **Decisão pendente:** manter o WhatsApp como único canal (zero backend, mas
 > zero lead capturada em CRM) ou acrescentar submissão real por email/API.
-> Ver §12.
+> Ver §11.
 
 ---
 
-## 9. Navegação e CTAs persistentes
+## 8. Navegação e CTAs persistentes
 
 **Navegação principal** (`aria-label="Navegação principal"`):
 
@@ -278,7 +255,7 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 
 ---
 
-## 10. Design system
+## 9. Design system
 
 > **Referência, não obrigação.** Os valores abaixo são os do site antigo,
 > registados para preservar a identidade cromática da marca (vermelho + âmbar
@@ -325,7 +302,7 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 
 ---
 
-## 11. Estado actual — diagnóstico
+## 10. Estado actual — diagnóstico
 
 O que motiva a reconstrução.
 
@@ -363,7 +340,7 @@ decisões já validadas que não vale a pena repensar do zero.
 
 ---
 
-## 12. Objectivos da reconstrução
+## 11. Objectivos da reconstrução
 
 ### Stack
 
@@ -439,7 +416,7 @@ tratadas como *doorway pages* pela Google.
 
 ---
 
-## 13. Palavras-chave alvo
+## 12. Palavras-chave alvo
 
 **Primárias (serviço âncora):**
 `eletricista`, `instalações elétricas`, `quadros elétricos`, `certificação elétrica`, `avarias elétricas`
@@ -455,7 +432,7 @@ tratadas como *doorway pages* pela Google.
 
 ---
 
-## 14. Assets
+## 13. Assets
 
 ### Existentes
 
@@ -478,12 +455,11 @@ tratadas como *doorway pages* pela Google.
 - [ ] NIF e morada de sede (obrigatório para `LocalBusiness` e para cumprimento legal em PT)
 - [ ] Links de redes sociais (`sameAs`) — Facebook, Instagram, LinkedIn
 - [ ] URL do Google Business Profile
-- [ ] Confirmação dos números (500+ clientes, 1000+ obras)
 - [ ] Imagem OG dedicada (1200×630) diferente do logótipo
 
 ---
 
-## 15. Questões em aberto
+## 14. Questões em aberto
 
 1. **Morada e NIF** — sem morada pública não há SEO local a sério nem ficha de empresa completa. É deliberado ou uma omissão?
 2. **Formulário** — manter só WhatsApp ou acrescentar submissão real (email/CRM) para capturar leads fora do horário?
@@ -495,10 +471,10 @@ tratadas como *doorway pages* pela Google.
 
 ---
 
-## 16. Decisões tomadas
+## 15. Decisões tomadas
 
 | # | Decisão | Data |
 | --- | --- | --- |
 | 1 | O site antigo é **fonte de dados da empresa apenas** — não é base de design nem de estrutura. Construção de raiz. | 2026-09-01 |
-| 2 | **Sem secção de testemunhos.** Prova social por números, certificações, garantia e fotografias reais. Sem `Review`/`AggregateRating`. | 2026-09-01 |
+| 2 | **Sem secção de testemunhos** e **sem bloco de estatísticas** (500+ clientes, 1000+ obras, 4,9★). Nenhum número não verificável entra no site. Prova social por certificações, garantia por escrito e fotografias reais de obras. Sem `Review`/`AggregateRating`. | 2026-09-01 |
 | 3 | **Copyright do rodapé mantém-se ReeseArch64** (autoria do desenvolvimento), com ano dinâmico. | 2026-09-01 |
