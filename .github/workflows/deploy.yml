@@ -1,0 +1,46 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Duas publicações em simultâneo pisavam-se uma à outra na Cloudflare. Só
+# interessa a última: as anteriores são canceladas ainda a meio.
+concurrency:
+  group: deploy-producao
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Publicar na Cloudflare Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: producao
+      url: https://www.guerrasolut.pt
+
+    steps:
+      - name: Obter o repositório
+        uses: actions/checkout@v6
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Instalar as dependências
+        run: npm ci
+
+      - name: Construir o site
+        run: npm run build
+
+      # A pasta publicada e o nome do projecto vêm do `wrangler.jsonc`.
+      - name: Publicar
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler pages deploy --branch main
