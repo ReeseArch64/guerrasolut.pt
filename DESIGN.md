@@ -32,12 +32,15 @@ colors:
   green-whatsapp: "#25d366"
   amber-600: "#b45309"
   amber-400: "#fbbf24"
+fonts:
+  display: Archivo
+  body: Inter
 ---
 
-<!-- SEED PARCIAL: a cor está resolvida e implementada em `src/styles/tokens.css`.
-     Tipografia, layout, profundidade, formas e componentes ainda não existem —
-     as secções correspondentes estão deliberadamente ausentes. Voltar a correr
-     `$impeccable document` quando houver componentes construídos. -->
+<!-- Cor, tipografia, espaço, forma e movimento estão resolvidos e
+     implementados em `src/styles/tokens.css` e `src/styles/base.css`. O
+     catálogo de componentes tem só o cabeçalho; cresce à medida que as
+     páginas forem construídas. -->
 
 # Design System: Guerra Solut
 
@@ -195,10 +198,118 @@ O único par que se aproxima do limite é **texto branco sobre `red-500`**
 (4,56:1). Passa AA, mas não tem folga: nunca reduzir esse texto abaixo de 16px
 regular ou 14px semibold, e nunca aplicar-lhe opacidade.
 
+## Typography
+
+Duas famílias, ambas servidas do próprio domínio pela configuração `fonts` do
+Astro (`--gs-font-display` e `--gs-font-body`), sem uma única ligação ao Google
+Fonts em tempo de execução.
+
+- **Archivo** (600 / 700 / 800) — a voz de display. É uma grotesca americana de
+  largura estreita e terminações rectas, do mesmo mundo das chapas de
+  identificação e da sinalética industrial. Carrega o wordmark, os títulos, os
+  nomes de serviço, os números e as etiquetas em maiúsculas.
+- **Inter** (400 / 500 / 600) — o corpo. Neutra, com altura-x alta, feita para
+  ecrã pequeno em condições más. Não compete com o Archivo; suporta-o.
+
+A divisão é de função, não de tamanho: **o que nomeia é Archivo, o que explica é
+Inter.** Um parágrafo em Archivo lê-se como um cartaz; um nome de serviço em
+Inter perde a autoridade.
+
+| Token | Valor | Uso |
+| --- | --- | --- |
+| `--gs-font-title` | Archivo | Títulos, wordmark, botões, números, etiquetas |
+| `--gs-font-ui` | Inter | Texto corrente, descrições, campos |
+| `--gs-size-xs` | 12px | Etiquetas em maiúsculas, metadados |
+| `--gs-size-sm` | 13px | Ligações secundárias |
+| `--gs-size-base` | 15px | Interface: ligações de navegação, campos |
+| `--gs-size-md` | 16px | Texto corrente e botões |
+| `--gs-size-lg` | 18px | Linhas de menu em ecrã pequeno |
+| `--gs-track-tight` | −0,02em | Títulos e linhas grandes |
+| `--gs-track-label` | +0,08em | O único sítio onde o espacejamento abre: maiúsculas |
+
+Os números — telefone, medidas, preços — levam sempre
+`font-variant-numeric: tabular-nums`. Um telefone que muda de largura conforme
+os dígitos é um telefone que parece mal composto.
+
+## Space & Layout
+
+Escala de 4px (`--gs-space-1` a `--gs-space-12`). A largura útil é
+`--gs-page-max` (1320px) com goteira fluida `--gs-page-pad`
+(`clamp(1rem, 4vw, 2.5rem)`), aplicada pela classe `.gs-shell`. Todas as
+secções do site partilham esta goteira: é o que alinha o logótipo, os títulos e
+o painel suspenso na mesma vertical.
+
+A calha do topo mede `--gs-header-h` — 60px em ecrã pequeno, 72px a partir de
+1024px. Qualquer alvo de toque tem no mínimo `--gs-tap` (44px).
+
+## Shape & Depth
+
+**Os controlos são rectos, os painéis é que são macios.** Botões, campos e
+separadores levam `--gs-radius-sm` (4px) ou `--gs-radius-md` (6px) — são
+interruptores de painel, não pastilhas. Só as superfícies que flutuam sobre a
+página (menus, modais, cartões) chegam a `--gs-radius-lg` (12px). Não há
+pastilhas de raio total em lado nenhum.
+
+A profundidade tem duas expressões e nunca se acumulam por decoração:
+
+- **Traço.** A divisória de 1px (`--gs-border`) é a gramática por defeito. É o
+  que separa zonas dentro de uma barra, linhas dentro de uma lista, e o
+  cabeçalho do conteúdo.
+- **Sombra.** `--gs-shadow-panel` (deslocamento + desfoque, nunca um halo) para
+  o que se ergue sobre a página; `--gs-shadow-rail` para a sombra que a calha
+  ganha quando a página descola do topo.
+
+## Motion
+
+Um só movimento autoral por superfície. Tudo sai de um estado já visível com
+`--gs-ease` (`cubic-bezier(.16, 1, .3, 1)`) em `--gs-dur` (200 ms) ou
+`--gs-dur-fast` (120 ms).
+
+No cabeçalho, esse movimento é **o fio**: o segmento sob cada ligação cresce em
+`scaleX` a partir do centro. Cinzento quando o rato passa — uma antecipação —,
+vermelho e já aberto na página onde estamos. Nada mais na barra se anima por
+gosto; a rotação da marca e do chevron são consequências do mesmo gesto.
+
+Todas as transições colapsam para 1ms sob
+`@media (prefers-reduced-motion: reduce)`, e a sombra de scroll só existe onde
+há `animation-timeline: scroll()` **e** o utilizador não pediu menos movimento.
+
+## Components
+
+### Cabeçalho — «a calha» (`src/components/SiteHeader.astro`)
+
+Uma barra fixa que se lê como a calha de um quadro elétrico: chapa neutra,
+divisórias a fio, e a corrente vermelha a marcar exactamente onde estamos.
+
+- **Zonas, da esquerda para a direita:** marca, navegação, ferramentas
+  (pesquisa · telefone · acção). Uma divisória de 1px separa as ferramentas da
+  navegação — a mesma divisória que separa circuitos num quadro.
+- **O fio.** A ligação activa é marcada por 2px de `--gs-brand` assentes na
+  borda inferior da barra, à largura do item. É a única marcação de estado da
+  navegação; não há fundos, pastilhas nem negritos coloridos.
+- **Dois vermelhos, dois papéis.** `--gs-brand` preenche o botão `Falar
+  connosco` e o fio; `--gs-accent` escreve o «SOLUT» do wordmark, o ícone do
+  telefone e a ligação `Ver todos os serviços`. Área vermelha total abaixo de
+  5% da barra.
+- **Zero JavaScript.** O painel de serviços abre por `:hover` e `:focus-within`
+  (com `display` a transitar por `allow-discrete` e `@starting-style`); a folha
+  em ecrã pequeno é um `<details>`. Ambos funcionam com o teclado e com o JS
+  desligado.
+- **Três bandas.** Abaixo de 1024px: marca, botão de telefone e menu. Entre
+  1024px e 1280px: navegação completa, com a pesquisa reduzida a um botão e o
+  telefone sem horário. Acima de 1280px: a barra inteira.
+
+O cabeçalho é o gabarito dos restantes componentes: uma superfície é delimitada
+por um traço, um estado é marcado por um segmento vermelho, e o texto que nomeia
+é Archivo.
+
 ## Do's and Don'ts
 
 ### Do:
 
+- **Do** marcar estado com o fio vermelho de 2px, não com fundos coloridos.
+- **Do** compor números com `tabular-nums` — telefones, medidas, preços.
+- **Do** nomear em Archivo e explicar em Inter.
 - **Do** usar `--gs-brand` para preencher e `--gs-accent` para escrever. É a
   única distinção entre os dois vermelhos e a razão por que o sistema passa AA.
 - **Do** manter `red-500` igual nos dois temas em qualquer preenchimento. A
@@ -215,6 +326,11 @@ regular ou 14px semibold, e nunca aplicar-lhe opacidade.
 
 ### Don't:
 
+- **Don't** arredondar controlos até à pastilha. O raio total pertence a
+  distintivos minúsculos, não a botões nem a campos.
+- **Don't** somar traço e sombra larga na mesma superfície só para a destacar:
+  a elevação declara-se uma vez.
+- **Don't** escrever parágrafos em Archivo nem nomes de serviço em Inter.
 - **Don't** introduzir uma quarta cor de marca. O âmbar já foi removido uma vez;
   laranja, azul e verde-de-sucesso são a mesma tentação com outro nome.
 - **Don't** temperar os neutros. Cinzento com matiz vermelha anula o contraste

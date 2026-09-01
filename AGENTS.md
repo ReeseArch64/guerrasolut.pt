@@ -26,10 +26,13 @@ WhatsApp, formulário).
 ## Âmbito actual
 
 A base técnica de SEO está montada (layout base, metadados, JSON-LD,
-`manifest.json`, `robots.txt`, `sitemap.xml`) e os tokens de cor existem. **O
-design e o conteúdo das páginas ainda não estão implementados.**
+`manifest.json`, `robots.txt`, `sitemap.xml`), o sistema de design está
+resolvido e documentado (cor, tipografia, espaço, forma, movimento) e o
+**cabeçalho global** está construído. **O conteúdo das páginas ainda não está
+implementado.**
 
-Próximo passo: header/rodapé e as secções da home (`PRODUCTS.md` §6).
+Próximo passo: a página `/pesquisa/` — o formulário do cabeçalho já aponta para
+lá —, o rodapé e as secções da home (`PRODUCTS.md` §6).
 
 O site só está feito quando as rotas de `PRODUCTS.md` §11 existirem com o copy
 da §6 e as metas técnicas da §11 forem cumpridas:
@@ -51,13 +54,18 @@ Sem framework de UI e sem Tailwind — CSS próprio sobre os tokens de
 
 ```text
 src/
-├── components/   # BaseHead.astro (metadados de <head>)
-├── config/       # site.ts (empresa, contactos, distritos) e services.ts (catálogo)
+├── assets/       # imagens processadas por `astro:assets`
+├── components/   # BaseHead.astro, SiteHeader.astro, Icon.astro
+├── config/       # site.ts (empresa), services.ts (catálogo), nav.ts (navegação)
 ├── layouts/      # BaseLayout.astro
 ├── lib/          # seo.ts (URLs) e schema.ts (JSON-LD)
 ├── pages/        # cada ficheiro .astro é uma rota
-└── styles/       # tokens.css
+└── styles/       # tokens.css (paleta e forma) e base.css (aplicação global)
 ```
+
+As duas famílias tipográficas (Archivo e Inter) são self-hosted pela
+configuração `fonts` do `astro.config.ts` — nenhuma ligação externa em tempo
+de execução.
 
 ## Regras do repositório
 
