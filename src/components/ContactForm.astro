@@ -1,0 +1,288 @@
+---
+/**
+ * Formulário de contacto (`PRODUCTS.md` §7).
+ *
+ * Não submete para servidor: compõe a mensagem e abre o WhatsApp. É uma das
+ * ilhas de interactividade autorizadas — e mesmo assim degrada, porque sem
+ * JavaScript o `action` abre a conversa do WhatsApp na mesma, apenas sem a
+ * mensagem preenchida.
+ *
+ * Três campos, três linhas: um formulário de obra pede-se em pé, no
+ * telemóvel, e cada campo a mais é um pedido a menos.
+ */
+import Icon from './Icon.astro';
+import { SERVICES } from '../config/services';
+import { CONTACT } from '../config/site';
+import { whatsappUrl } from '../lib/whatsapp';
+
+interface Props {
+  /** Nome do serviço pré-seleccionado (páginas de serviço). */
+  preselect?: string;
+  /** `id` do título que dá nome à região do formulário. */
+  labelledby?: string;
+}
+
+const { preselect, labelledby } = Astro.props;
+
+const OPCOES = [...SERVICES.map((s) => s.name), 'Outro serviço'];
+---
+
+<form
+  class="form"
+  id="gs-formulario"
+  action={whatsappUrl()}
+  method="get"
+  target="_blank"
+  data-whatsapp={CONTACT.whatsapp}
+  aria-labelledby={labelledby}
+>
+  <div class="campo">
+    <label class="campo__label" for="gs-nome">Nome</label>
+    <input
+      class="campo__controlo"
+      id="gs-nome"
+      name="nome"
+      type="text"
+      autocomplete="name"
+      placeholder="Ex.: João Silva"
+      required
+      maxlength="80"
+    />
+    <p class="campo__erro">
+      <Icon name="aviso" size={16} />
+      Escreva o seu nome para sabermos com quem falamos.
+    </p>
+  </div>
+
+  <div class="campo">
+    <label class="campo__label" for="gs-servico">Serviço</label>
+    <div class="campo__poco">
+      <select class="campo__controlo" id="gs-servico" name="servico" required>
+        <option value="" disabled selected={!preselect}>Escolha o serviço</option>
+        {
+          OPCOES.map((opcao) => (
+            <option value={opcao} selected={preselect === opcao}>
+              {opcao}
+            </option>
+          ))
+        }
+      </select>
+      <Icon name="seta-baixo" size={16} class="campo__chevron" />
+    </div>
+    <p class="campo__erro">
+      <Icon name="aviso" size={16} />
+      Escolha o serviço mais próximo do que precisa — depois afinamos.
+    </p>
+  </div>
+
+  <div class="campo">
+    <label class="campo__label" for="gs-detalhes">O que precisa de fazer</label>
+    <textarea
+      class="campo__controlo campo__controlo--area"
+      id="gs-detalhes"
+      name="detalhes"
+      rows="3"
+      placeholder="Ex.: Remodelação de casa de banho num T2 em Lisboa, cerca de 6 m²."
+      required
+      maxlength="1200"></textarea>
+    <p class="campo__erro">
+      <Icon name="aviso" size={16} />
+      Descreva o trabalho em duas linhas — chega para percebermos.
+    </p>
+  </div>
+
+  <button class="gs-btn gs-btn--whatsapp form__enviar" type="submit">
+    <Icon name="whatsapp" size={19} />
+    Enviar por WhatsApp
+  </button>
+
+  <p class="form__nota">
+    Abrimos o WhatsApp com a mensagem já preenchida. Depois de perceber o
+    trabalho, agendamos a visita técnica — o orçamento é apresentado nessa
+    fase, sem qualquer custo.
+  </p>
+
+  <noscript>
+    <p class="form__noscript">
+      <Icon name="aviso" size={16} />
+      Com o JavaScript desligado, o botão abre a conversa de WhatsApp sem a
+      mensagem preenchida. Também pode ligar para{' '}
+      <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a> ou escrever
+      para <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+    </p>
+  </noscript>
+</form>
+
+<script>
+  // A única razão para haver JavaScript nesta página: compor a mensagem.
+  // `wa.me` só aceita um parâmetro `text`, e um formulário GET não o
+  // consegue montar a partir de três campos.
+  const form = document.getElementById('gs-formulario') as HTMLFormElement | null;
+
+  form?.addEventListener('submit', (evento) => {
+    if (!form.reportValidity()) {
+      evento.preventDefault();
+      return;
+    }
+
+    evento.preventDefault();
+
+    const dados = new FormData(form);
+    const nome = String(dados.get('nome') ?? '').trim();
+    const servico = String(dados.get('servico') ?? '').trim() || 'Outro serviço';
+    const detalhes = String(dados.get('detalhes') ?? '').trim();
+
+    const mensagem = [
+      `Olá Guerra Solut! O meu nome é ${nome}.`,
+      '',
+      `Serviço pretendido: ${servico}`,
+      '',
+      detalhes,
+      '',
+      'Gostaria de agendar uma visita técnica para avaliarem o trabalho.',
+    ].join('\n');
+
+    const base = form.dataset.whatsapp ?? 'https://wa.me/351964148843';
+    window.open(`${base}?text=${encodeURIComponent(mensagem)}`, '_blank', 'noopener');
+  });
+</script>
+
+<style>
+  .form {
+    display: grid;
+    gap: var(--gs-space-5);
+  }
+
+  .campo {
+    display: grid;
+    gap: var(--gs-space-2);
+  }
+
+  .campo__label {
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-text-muted);
+  }
+
+  /* Campos como poços de painel: rectos, fundos, com traço forte. */
+  .campo__controlo {
+    inline-size: 100%;
+    min-block-size: var(--gs-tap);
+    padding: var(--gs-space-3) var(--gs-space-4);
+    border: 1px solid var(--gs-border-strong);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-surface-sunken);
+    color: var(--gs-text);
+    font-family: var(--gs-font-ui);
+    font-size: var(--gs-size-md);
+    line-height: var(--gs-leading-snug);
+    transition:
+      border-color var(--gs-dur-fast) var(--gs-ease),
+      background var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .campo__controlo--area {
+    resize: vertical;
+    min-block-size: 6.5rem;
+  }
+
+  .campo__controlo::placeholder {
+    color: var(--gs-text-subtle);
+  }
+
+  .campo__controlo:hover {
+    border-color: var(--gs-text-subtle);
+  }
+
+  .campo__controlo:focus-visible {
+    border-color: var(--gs-brand);
+    background: var(--gs-surface);
+  }
+
+  /* O `select` desenha-se por inteiro: a seta do sistema não pertence a
+     nenhum sistema de design. */
+  .campo__poco {
+    position: relative;
+    display: grid;
+  }
+
+  .campo__poco select {
+    appearance: none;
+    padding-inline-end: var(--gs-space-10);
+    cursor: pointer;
+  }
+
+  .campo__poco :global(.campo__chevron) {
+    position: absolute;
+    inset-inline-end: var(--gs-space-4);
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    pointer-events: none;
+    color: var(--gs-text-subtle);
+  }
+
+  /* Um erro nunca se distingue só por cor: leva ícone e frase. */
+  .campo__erro {
+    display: none;
+    align-items: center;
+    gap: var(--gs-space-2);
+    margin: 0;
+    font-size: var(--gs-size-sm);
+    color: var(--gs-danger);
+  }
+
+  .campo:has(:user-invalid) .campo__erro {
+    display: flex;
+  }
+
+  .campo:has(:user-invalid) .campo__controlo {
+    border-color: var(--gs-danger);
+    background: var(--gs-danger-wash);
+  }
+
+  .form__enviar {
+    justify-self: start;
+    margin-block-start: var(--gs-space-2);
+  }
+
+  @media (max-width: 29.99rem) {
+    .form__enviar {
+      justify-self: stretch;
+    }
+  }
+
+  .form__nota {
+    margin: 0;
+    max-inline-size: 58ch;
+    font-size: var(--gs-size-sm);
+    color: var(--gs-text-subtle);
+  }
+
+  .form__noscript {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gs-space-2);
+    margin: 0;
+    padding: var(--gs-space-3) var(--gs-space-4);
+    border: 1px solid var(--gs-wash-edge);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-wash);
+    font-size: var(--gs-size-sm);
+    color: var(--gs-text-muted);
+  }
+
+  .form__noscript :global(svg) {
+    flex: none;
+    margin-block-start: 0.15rem;
+    color: var(--gs-wash-text);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .campo__controlo {
+      transition-duration: 1ms;
+    }
+  }
+</style>

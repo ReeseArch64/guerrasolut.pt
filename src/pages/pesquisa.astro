@@ -1,0 +1,493 @@
+---
+/**
+ * Pesquisa (`/pesquisa/`) — destino do formulário do cabeçalho (`SEARCH`).
+ *
+ * O índice inteiro do site vai no HTML, já legível e navegável: sem
+ * JavaScript, esta página é o directório completo de tudo o que existe. Com
+ * JavaScript — cerca de uma dúzia de linhas — os mesmos itens filtram-se ao
+ * escrever, sem pedir nada ao servidor.
+ *
+ * `noindex`: uma página de resultados não pertence ao índice da Google, mas
+ * as ligações que dá devem ser seguidas.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import Icon from '../components/Icon.astro';
+import { SERVICES } from '../config/services';
+import { FAQ } from '../config/faq';
+import { DISTRICTS } from '../config/site';
+import { SEARCH } from '../config/nav';
+
+interface Entrada {
+  grupo: 'Serviços' | 'Páginas' | 'Perguntas';
+  titulo: string;
+  resumo: string;
+  href: string;
+  /** Palavras extra que devem encontrar esta entrada. */
+  termos: string[];
+}
+
+const entradas: Entrada[] = [
+  ...SERVICES.map<Entrada>((servico) => ({
+    grupo: 'Serviços',
+    titulo: servico.name,
+    resumo: servico.description,
+    href: `/servicos/${servico.slug}/`,
+    termos: [...servico.tags, servico.slug.replace(/-/g, ' ')],
+  })),
+
+  {
+    grupo: 'Páginas',
+    titulo: 'Início',
+    resumo:
+      'A solução certa para a sua obra: eletricidade, construção civil e remodelação na mesma equipa.',
+    href: '/',
+    termos: ['home', 'página inicial', 'guerra solut'],
+  },
+  {
+    grupo: 'Páginas',
+    titulo: 'Todos os serviços',
+    resumo:
+      'Os oito serviços da Guerra Solut, com o que fazemos em cada um e as respectivas especialidades.',
+    href: '/servicos/',
+    termos: ['catálogo', 'especialidades', 'o que fazemos'],
+  },
+  {
+    grupo: 'Páginas',
+    titulo: 'Sobre nós',
+    resumo:
+      'A empresa, a equipa própria por especialidade, as certificações, o seguro e o âmbito geográfico.',
+    href: '/sobre/',
+    termos: ['empresa', 'equipa', 'certificações', 'seguro', 'história'],
+  },
+  {
+    grupo: 'Páginas',
+    titulo: 'Contactos',
+    resumo:
+      'Telefone, WhatsApp, e-mail, horário e formulário para descrever o seu projecto.',
+    href: '/contactos/',
+    termos: ['telefone', 'whatsapp', 'email', 'horário', 'orçamento', 'falar'],
+  },
+  {
+    grupo: 'Páginas',
+    titulo: 'Perguntas frequentes',
+    resumo:
+      'Orçamentos, prazos de resposta, zonas cobertas, garantias, facturação e contratos com condomínios.',
+    href: '/faq/',
+    termos: ['faq', 'dúvidas', 'perguntas'],
+  },
+  {
+    grupo: 'Páginas',
+    titulo: 'Política de privacidade',
+    resumo:
+      'Que dados tratamos, para quê, durante quanto tempo e quais são os seus direitos.',
+    href: '/politica-de-privacidade/',
+    termos: ['rgpd', 'dados pessoais', 'cookies', 'privacidade'],
+  },
+  {
+    grupo: 'Páginas',
+    titulo: 'Termos e condições',
+    resumo:
+      'Condições de utilização do site, orçamentos, execução, garantia e resolução de litígios.',
+    href: '/termos/',
+    termos: ['condições', 'legal', 'garantia', 'reclamações'],
+  },
+
+  ...FAQ.map<Entrada>((item) => ({
+    grupo: 'Perguntas',
+    titulo: item.pergunta,
+    resumo: item.resposta,
+    href: `/faq/#${item.id}`,
+    termos: ['faq', 'dúvida'],
+  })),
+];
+
+/** Sem acentos e em minúsculas: «eletricas» tem de encontrar «Elétricas». */
+const normalizar = (texto: string) =>
+  texto
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase();
+
+const indice = entradas.map((entrada) => ({
+  ...entrada,
+  chave: normalizar(
+    [entrada.titulo, entrada.resumo, entrada.grupo, ...entrada.termos].join(' '),
+  ),
+}));
+
+const grupos = ['Serviços', 'Páginas', 'Perguntas'] as const;
+---
+
+<BaseLayout
+  title="Pesquisar no site"
+  description="Encontre um serviço, uma página ou uma resposta no site da Guerra Solut."
+  noindex
+>
+  <main id="conteudo">
+    <PageHeader
+      title="Pesquisar no site"
+      lead="Escreva o que procura — um serviço, uma zona, uma dúvida. A lista completa está aqui em baixo, e filtra-se à medida que escreve."
+      crumbs={[{ name: 'Pesquisa' }]}
+      meta={`${indice.length} resultados`}
+    >
+      <form class="busca" role="search" action={SEARCH.action} method="get">
+        <label class="gs-sr-only" for="gs-pesquisa">Procurar no site</label>
+        <Icon name="pesquisa" size={20} class="busca__icon" />
+        <input
+          class="busca__input"
+          id="gs-pesquisa"
+          name={SEARCH.param}
+          type="search"
+          placeholder="Ex.: quadro elétrico, casa de banho, garantia…"
+          autocomplete="off"
+          enterkeyhint="search"
+          aria-describedby="gs-pesquisa-estado"
+        />
+        <button class="busca__enviar" type="submit">Procurar</button>
+      </form>
+
+      <p class="estado" id="gs-pesquisa-estado" role="status">
+        A mostrar tudo o que existe no site.
+      </p>
+    </PageHeader>
+
+    <section class="resultados" aria-label="Resultados">
+      <div class="gs-shell">
+        {
+          grupos.map((grupo) => (
+            <div class="grupo" data-grupo={grupo}>
+              <h2 class="grupo__titulo">{grupo}</h2>
+              <ul class="grupo__list">
+                {indice
+                  .filter((entrada) => entrada.grupo === grupo)
+                  .map((entrada) => (
+                    <li class="achado" data-chave={entrada.chave}>
+                      <a class="achado__link" href={entrada.href}>
+                        <span class="achado__titulo">{entrada.titulo}</span>
+                        <Icon name="seta-direita" size={16} />
+                      </a>
+                      <p class="achado__resumo">{entrada.resumo}</p>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          ))
+        }
+
+        <div class="vazio" id="gs-vazio" hidden>
+          <p class="vazio__titulo">Nada encontrado.</p>
+          <p class="vazio__texto">
+            Pode não termos usado a mesma palavra que procurou. Diga-nos o que
+            precisa de fazer — respondemos em menos de 2 horas — ou percorra a
+            lista completa de serviços.
+          </p>
+          <div class="vazio__acoes">
+            <a class="gs-btn gs-btn--cheia" href="/contactos/">
+              Descrever o meu projecto
+            </a>
+            <a class="gs-btn gs-btn--traco" href="/servicos/">
+              Ver todos os serviços
+              <Icon name="seta-direita" size={18} />
+            </a>
+          </div>
+        </div>
+
+        <p class="cobertura">
+          <Icon name="local" size={18} class="cobertura__icon" />
+          <span>
+            Trabalhamos em todo o Portugal continental, com presença regular
+            em {DISTRICTS.join(', ')}.
+          </span>
+        </p>
+      </div>
+    </section>
+
+    <CtaFinal
+      title="Não encontrou o que procurava?"
+      text="Descreva-nos o trabalho em duas linhas. Respondemos em menos de 2 horas e dizemos-lhe se é connosco — mesmo quando não é."
+    />
+  </main>
+</BaseLayout>
+
+<script>
+  // Toda a informação já está no HTML; isto só a filtra. Sem pedidos ao
+  // servidor, sem índice remoto, sem biblioteca.
+  const campo = document.getElementById('gs-pesquisa') as HTMLInputElement | null;
+  const estado = document.getElementById('gs-pesquisa-estado');
+  const vazio = document.getElementById('gs-vazio');
+  const achados = Array.from(
+    document.querySelectorAll<HTMLElement>('.achado'),
+  );
+  const grupos = Array.from(document.querySelectorAll<HTMLElement>('.grupo'));
+
+  if (campo && estado && vazio) {
+    const normalizar = (texto: string) =>
+      texto
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .toLowerCase();
+
+    const filtrar = (bruto: string) => {
+      const termos = normalizar(bruto).split(/\s+/).filter(Boolean);
+      let visiveis = 0;
+
+      for (const achado of achados) {
+        const chave = achado.dataset.chave ?? '';
+        const corresponde = termos.every((termo) => chave.includes(termo));
+        achado.hidden = !corresponde;
+        if (corresponde) visiveis += 1;
+      }
+
+      // Um grupo sem resultados desaparece com o seu título.
+      for (const grupo of grupos) {
+        grupo.hidden = !grupo.querySelector<HTMLElement>('.achado:not([hidden])');
+      }
+
+      vazio.hidden = visiveis > 0;
+
+      if (!termos.length) {
+        estado.textContent = 'A mostrar tudo o que existe no site.';
+      } else if (visiveis === 0) {
+        estado.textContent = `Nada encontrado para «${bruto.trim()}».`;
+      } else {
+        estado.textContent = `${visiveis} ${visiveis === 1 ? 'resultado' : 'resultados'} para «${bruto.trim()}».`;
+      }
+    };
+
+    // O `?q=` do cabeçalho chega por URL; a partir daí é ao escrever.
+    const inicial = new URLSearchParams(window.location.search).get('q') ?? '';
+    if (inicial) {
+      campo.value = inicial;
+      filtrar(inicial);
+    }
+
+    campo.addEventListener('input', () => {
+      filtrar(campo.value);
+      const url = new URL(window.location.href);
+      if (campo.value.trim()) url.searchParams.set('q', campo.value.trim());
+      else url.searchParams.delete('q');
+      window.history.replaceState(null, '', url);
+    });
+
+    // Com JavaScript activo o filtro já correu: recarregar não acrescenta nada.
+    campo.form?.addEventListener('submit', (evento) => evento.preventDefault());
+  }
+</script>
+
+<style>
+  /* ── O campo ─────────────────────────────────────────────────────────── */
+
+  .busca {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-3);
+    margin-block-start: var(--gs-space-8);
+    max-inline-size: 44rem;
+    padding-inline: var(--gs-space-4);
+    border: 1px solid var(--gs-border-strong);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-surface-sunken);
+    transition: border-color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .busca:focus-within {
+    border-color: var(--gs-brand);
+    background: var(--gs-surface);
+  }
+
+  .busca :global(.busca__icon) {
+    flex: none;
+    color: var(--gs-text-subtle);
+  }
+
+  .busca:focus-within :global(.busca__icon) {
+    color: var(--gs-accent);
+  }
+
+  .busca__input {
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: 3.25rem;
+    border: 0;
+    background: none;
+    font-size: var(--gs-size-md);
+    color: var(--gs-text);
+  }
+
+  .busca__input::placeholder {
+    color: var(--gs-text-subtle);
+  }
+
+  .busca__input:focus-visible {
+    outline: none;
+  }
+
+  /* O `x` do `type=search` no WebKit não segue nenhuma paleta; fora. */
+  .busca__input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  .busca__enviar {
+    flex: none;
+    min-block-size: var(--gs-tap);
+    padding-inline: var(--gs-space-5);
+    margin-inline-end: calc(var(--gs-space-2) * -1);
+    border: 0;
+    border-radius: var(--gs-radius-sm);
+    background: var(--gs-brand);
+    color: var(--gs-on-brand);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-base);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .busca__enviar:hover {
+    background: var(--gs-brand-hover);
+  }
+
+  @media (max-width: 34.99rem) {
+    .busca__enviar {
+      padding-inline: var(--gs-space-4);
+    }
+  }
+
+  .estado {
+    margin: var(--gs-space-3) 0 0;
+    font-size: var(--gs-size-sm);
+    color: var(--gs-text-subtle);
+  }
+
+  /* ── Resultados ──────────────────────────────────────────────────────── */
+
+  .resultados {
+    padding-block-end: var(--gs-section-y);
+  }
+
+  .grupo + .grupo {
+    margin-block-start: var(--gs-space-10);
+  }
+
+  .grupo__titulo {
+    margin: 0 0 var(--gs-space-4);
+    padding-block-end: var(--gs-space-3);
+    border-block-end: 1px solid var(--gs-border);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-text-subtle);
+  }
+
+  .grupo__list {
+    display: grid;
+    gap: var(--gs-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .achado {
+    padding-block: var(--gs-space-4);
+    border-block-end: 1px solid var(--gs-border);
+  }
+
+  .achado__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-lg);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-tight);
+    color: var(--gs-text);
+    text-decoration: none;
+  }
+
+  .achado__link :global(svg) {
+    color: var(--gs-text-subtle);
+    transition: translate var(--gs-dur) var(--gs-ease);
+  }
+
+  .achado__link:hover {
+    color: var(--gs-accent);
+  }
+
+  .achado__link:hover :global(svg) {
+    color: var(--gs-accent);
+    translate: 0.2rem 0;
+  }
+
+  .achado__resumo {
+    margin: var(--gs-space-1) 0 0;
+    max-inline-size: 72ch;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  /* ── Vazio ───────────────────────────────────────────────────────────── */
+
+  .vazio {
+    padding: var(--gs-space-8) 0;
+    max-inline-size: 52ch;
+  }
+
+  .vazio__titulo {
+    margin: 0 0 var(--gs-space-2);
+    font-family: var(--gs-font-title);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: var(--gs-track-tight);
+  }
+
+  .vazio__texto {
+    margin: 0 0 var(--gs-space-6);
+    color: var(--gs-text-muted);
+  }
+
+  .vazio__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gs-space-3);
+  }
+
+  @media (max-width: 29.99rem) {
+    .vazio__acoes {
+      display: grid;
+    }
+  }
+
+  /* ── Nota de cobertura ───────────────────────────────────────────────── */
+
+  .cobertura {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gs-space-3);
+    margin: var(--gs-space-10) 0 0;
+    padding: var(--gs-space-4) var(--gs-space-5);
+    border: 1px solid var(--gs-border);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-bg-subtle);
+    max-inline-size: 62ch;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  .resultados :global(.cobertura__icon) {
+    flex: none;
+    margin-block-start: 0.15rem;
+    color: var(--gs-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .busca,
+    .busca__enviar,
+    .achado__link :global(svg) {
+      transition-duration: 1ms;
+    }
+  }
+</style>

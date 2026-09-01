@@ -30,6 +30,7 @@ colors:
   ink-975: "#141414"
   ink-1000: "#0a0a0a"
   green-whatsapp: "#25d366"
+  green-whatsapp-dark: "#21ba5a"
   amber-600: "#b45309"
   amber-400: "#fbbf24"
 fonts:
@@ -39,8 +40,10 @@ fonts:
 
 <!-- Cor, tipografia, espaço, forma e movimento estão resolvidos e
      implementados em `src/styles/tokens.css` e `src/styles/base.css`. O
-     catálogo de componentes tem o cabeçalho e o herói da home; cresce à medida
-     que as páginas forem construídas. -->
+     catálogo de componentes cobre o cabeçalho, o herói da home, as peças
+     partilhadas (botões, bloco de título, rodapé, CTA final, formulário,
+     acordeão) e a grelha de serviços; cresce à medida que as páginas forem
+     construídas. -->
 
 # Design System: Guerra Solut
 
@@ -172,6 +175,7 @@ na frontmatter e em `src/styles/tokens.css`.
 | `--gs-inverse-accent` | Vermelho dentro do bloco invertido | `red-400` | `red-600` |
 | `--gs-focus` | Anel de foco | `red-500` | `red-400` |
 | `--gs-success` | WhatsApp (não é marca) | `green-whatsapp` | `green-whatsapp` |
+| `--gs-success-hover` | Hover do controlo de WhatsApp | `green-whatsapp-dark` | `green-whatsapp-dark` |
 | `--gs-on-success` | Texto sobre o verde — sempre preto | `ink-1000` | `ink-1000` |
 | `--gs-warning` | Alerta de sistema | `amber-600` | `amber-400` |
 | `--gs-danger` | Erro (é o mesmo vermelho) | `red-600` | `red-400` |
@@ -373,6 +377,58 @@ equipamento e não como uma imagem decorativa.
 A chapa é o gabarito de qualquer superfície com fotografia: fundo escuro
 constante, bloco de título com fio, corrente na aresta, e a imagem a assentar
 em vez de ser emoldurada.
+
+### Peças partilhadas (`src/styles/base.css`)
+
+Os botões apareciam em quase todas as secções e não podiam divergir entre
+elas: `.gs-btn` (`--cheia`, `--traco`, `--whatsapp`), `.gs-link`, `.gs-label`
+e `.gs-section` são globais. Um só preenchimento de marca por ecrã; a seta de
+um botão só se move com o cursor; o verde do WhatsApp leva sempre texto preto.
+
+### Cabeçalho de página — «o bloco de título» (`PageHeader.astro`)
+
+Abre todas as rotas fora da home. Migalhas em Archivo maiúsculo à esquerda,
+etiqueta de contexto à direita (`8 serviços`, `Actualizado a …`), fio de 1px
+a fechar a faixa e os primeiros 3rem desse fio a vermelho — a corrente a
+chegar, o mesmo gesto do herói. Por baixo, o `h1` fluido e o parágrafo de
+entrada a 58ch. As migalhas visíveis são a condição para emitir
+`BreadcrumbList`.
+
+### Grelha de serviços — «os circuitos» (`/servicos/`)
+
+Oito cartões numerados 01–08, cada um com o fio de 2px na aresta superior que
+abre em `scaleX` no hover. O serviço âncora leva `--gs-wash`, a etiqueta
+«Especialidade principal» e o fio permanentemente aberto; os dois destacados
+ocupam duas colunas a partir de 72rem. Sem ícone por cartão: oito ícones
+genéricos não distinguiriam pintura de pladur.
+
+### Bloco invertido — o CTA final (`CtaFinal.astro`)
+
+A secção preta que corta a página antes do rodapé, com aresta superior de 2px
+em `--gs-brand`. Três saídas: preenchimento de marca, verde do WhatsApp e o
+telefone em traço com o contorno do bloco. Fecha todas as rotas excepto
+`/contactos/`, onde o formulário já é o fim do caminho.
+
+### Rodapé — «o esquema do quadro» (`SiteFooter.astro`)
+
+Chapa `--gs-bg-subtle` com a lista completa de circuitos: quatro colunas
+(marca, serviços, empresa, contactos), a faixa «Onde trabalhamos» com os dez
+distritos em chapas de identificação, e a base com o crédito. Divisórias a
+fio, nomes em Archivo, números em `tabular-nums`.
+
+### Formulário de contacto (`ContactForm.astro`)
+
+Campos como poços de painel: `--gs-surface-sunken`, traço forte de 1px, 6px de
+raio, e o `select` desenhado por inteiro — a seta do sistema não pertence a
+nenhum sistema de design. O erro (`:user-invalid`) identifica-se por lavado,
+ícone e frase, nunca por matiz: a marca e o erro são o mesmo vermelho.
+
+### Acordeão (`/faq/`)
+
+`<details>` nativo com `name` partilhado — abre um de cada vez, sem uma linha
+de JavaScript, com as respostas sempre no HTML. A pergunta aberta é marcada
+pela corrente vermelha à esquerda; o chevron do conjunto de ícones roda 180°.
+
 
 ## Do's and Don'ts
 

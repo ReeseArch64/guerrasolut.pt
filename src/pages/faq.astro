@@ -1,0 +1,248 @@
+---
+/**
+ * Perguntas frequentes (`/faq/`) — `PRODUCTS.md` §6.6.
+ *
+ * As seis perguntas da §5 completas e visíveis no HTML — é essa a condição
+ * para emitir `FAQPage`. O acordeão é `<details>` nativo com `name`
+ * partilhado: abre uma de cada vez, sem uma linha de JavaScript, e funciona
+ * com o teclado.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import Icon from '../components/Icon.astro';
+import { FAQ } from '../config/faq';
+import { CONTACT } from '../config/site';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
+
+const title = 'Perguntas frequentes';
+const description =
+  'Orçamentos, prazos de resposta, zonas cobertas, garantias, facturação e contratos com empresas e condomínios — as dúvidas que nos colocam mais vezes.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  schemas={[
+    faqSchema(FAQ.map((f) => ({ question: f.pergunta, answer: f.resposta }))),
+    breadcrumbSchema([
+      { name: 'Início', path: '/' },
+      { name: 'Perguntas frequentes', path: '/faq/' },
+    ]),
+  ]}
+>
+  <main id="conteudo">
+    <PageHeader
+      title={title}
+      lead="As dúvidas que nos colocam mais vezes, respondidas sem rodeios. Se a sua pergunta não estiver aqui, fale connosco — respondemos no próprio dia."
+      crumbs={[{ name: 'Perguntas frequentes' }]}
+      meta={`${FAQ.length} perguntas`}
+    />
+
+    <div class="gs-shell painel">
+      <section class="acordeao" aria-label="Perguntas e respostas">
+        {
+          FAQ.map((item, indice) => (
+            <details class="questao" id={item.id} name="gs-faq" open={indice === 0}>
+              <summary class="questao__cabeca">
+                <span class="questao__numero" aria-hidden="true">
+                  {String(indice + 1).padStart(2, '0')}
+                </span>
+                <span class="questao__texto">{item.pergunta}</span>
+                <Icon name="seta-baixo" size={20} class="questao__chevron" />
+              </summary>
+              <div class="questao__corpo">
+                <p class="questao__resposta">{item.resposta}</p>
+              </div>
+            </details>
+          ))
+        }
+      </section>
+
+      <aside class="apoio" aria-labelledby="apoio-titulo">
+        <div class="apoio__caixa">
+          <h2 class="apoio__titulo" id="apoio-titulo">Ficou alguma dúvida?</h2>
+          <p class="apoio__texto">
+            Explique-nos o caso e damos-lhe uma resposta concreta — não uma
+            tabela de preços genérica.
+          </p>
+          <a class="gs-btn gs-btn--cheia apoio__acao" href="/contactos/">
+            Perguntar
+          </a>
+          <a class="apoio__telefone" href={`tel:${CONTACT.phone}`}>
+            <Icon name="telefone" size={18} />
+            {phoneLocal}
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <CtaFinal />
+  </main>
+</BaseLayout>
+
+<style>
+  .painel {
+    display: grid;
+    gap: var(--gs-space-10);
+    align-items: start;
+  }
+
+  /* ── O acordeão ──────────────────────────────────────────────────────── */
+
+  .acordeao {
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .questao {
+    position: relative;
+    border-block-end: 1px solid var(--gs-border);
+  }
+
+  .questao__cabeca {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) 1.5rem;
+    align-items: baseline;
+    gap: var(--gs-space-3);
+    min-block-size: var(--gs-tap);
+    padding-block: var(--gs-space-5);
+    cursor: pointer;
+    list-style: none;
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  /* O triângulo do sistema não pertence a nenhum sistema de design. */
+  .questao__cabeca::-webkit-details-marker {
+    display: none;
+  }
+
+  .questao__cabeca:hover {
+    color: var(--gs-accent);
+  }
+
+  .questao__numero {
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-sm);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--gs-track-label);
+    color: var(--gs-text-subtle);
+  }
+
+  .questao__texto {
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-lg);
+    font-weight: 700;
+    line-height: var(--gs-leading-snug);
+    letter-spacing: var(--gs-track-tight);
+    text-wrap: balance;
+  }
+
+  .acordeao :global(.questao__chevron) {
+    align-self: center;
+    color: var(--gs-text-subtle);
+    transition: rotate var(--gs-dur) var(--gs-ease);
+  }
+
+  .questao[open] :global(.questao__chevron) {
+    rotate: 180deg;
+    color: var(--gs-accent);
+  }
+
+  /* A corrente marca a pergunta aberta — a mesma marcação do cabeçalho. */
+  .questao[open]::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(var(--gs-space-4) * -1);
+    inline-size: 2px;
+    background: var(--gs-brand);
+  }
+
+  .questao[open] .questao__numero {
+    color: var(--gs-accent);
+  }
+
+  .questao__corpo {
+    padding-block-end: var(--gs-space-6);
+  }
+
+  .questao__resposta {
+    margin: 0;
+    max-inline-size: 68ch;
+    padding-inline-start: calc(2.25rem + var(--gs-space-3));
+    color: var(--gs-text-muted);
+  }
+
+  @media (max-width: 29.99rem) {
+    .questao__resposta {
+      padding-inline-start: 0;
+    }
+  }
+
+  /* ── Cartão de apoio ─────────────────────────────────────────────────── */
+
+  .apoio__caixa {
+    padding: var(--gs-space-6);
+    border: 1px solid var(--gs-wash-edge);
+    border-block-start: 2px solid var(--gs-brand);
+    border-radius: var(--gs-radius-lg);
+    background: var(--gs-wash);
+  }
+
+  .apoio__titulo {
+    margin: 0 0 var(--gs-space-3);
+    font-size: 1.375rem;
+  }
+
+  .apoio__texto {
+    margin: 0 0 var(--gs-space-6);
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  .apoio__acao {
+    display: flex;
+  }
+
+  .apoio__telefone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gs-space-2);
+    margin-block-start: var(--gs-space-3);
+    min-block-size: var(--gs-tap);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-md);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--gs-wash-text);
+    text-decoration: none;
+  }
+
+  .apoio__telefone:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  @media (min-width: 64rem) {
+    .painel {
+      grid-template-columns: minmax(0, 1fr) 21rem;
+      gap: var(--gs-space-12);
+    }
+
+    .apoio {
+      position: sticky;
+      inset-block-start: calc(var(--gs-header-h) + var(--gs-space-6));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .questao__cabeca,
+    .acordeao :global(.questao__chevron) {
+      transition-duration: 1ms;
+    }
+  }
+</style>

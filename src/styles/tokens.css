@@ -53,6 +53,9 @@
      texto preto (branco sobre #25d366 dá 1,98:1 — ilegível). O âmbar existe
      só para alertas de sistema e nunca aparece em conteúdo editorial. */
   --gs-green-whatsapp: #25d366;
+  /* O mesmo verde escurecido 12% — o hover do controlo de WhatsApp. Fixo,
+     porque a cor de origem também é fixa: é imposta pela plataforma. */
+  --gs-green-whatsapp-dark: #21ba5a;
   --gs-amber-600: #b45309;
   --gs-amber-400: #fbbf24;
 
@@ -112,6 +115,7 @@
   /* Estado */
   --gs-focus: var(--gs-red-500);
   --gs-success: var(--gs-green-whatsapp);
+  --gs-success-hover: var(--gs-green-whatsapp-dark);
   --gs-on-success: var(--gs-ink-1000);
   --gs-warning: var(--gs-amber-600);
   --gs-danger: var(--gs-red-600);
@@ -247,6 +251,7 @@
 
     --gs-focus: var(--gs-red-400);
     --gs-success: var(--gs-green-whatsapp);
+    --gs-success-hover: var(--gs-green-whatsapp-dark);
     --gs-on-success: var(--gs-ink-1000);
     --gs-warning: var(--gs-amber-400);
     --gs-danger: var(--gs-red-400);
@@ -301,6 +306,7 @@
 
   --gs-focus: var(--gs-red-400);
   --gs-success: var(--gs-green-whatsapp);
+  --gs-success-hover: var(--gs-green-whatsapp-dark);
   --gs-on-success: var(--gs-ink-1000);
   --gs-warning: var(--gs-amber-400);
   --gs-danger: var(--gs-red-400);

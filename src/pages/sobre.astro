@@ -1,0 +1,531 @@
+---
+/**
+ * Sobre (`/sobre/`) — `PRODUCTS.md` §6.4.
+ *
+ * Desenvolve os dois parágrafos da home com história, equipa por
+ * especialidade, certificações e âmbito geográfico. Os diferenciadores da §3
+ * entram como um esquema de circuitos numerado — não como cartões: são cinco
+ * compromissos, e o que importa é lê-los em sequência.
+ *
+ * Sem fotografias reais da empresa (§13, lacuna assumida): a chapa mostra a
+ * ilustração de obra, e nenhum número não verificável entra na página (§15).
+ */
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import Icon from '../components/Icon.astro';
+import obra from '../assets/hero/obra-estaleiro.png';
+import { SITE } from '../config/site';
+import { SERVICES } from '../config/services';
+import { BULLETS_SOBRE, DIFERENCIADORES } from '../config/company';
+import { breadcrumbSchema } from '../lib/schema';
+
+const title = 'Mais de uma década ao serviço da sua obra';
+const description =
+  'A Guerra Solut nasceu das instalações elétricas e é hoje uma empresa portuguesa de serviços técnicos e construção civil, com equipa própria em todo o território continental.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  schemas={[
+    breadcrumbSchema([
+      { name: 'Início', path: '/' },
+      { name: 'Sobre nós', path: '/sobre/' },
+    ]),
+  ]}
+>
+  <main id="conteudo">
+    <PageHeader
+      title={title}
+      lead="Da instalação elétrica ao acabamento final, com equipa própria e o mesmo rigor numa pequena reparação ou numa remodelação integral."
+      crumbs={[{ name: 'Sobre nós' }]}
+    />
+
+    <section class="empresa" aria-labelledby="empresa-titulo">
+      <div class="gs-shell empresa__grid">
+        <div class="empresa__texto">
+          <h2 class="gs-sr-only" id="empresa-titulo">A empresa</h2>
+
+          <p class="empresa__p empresa__p--lead">
+            A <strong>Guerra Solut</strong> nasceu das instalações elétricas e é
+            hoje uma empresa portuguesa de serviços técnicos e construção civil,
+            ao serviço de particulares, empresas e condomínios em todo o
+            território continental.
+          </p>
+
+          <p class="empresa__p">
+            A eletricidade continua a ser a especialidade de origem — e é a
+            partir dela que coordenamos internamente todas as restantes
+            frentes de uma obra. Quem nos contrata para um quadro elétrico tem,
+            na mesma equipa, quem faça a alvenaria, o pladur, a pintura, a
+            canalização e a climatização, sem andar atrás de vários
+            prestadores nem gerir agendas que não são suas.
+          </p>
+
+          <p class="empresa__p">
+            Com equipa própria e multidisciplinar, entregamos obras completas —
+            do projecto ao acabamento — com o mesmo rigor numa pequena
+            reparação ou numa remodelação integral. A empresa está constituída
+            como <strong>{SITE.legalName}</strong> desde {SITE.foundingDate}, e
+            os técnicos que a compõem trazem para cada obra a experiência
+            acumulada de mais de uma década no terreno.
+          </p>
+
+          <ul class="bullets">
+            {
+              BULLETS_SOBRE.map((bullet) => (
+                <li class="bullets__item">
+                  <Icon name="visto" size={18} class="bullets__icon" />
+                  {bullet}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <figure class="chapa">
+          <span class="chapa__fio" aria-hidden="true"></span>
+          <span class="chapa__grelha" aria-hidden="true"></span>
+          <p class="chapa__etiqueta">Obra acompanhada do início ao fim</p>
+          <Picture
+            class="chapa__figura"
+            src={obra}
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            widths={[420, 640, 860, 1120]}
+            sizes="(min-width: 64rem) 40vw, min(30rem, 92vw)"
+            alt="Ilustração de um estaleiro de construção com um edifício em estrutura de betão e uma grua amarela."
+            loading="lazy"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section class="compromisso gs-section" aria-labelledby="compromisso-titulo">
+      <div class="gs-shell">
+        <p class="gs-label">Porquê a Guerra Solut</p>
+        <h2 class="titulo" id="compromisso-titulo">
+          O compromisso que nos <span class="accent">distingue</span>
+        </h2>
+        <p class="lead">
+          Cinco razões pelas quais condomínios, empresas e famílias voltam a
+          contratar-nos.
+        </p>
+
+        <ol class="razoes">
+          {
+            DIFERENCIADORES.map((item, indice) => (
+              <li class="razao">
+                <p class="razao__numero" aria-hidden="true">
+                  {String(indice + 1).padStart(2, '0')}
+                </p>
+                <div class="razao__corpo">
+                  <h3 class="razao__titulo">{item.titulo}</h3>
+                  <p class="razao__texto">{item.descricao}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="equipa gs-section" aria-labelledby="equipa-titulo">
+      <div class="gs-shell equipa__grid">
+        <div>
+          <p class="gs-label">Equipa própria</p>
+          <h2 class="titulo" id="equipa-titulo">
+            Uma especialidade, <span class="accent">um técnico nosso</span>
+          </h2>
+          <p class="lead">
+            Sem subcontratação anónima: cada frente da obra tem dentro da
+            empresa quem a executa e quem responde por ela. É também por isso
+            que conseguimos manter prazos — não dependemos da agenda de
+            terceiros.
+          </p>
+
+          <p class="equipa__nota">
+            <Icon name="local" size={18} class="equipa__icon" />
+            Cobrimos todo o Portugal continental, com equipas com base em
+            Lisboa, Porto e Braga. Para obras fora destas zonas, a deslocação é
+            confirmada no orçamento, antes de começar.
+          </p>
+        </div>
+
+        <ul class="especialidades">
+          {
+            SERVICES.map((servico) => (
+              <li class="especialidades__item">
+                <a class="especialidades__link" href={`/servicos/${servico.slug}/`}>
+                  <span>{servico.name}</span>
+                  <Icon name="seta-direita" size={16} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="garantias gs-section" aria-labelledby="garantias-titulo">
+      <div class="gs-shell">
+        <p class="gs-label">Certificações e seguro</p>
+        <h2 class="titulo" id="garantias-titulo">
+          O que fica <span class="accent">por escrito</span>
+        </h2>
+
+        <div class="garantias__grid">
+          <p class="garantias__p">
+            As intervenções elétricas são executadas por técnicos com as
+            certificações exigidas por lei, e a empresa mantém seguro de
+            responsabilidade civil activo para todas as obras. Emitimos factura
+            com IVA em todos os serviços, incluindo pequenas reparações.
+          </p>
+          <p class="garantias__p">
+            O orçamento é fechado por escrito antes de a obra começar: o que
+            está na proposta é o que paga no fim. À entrega, todos os trabalhos
+            executados pela nossa equipa levam garantia por escrito, com o
+            período a variar consoante o tipo de intervenção e os materiais
+            aplicados.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <CtaFinal
+      title="Quer conhecer-nos numa obra a sério?"
+      text="Descreva-nos o trabalho que tem em mãos. A visita técnica é gratuita e sem compromisso — e é aí que se percebe como trabalhamos."
+    />
+  </main>
+</BaseLayout>
+
+<style>
+  /* ── Peças partilhadas pelas secções desta página ────────────────────── */
+
+  .titulo {
+    margin: 0;
+    font-size: var(--gs-size-h2);
+    max-inline-size: 20ch;
+  }
+
+  .accent {
+    color: var(--gs-accent);
+  }
+
+  .lead {
+    margin: var(--gs-space-4) 0 0;
+    max-inline-size: 56ch;
+    font-size: var(--gs-size-lead);
+    line-height: var(--gs-leading-snug);
+    color: var(--gs-text-muted);
+  }
+
+  /* ── A empresa ───────────────────────────────────────────────────────── */
+
+  .empresa__grid {
+    display: grid;
+    gap: var(--gs-space-10);
+  }
+
+  .empresa__grid > * {
+    min-inline-size: 0;
+  }
+
+  .empresa__p {
+    margin: 0 0 var(--gs-space-4);
+    max-inline-size: 68ch;
+    color: var(--gs-text-muted);
+  }
+
+  .empresa__p--lead {
+    font-size: var(--gs-size-lead);
+    line-height: var(--gs-leading-snug);
+    color: var(--gs-text);
+  }
+
+  .empresa__p strong {
+    color: var(--gs-text);
+    font-weight: 600;
+  }
+
+  .bullets {
+    display: grid;
+    gap: var(--gs-space-3);
+    margin: var(--gs-space-8) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bullets__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gs-space-3);
+    font-size: var(--gs-size-base);
+    font-weight: 500;
+  }
+
+  .bullets :global(.bullets__icon) {
+    flex: none;
+    margin-block-start: 0.15rem;
+    color: var(--gs-accent);
+  }
+
+  /* A chapa, com a mesma gramática do herói: fundo escuro nos dois temas,
+     bloco de título fechado por um fio, corrente na aresta. */
+  .chapa {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    margin: 0;
+    inline-size: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--gs-plate-edge);
+    border-radius: var(--gs-radius-lg);
+    background: var(--gs-plate);
+  }
+
+  .chapa__fio {
+    position: absolute;
+    z-index: 4;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 2px;
+    background: var(--gs-brand);
+  }
+
+  .chapa__grelha {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image:
+      linear-gradient(to right, var(--gs-plate-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--gs-plate-line) 1px, transparent 1px);
+    background-size: 2.5rem 2.5rem;
+    mask-image: radial-gradient(
+      115% 85% at 70% 15%,
+      rgb(0 0 0 / 1) 30%,
+      rgb(0 0 0 / 0) 100%
+    );
+  }
+
+  .chapa__etiqueta {
+    position: absolute;
+    z-index: 3;
+    inset-block-start: 0;
+    inset-inline: 0;
+    margin: 0;
+    padding: var(--gs-space-4) var(--gs-space-5);
+    border-block-end: 1px solid var(--gs-plate-edge);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--gs-plate-text-muted);
+  }
+
+  .chapa :global(.chapa__figura) {
+    position: absolute;
+    z-index: 2;
+    inset: 3rem 0 0;
+    inline-size: 100%;
+    block-size: calc(100% - 3rem);
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  @media (min-width: 64rem) {
+    .empresa__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+      align-items: start;
+      gap: var(--gs-space-12);
+    }
+  }
+
+  /* ── Os cinco compromissos ───────────────────────────────────────────── */
+
+  .compromisso {
+    margin-block-start: var(--gs-section-y);
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .razoes {
+    display: grid;
+    gap: 0;
+    margin: var(--gs-space-10) 0 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  /* Linhas de uma lista, não cartões: cinco compromissos lêem-se em
+     sequência, e a divisória a fio é a gramática da casa. */
+  .razao {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: var(--gs-space-4);
+    padding-block: var(--gs-space-5);
+    border-block-end: 1px solid var(--gs-border);
+  }
+
+  .razao__numero {
+    margin: 0;
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-sm);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--gs-track-label);
+    color: var(--gs-text-subtle);
+  }
+
+  .razao__titulo {
+    margin: 0 0 var(--gs-space-2);
+    font-size: var(--gs-size-lg);
+  }
+
+  .razao__texto {
+    margin: 0;
+    max-inline-size: 62ch;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .razao {
+      grid-template-columns: 4rem 18rem minmax(0, 1fr);
+      align-items: baseline;
+      gap: var(--gs-space-6);
+      padding-block: var(--gs-space-6);
+    }
+
+    .razao__corpo {
+      display: contents;
+    }
+
+    .razao__titulo {
+      margin: 0;
+    }
+  }
+
+  /* ── Equipa e especialidades ─────────────────────────────────────────── */
+
+  .equipa__grid {
+    display: grid;
+    gap: var(--gs-space-10);
+  }
+
+  .equipa__nota {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gs-space-3);
+    margin: var(--gs-space-6) 0 0;
+    padding: var(--gs-space-4) var(--gs-space-5);
+    border: 1px solid var(--gs-wash-edge);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-wash);
+    max-inline-size: 56ch;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  .equipa :global(.equipa__icon) {
+    flex: none;
+    margin-block-start: 0.15rem;
+    color: var(--gs-wash-text);
+  }
+
+  .especialidades {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .especialidades__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gs-space-4);
+    min-block-size: var(--gs-tap);
+    padding-block: var(--gs-space-3);
+    border-block-end: 1px solid var(--gs-border);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-md);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-tight);
+    color: var(--gs-text);
+    text-decoration: none;
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  /* Só o nome desliza; a seta fica onde está, e nada refaz o layout. */
+  .especialidades__link > span {
+    transition: translate var(--gs-dur) var(--gs-ease);
+  }
+
+  .especialidades__link :global(svg) {
+    color: var(--gs-text-subtle);
+    transition: translate var(--gs-dur) var(--gs-ease);
+  }
+
+  .especialidades__link:hover {
+    color: var(--gs-accent);
+  }
+
+  .especialidades__link:hover > span {
+    translate: var(--gs-space-2) 0;
+  }
+
+  .especialidades__link:hover :global(svg) {
+    color: var(--gs-accent);
+    translate: 0.2rem 0;
+  }
+
+  @media (min-width: 64rem) {
+    .equipa__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+      gap: var(--gs-space-12);
+      align-items: start;
+    }
+  }
+
+  /* ── Garantias ───────────────────────────────────────────────────────── */
+
+  .garantias {
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .garantias__grid {
+    display: grid;
+    gap: var(--gs-space-6);
+    margin-block-start: var(--gs-space-6);
+  }
+
+  .garantias__p {
+    margin: 0;
+    max-inline-size: 62ch;
+    color: var(--gs-text-muted);
+  }
+
+  @media (min-width: 60rem) {
+    .garantias__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gs-space-10);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .especialidades__link,
+    .especialidades__link > span,
+    .especialidades__link :global(svg) {
+      transition-duration: 1ms;
+    }
+  }
+</style>

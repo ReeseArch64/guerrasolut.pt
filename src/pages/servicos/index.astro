@@ -1,0 +1,392 @@
+---
+/**
+ * Índice de serviços (`/servicos/`) — `PRODUCTS.md` §6.2.
+ *
+ * A grelha é o esquema do quadro: oito circuitos numerados, cada um com o
+ * seu fio, o seu nome e as suas chapas de identificação. Os dois serviços
+ * destacados (§2) ocupam o dobro da largura; o serviço âncora leva o lavado
+ * vermelho e a etiqueta «Especialidade principal».
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import Icon from '../../components/Icon.astro';
+import { SERVICES } from '../../config/services';
+import { PROCESSO } from '../../config/company';
+import { breadcrumbSchema, serviceListSchema } from '../../lib/schema';
+
+const crumbs = [{ name: 'Serviços' }];
+
+const title = 'Serviços de eletricidade, construção e remodelação';
+const description =
+  'Instalações elétricas, construção civil, remodelação, pintura, pladur, canalização, climatização e controlo de acessos — equipa própria em todo o Portugal continental.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  schemas={[
+    serviceListSchema(),
+    breadcrumbSchema([
+      { name: 'Início', path: '/' },
+      { name: 'Serviços', path: '/servicos/' },
+    ]),
+  ]}
+>
+  <main id="conteudo">
+    <PageHeader
+      title={title}
+      lead="Uma equipa própria para toda a obra — da instalação elétrica ao acabamento final. Escolha o serviço para perceber o que fazemos e pedir orçamento."
+      crumbs={crumbs}
+      meta={`${SERVICES.length} serviços`}
+    />
+
+    <section class="lista" aria-label="Lista de serviços">
+      <div class="gs-shell">
+        <ul class="grelha">
+          {
+            SERVICES.map((servico, indice) => (
+              <li
+                class:list={[
+                  'circuito',
+                  servico.featured && 'circuito--largo',
+                  servico.primary && 'circuito--ancora',
+                ]}
+              >
+                <span class="circuito__fio" aria-hidden="true" />
+
+                <p class="circuito__indice" aria-hidden="true">
+                  {String(indice + 1).padStart(2, '0')}
+                </p>
+
+                {servico.primary && (
+                  <p class="circuito__etiqueta">Especialidade principal</p>
+                )}
+
+                <h2 class="circuito__nome">
+                  <a class="circuito__link" href={`/servicos/${servico.slug}/`}>
+                    {servico.name}
+                  </a>
+                </h2>
+
+                <p class="circuito__descricao">{servico.description}</p>
+
+                <ul class="chapas">
+                  {servico.tags.map((tag) => (
+                    <li class="chapas__item">{tag}</li>
+                  ))}
+                </ul>
+
+                <p class="circuito__acao" aria-hidden="true">
+                  Ver o serviço
+                  <Icon name="seta-direita" size={16} />
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="processo gs-section" aria-labelledby="processo-titulo">
+      <div class="gs-shell">
+        <p class="gs-label">Como trabalhamos</p>
+        <h2 class="processo__titulo" id="processo-titulo">
+          Do primeiro contacto à <span class="processo__accent">entrega da obra</span>
+        </h2>
+        <p class="processo__lead">
+          O percurso é o mesmo em qualquer um dos oito serviços — para saber
+          sempre em que ponto está o seu projecto.
+        </p>
+
+        <ol class="passos">
+          {
+            PROCESSO.map((passo) => (
+              <li class="passo">
+                <p class="passo__numero">{passo.numero}</p>
+                <h3 class="passo__titulo">{passo.titulo}</h3>
+                <p class="passo__descricao">{passo.descricao}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <CtaFinal />
+  </main>
+</BaseLayout>
+
+<style>
+  /* ── A grelha de circuitos ───────────────────────────────────────────── */
+
+  .grelha {
+    display: grid;
+    gap: var(--gs-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .circuito {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: var(--gs-space-6);
+    border: 1px solid var(--gs-border);
+    border-radius: var(--gs-radius-lg);
+    background: var(--gs-surface);
+    transition:
+      border-color var(--gs-dur) var(--gs-ease),
+      background var(--gs-dur) var(--gs-ease);
+  }
+
+  .circuito:hover {
+    border-color: var(--gs-border-strong);
+  }
+
+  /* A corrente na aresta de cima: cinzenta em repouso, vermelha e aberta
+     quando o cartão está debaixo do cursor ou do foco. */
+  .circuito__fio {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 2px;
+    background: var(--gs-brand);
+    scale: 0 1;
+    transform-origin: left center;
+    transition: scale var(--gs-dur) var(--gs-ease);
+  }
+
+  .circuito:hover .circuito__fio,
+  .circuito:focus-within .circuito__fio {
+    scale: 1 1;
+  }
+
+  .circuito--ancora {
+    background: var(--gs-wash);
+    border-color: var(--gs-wash-edge);
+  }
+
+  .circuito--ancora .circuito__fio {
+    scale: 1 1;
+  }
+
+  .circuito__indice {
+    margin: 0 0 var(--gs-space-3);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--gs-track-label);
+    color: var(--gs-text-subtle);
+  }
+
+  .circuito--ancora .circuito__indice {
+    color: var(--gs-wash-text);
+  }
+
+  .circuito__etiqueta {
+    margin: 0 0 var(--gs-space-3);
+    padding: 0.2rem var(--gs-space-3);
+    border: 1px solid var(--gs-wash-text);
+    border-radius: var(--gs-radius-sm);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-wash-text);
+  }
+
+  .circuito__nome {
+    margin: 0 0 var(--gs-space-3);
+    font-size: 1.375rem;
+    line-height: var(--gs-leading-tight);
+  }
+
+  /* O cartão inteiro é alvo, mas o link continua a ser o link: é ele que o
+     teclado alcança e o leitor de ecrã anuncia. */
+  .circuito__link {
+    color: var(--gs-text);
+    text-decoration: none;
+  }
+
+  .circuito__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .circuito:hover .circuito__link {
+    color: var(--gs-accent);
+  }
+
+  .circuito__descricao {
+    margin: 0 0 var(--gs-space-5);
+    max-inline-size: 56ch;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  /* As chapas de identificação do circuito. */
+  .chapas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gs-space-2);
+    margin: 0 0 var(--gs-space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .chapas__item {
+    padding: 0.2rem var(--gs-space-3);
+    border: 1px solid var(--gs-border);
+    border-radius: var(--gs-radius-sm);
+    background: var(--gs-bg);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--gs-text-muted);
+  }
+
+  .circuito__acao {
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    margin: auto 0 0;
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-sm);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-tight);
+    color: var(--gs-text-subtle);
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .circuito__acao :global(svg) {
+    transition: translate var(--gs-dur) var(--gs-ease);
+  }
+
+  .circuito:hover .circuito__acao {
+    color: var(--gs-accent);
+  }
+
+  .circuito:hover .circuito__acao :global(svg) {
+    translate: 0.2rem 0;
+  }
+
+  @media (min-width: 48rem) {
+    .grelha {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .grelha {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* Os dois destacados ocupam o dobro da largura (`PRODUCTS.md` §2). */
+    .circuito--largo {
+      grid-column: span 2;
+    }
+
+    .circuito--largo .circuito__nome {
+      font-size: 1.75rem;
+    }
+
+    .circuito {
+      padding: var(--gs-space-8);
+    }
+  }
+
+  /* ── O processo ──────────────────────────────────────────────────────── */
+
+  .processo {
+    margin-block-start: var(--gs-section-y);
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .processo__titulo {
+    margin: 0;
+    font-size: var(--gs-size-h2);
+    max-inline-size: 18ch;
+  }
+
+  .processo__accent {
+    color: var(--gs-accent);
+  }
+
+  .processo__lead {
+    margin: var(--gs-space-4) 0 0;
+    max-inline-size: 52ch;
+    font-size: var(--gs-size-lead);
+    color: var(--gs-text-muted);
+  }
+
+  .passos {
+    display: grid;
+    gap: var(--gs-space-6);
+    margin: var(--gs-space-10) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: passo;
+  }
+
+  /* Aqui os números não são decoração: são a ordem do processo, e é isso
+     que o leitor precisa de saber. */
+  .passo {
+    padding-block-start: var(--gs-space-4);
+    border-block-start: 2px solid var(--gs-border-strong);
+  }
+
+  .passo:first-child {
+    border-block-start-color: var(--gs-brand);
+  }
+
+  .passo__numero {
+    margin: 0 0 var(--gs-space-2);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-sm);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--gs-track-label);
+    color: var(--gs-accent);
+  }
+
+  .passo__titulo {
+    margin: 0 0 var(--gs-space-2);
+    font-size: var(--gs-size-lg);
+  }
+
+  .passo__descricao {
+    margin: 0;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .passos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gs-space-8);
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .passos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .circuito,
+    .circuito__fio,
+    .circuito__acao,
+    .circuito__acao :global(svg) {
+      transition-duration: 1ms;
+    }
+  }
+</style>

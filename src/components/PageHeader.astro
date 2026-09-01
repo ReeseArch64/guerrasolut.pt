@@ -1,0 +1,164 @@
+---
+/**
+ * Cabeçalho de página interna — «o bloco de título».
+ *
+ * É a peça que abre todas as rotas fora da home, com a mesma gramática da
+ * chapa do herói: uma faixa fechada por um fio de 1px, com as migalhas em
+ * Archivo maiúsculo, e a corrente vermelha de 2px a marcar o início.
+ *
+ * As migalhas visíveis são condição para emitir `BreadcrumbList` — quem usa
+ * este componente passa os mesmos `crumbs` ao `breadcrumbSchema`.
+ */
+interface Crumb {
+  name: string;
+  /** Caminho com barra final. O último item não leva `path`. */
+  path?: string;
+}
+
+interface Props {
+  title: string;
+  /** Parágrafo de entrada. Opcional — as páginas legais abrem só com a data. */
+  lead?: string;
+  crumbs: Crumb[];
+  /** Etiqueta curta à direita da faixa (ex.: «6 perguntas»). */
+  meta?: string;
+}
+
+const { title, lead, crumbs, meta } = Astro.props;
+---
+
+<header class="head">
+  <div class="gs-shell">
+    <div class="head__band">
+      <span class="head__wire" aria-hidden="true"></span>
+
+      <nav class="crumbs" aria-label="Onde está">
+        <ol class="crumbs__list">
+          <li class="crumbs__item"><a href="/">Início</a></li>
+          {
+            crumbs.map((crumb) => (
+              <li class="crumbs__item">
+                {crumb.path ? (
+                  <a href={crumb.path}>{crumb.name}</a>
+                ) : (
+                  <span aria-current="page">{crumb.name}</span>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      {meta && <p class="head__meta">{meta}</p>}
+    </div>
+
+    <h1 class="head__title">{title}</h1>
+    {lead && <p class="head__lead">{lead}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .head {
+    padding-block: var(--gs-space-6) var(--gs-section-y);
+  }
+
+  /* A faixa do bloco de título: fio em baixo, migalhas em cima. */
+  .head__band {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gs-space-4);
+    padding-block-end: var(--gs-space-3);
+    margin-block-end: var(--gs-space-6);
+    border-block-end: 1px solid var(--gs-border);
+  }
+
+  /* A corrente: os primeiros 3rem do fio são vermelhos. */
+  .head__wire {
+    position: absolute;
+    inset-block-end: -1px;
+    inset-inline-start: 0;
+    inline-size: 3rem;
+    block-size: 2px;
+    background: var(--gs-brand);
+    transform-origin: left center;
+  }
+
+  .crumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gs-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-text-subtle);
+  }
+
+  .crumbs__item + .crumbs__item::before {
+    content: '/';
+    margin-inline-end: var(--gs-space-2);
+    color: var(--gs-border-strong);
+  }
+
+  .crumbs__item a {
+    color: var(--gs-text-subtle);
+    text-decoration: none;
+  }
+
+  .crumbs__item a:hover {
+    color: var(--gs-accent);
+  }
+
+  .crumbs__item [aria-current='page'] {
+    color: var(--gs-text);
+  }
+
+  .head__meta {
+    margin: 0;
+    flex: none;
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--gs-text-subtle);
+  }
+
+  .head__title {
+    margin: 0;
+    font-size: var(--gs-size-h1);
+    line-height: var(--gs-leading-display);
+    letter-spacing: var(--gs-track-display);
+    max-inline-size: 20ch;
+  }
+
+  .head__lead {
+    margin: var(--gs-space-5) 0 0;
+    max-inline-size: 58ch;
+    font-size: var(--gs-size-lead);
+    line-height: var(--gs-leading-snug);
+    color: var(--gs-text-muted);
+  }
+
+  /* O único gesto: a corrente a chegar, como no herói. */
+  @media (prefers-reduced-motion: no-preference) {
+    .head__wire {
+      animation: corrente-x 520ms var(--gs-ease) both;
+    }
+  }
+
+  @keyframes corrente-x {
+    from {
+      scale: 0 1;
+    }
+  }
+</style>

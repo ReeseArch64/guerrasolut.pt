@@ -1,0 +1,276 @@
+---
+/**
+ * Esqueleto das páginas legais (`PRODUCTS.md` §6.7).
+ *
+ * Texto simples, coluna estreita e sem CTA agressivo: quem chega aqui vem
+ * ler, não vem comprar. A data de última actualização é obrigatória e fica
+ * logo no bloco de título.
+ *
+ * `.legal` estiliza o conteúdo do `<slot />`, que vem de outro componente e
+ * por isso não recebe o hash de âmbito — daí o `:global` no bloco de estilo.
+ */
+import BaseLayout from './BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import { CONTACT, SITE } from '../config/site';
+import { breadcrumbSchema } from '../lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  lead: string;
+  /** Rota desta página, com barra final. */
+  path: string;
+  /** Data ISO da última revisão do texto. */
+  updated: string;
+  /** Índice da página: âncoras para os `<section id>` do conteúdo. */
+  sections: { id: string; label: string }[];
+}
+
+const { title, description, lead, path, updated, sections } = Astro.props;
+
+// `updated` é uma data sem hora: sem `timeZone: 'UTC'`, o build a oeste de
+// Greenwich formatava-a como o dia anterior.
+const dataLegivel = new Intl.DateTimeFormat('pt-PT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(updated));
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  schemas={[
+    breadcrumbSchema([
+      { name: 'Início', path: '/' },
+      { name: title, path },
+    ]),
+  ]}
+>
+  <main id="conteudo">
+    <PageHeader
+      title={title}
+      lead={lead}
+      crumbs={[{ name: title }]}
+      meta={`Actualizado a ${dataLegivel}`}
+    />
+
+    <div class="gs-shell painel">
+      <nav class="indice" aria-labelledby="indice-titulo">
+        <h2 class="indice__titulo" id="indice-titulo">Nesta página</h2>
+        <ol class="indice__list">
+          {
+            sections.map((section) => (
+              <li>
+                <a class="indice__link" href={`#${section.id}`}>
+                  {section.label}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <div class="legal">
+        <slot />
+
+        <section class="legal__contacto" aria-labelledby="legal-contacto">
+          <h2 id="legal-contacto">Dúvidas sobre este texto</h2>
+          <p>
+            Para qualquer questão relacionada com esta página, escreva para{' '}
+            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> ou ligue
+            para <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
+          </p>
+          <p class="legal__assinatura">
+            <Icon name="aviso" size={16} />
+            <span>
+              {SITE.legalName} · Última actualização: {dataLegivel}. Alterações
+              a este texto passam a vigorar na data em que forem publicadas
+              nesta página.
+            </span>
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .painel {
+    display: grid;
+    gap: var(--gs-space-10);
+    align-items: start;
+    padding-block-end: var(--gs-section-y);
+  }
+
+  /* ── Índice ──────────────────────────────────────────────────────────── */
+
+  .indice {
+    padding-block-start: var(--gs-space-4);
+    border-block-start: 2px solid var(--gs-brand);
+  }
+
+  .indice__titulo {
+    margin: 0 0 var(--gs-space-4);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-text-subtle);
+  }
+
+  .indice__list {
+    display: grid;
+    gap: var(--gs-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: seccao;
+  }
+
+  .indice__link {
+    display: block;
+    padding-block: 0.2rem;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+    text-decoration: none;
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .indice__link::before {
+    counter-increment: seccao;
+    content: counter(seccao, decimal-leading-zero) '  ';
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--gs-text-subtle);
+  }
+
+  .indice__link:hover {
+    color: var(--gs-accent);
+  }
+
+  /* ── Corpo legal ─────────────────────────────────────────────────────── */
+
+  .legal {
+    max-inline-size: 70ch;
+  }
+
+  .legal :global(section) {
+    padding-block-start: var(--gs-space-8);
+  }
+
+  .legal :global(section:first-child) {
+    padding-block-start: 0;
+  }
+
+  .legal :global(h2) {
+    margin: 0 0 var(--gs-space-4);
+    font-size: 1.5rem;
+    scroll-margin-block-start: calc(var(--gs-header-h) + var(--gs-space-6));
+  }
+
+  .legal :global(h3) {
+    margin: var(--gs-space-6) 0 var(--gs-space-2);
+    font-size: var(--gs-size-lg);
+  }
+
+  .legal :global(p) {
+    margin: 0 0 var(--gs-space-4);
+    color: var(--gs-text-muted);
+  }
+
+  .legal :global(ul) {
+    margin: 0 0 var(--gs-space-4);
+    padding-inline-start: var(--gs-space-5);
+    color: var(--gs-text-muted);
+  }
+
+  .legal :global(li) {
+    margin-block-end: var(--gs-space-2);
+  }
+
+  .legal :global(strong) {
+    color: var(--gs-text);
+    font-weight: 600;
+  }
+
+  .legal :global(a) {
+    color: var(--gs-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .legal :global(a:hover) {
+    color: var(--gs-accent-hover);
+  }
+
+  /* O bloco que assinala o que falta confirmar com o cliente. Fica visível
+     de propósito: uma lacuna legal calada é pior do que uma lacuna
+     assinalada (`PRODUCTS.md` §14). */
+  .legal :global(.legal__pendente) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gs-space-3);
+    margin: 0 0 var(--gs-space-4);
+    padding: var(--gs-space-4) var(--gs-space-5);
+    border: 1px solid var(--gs-wash-edge);
+    border-inline-start: 2px solid var(--gs-brand);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-wash);
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  .legal :global(.legal__pendente svg) {
+    flex: none;
+    margin-block-start: 0.15rem;
+    color: var(--gs-wash-text);
+  }
+
+  .legal__contacto {
+    margin-block-start: var(--gs-space-8);
+    padding-block-start: var(--gs-space-6);
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .legal__assinatura {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gs-space-3);
+    margin: 0;
+    font-size: var(--gs-size-sm);
+    color: var(--gs-text-subtle);
+  }
+
+  .legal__assinatura :global(svg) {
+    flex: none;
+    margin-block-start: 0.15rem;
+  }
+
+  @media (min-width: 64rem) {
+    .painel {
+      grid-template-columns: minmax(0, 1fr) 18rem;
+      gap: var(--gs-space-12);
+    }
+
+    .indice {
+      position: sticky;
+      inset-block-start: calc(var(--gs-header-h) + var(--gs-space-6));
+      order: 2;
+    }
+
+    .legal {
+      order: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .indice__link {
+      transition-duration: 1ms;
+    }
+  }
+</style>

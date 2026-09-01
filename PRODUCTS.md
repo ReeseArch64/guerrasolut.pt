@@ -560,7 +560,9 @@ pedido pelos clientes nesse caminho fixo.
 4. **Blog/conteúdo** — há disponibilidade para produzir conteúdo editorial? É a alavanca principal de cauda longa.
 5. **Multilíngue** — só pt-PT ou também EN (expatriados no Algarve/Lisboa)?
 6. **Analytics** — que ferramenta? (Recomendação: solução sem cookies para evitar banner RGPD.)
-7. **Hosting** — onde vai ficar alojado? (Estático: Vercel / Netlify / Cloudflare Pages.)
+7. **Hosting** — onde vai ficar alojado? (Estático: Vercel / Netlify / Cloudflare Pages.) A política de privacidade assinala esta lacuna no texto publicado.
+8. **«Mais de uma década» vs. «desde 2025»** — o copy da §6.1 e da §6.4 fala em mais de uma década, e `SITE.foundingDate` diz 2025. A página `/sobre/` resolve-o pela única leitura que não inventa nada — a empresa está constituída desde 2025 e os técnicos trazem mais de uma década de experiência —, mas é preciso confirmar qual é a verdade e alinhar os dois lados.
+9. **Entidade de resolução alternativa de litígios** — depende da sede; assinalada como pendente nos termos.
 
 ---
 
@@ -574,3 +576,5 @@ pedido pelos clientes nesse caminho fixo.
 | 4 | **URLs com barra final** (`trailingSlash: 'always'`, `build.format: 'directory'`). Canónicos, sitemap e ligações internas seguem esta forma. | 2025-09-01 |
 | 5 | **`sameAs` fica vazio** até o cliente confirmar os perfis oficiais — não se inventam links de redes sociais. | 2025-09-01 |
 | 6 | **Site multipágina, não landing page com âncoras.** Cada tema tem rota própria (§11) com `<h1>`, metadados, canónico e entrada no sitemap próprios. A home resume e encaminha; a navegação principal aponta para páginas, não para `#`. | 2025-09-01 |
+| 7 | **`/pesquisa/` é um índice estático filtrado no cliente.** Todo o conteúdo pesquisável (serviços, páginas e perguntas) vai no HTML e é navegável sem JavaScript; uma ilha de ~12 linhas filtra ao escrever. A página é `noindex, follow` e fica fora do `sitemap.xml`. Sem `SearchAction` no JSON-LD — exigiria resultados servidos pelo servidor. | 2026-09-01 |
+| 8 | **As lacunas legais assinalam-se no site.** Onde a lei exige um dado que o cliente ainda não forneceu (sede, NIF, alojamento, entidade RAL), as páginas legais mostram um bloco «Por confirmar» visível, em vez de omitir em silêncio ou inventar. | 2026-09-01 |

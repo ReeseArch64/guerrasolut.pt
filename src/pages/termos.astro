@@ -1,0 +1,184 @@
+---
+/**
+ * Termos e condições (`/termos/`) — `PRODUCTS.md` §6.7.
+ *
+ * Regem a utilização do site e o enquadramento dos pedidos feitos por ele.
+ * As condições concretas de cada obra — preço, prazo, garantia — vivem no
+ * orçamento escrito, não aqui: inventá-las neste texto seria assumir
+ * compromissos que a empresa não confirmou (§15).
+ */
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Icon from '../components/Icon.astro';
+import { CONTACT, SITE } from '../config/site';
+
+const sections = [
+  { id: 'objecto', label: 'Objecto e aceitação' },
+  { id: 'identificacao', label: 'Identificação da empresa' },
+  { id: 'pedidos', label: 'Pedidos, visita técnica e orçamento' },
+  { id: 'precos', label: 'Preços, facturação e pagamento' },
+  { id: 'garantia', label: 'Execução e garantia' },
+  { id: 'conteudo', label: 'Conteúdo do site' },
+  { id: 'propriedade', label: 'Propriedade intelectual' },
+  { id: 'reclamacoes', label: 'Reclamações e litígios' },
+  { id: 'lei', label: 'Lei aplicável' },
+];
+---
+
+<LegalLayout
+  title="Termos e condições"
+  description="Condições de utilização do site da Guerra Solut e enquadramento dos pedidos de orçamento, visita técnica, execução de obra e garantia."
+  lead="Estas condições regem a utilização deste site e os pedidos feitos através dele. As condições concretas de cada obra — preço, prazo e garantia — constam do orçamento escrito que lhe entregamos antes de começar."
+  path="/termos/"
+  updated="2026-09-01"
+  sections={sections}
+>
+  <section id="objecto">
+    <h2>Objecto e aceitação</h2>
+    <p>
+      Este site é um sítio informativo sobre os serviços da{' '}
+      <strong>{SITE.legalName}</strong> e um canal para pedir orçamento. Ao
+      navegar nele ou ao usar os seus canais de contacto, aceita as condições
+      descritas nesta página. Se não concordar com elas, não utilize o site.
+    </p>
+  </section>
+
+  <section id="identificacao">
+    <h2>Identificação da empresa</h2>
+    <p>
+      <strong>{SITE.legalName}</strong> · Telefone{' '}
+      <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a> · E-mail{' '}
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> · Área de
+      actuação: Portugal continental.
+    </p>
+    <p class="legal__pendente">
+      <Icon name="aviso" size={16} />
+      <span>
+        <strong>Por confirmar:</strong> a sede social e o número de
+        identificação fiscal ainda não foram publicados. A sua indicação é
+        exigida pelo regime do comércio electrónico e será acrescentada a este
+        ponto assim que estiver disponível.
+      </span>
+    </p>
+  </section>
+
+  <section id="pedidos">
+    <h2>Pedidos, visita técnica e orçamento</h2>
+    <p>
+      Os pedidos feitos por telefone, WhatsApp, e-mail ou pelo formulário deste
+      site são <strong>pedidos de contacto</strong>, não encomendas: não
+      constituem contrato nem obrigam qualquer das partes.
+    </p>
+    <p>
+      Depois de percebermos o trabalho, agendamos uma visita técnica ao local.
+      A visita e o orçamento dela resultante são gratuitos e sem compromisso. O
+      contrato só se forma quando aceita, por escrito, o orçamento que lhe
+      apresentamos.
+    </p>
+    <p>
+      Reservamo-nos o direito de não aceitar trabalhos fora do nosso âmbito
+      técnico ou geográfico, ou cuja execução não reúna condições de segurança.
+    </p>
+  </section>
+
+  <section id="precos">
+    <h2>Preços, facturação e pagamento</h2>
+    <p>
+      Este site não apresenta preços nem tabelas: cada obra é orçamentada
+      individualmente, depois da visita técnica. O valor do orçamento aceite é
+      fechado, e só é alterado se — e na medida em que — o cliente solicitar
+      trabalhos adicionais ou se surgirem condições no local que não eram
+      visíveis no momento da visita; em qualquer dos casos, a alteração é
+      comunicada e acordada antes de ser executada.
+    </p>
+    <p>
+      Emitimos factura com IVA em todos os serviços prestados. As condições de
+      pagamento — faseamento, prazos e meios aceites — constam do orçamento
+      escrito de cada obra.
+    </p>
+  </section>
+
+  <section id="garantia">
+    <h2>Execução e garantia</h2>
+    <p>
+      Os trabalhos são executados por técnicos da empresa, com as certificações
+      exigidas por lei para cada tipo de intervenção, e a empresa mantém seguro
+      de responsabilidade civil activo.
+    </p>
+    <p>
+      Todos os trabalhos executados pela nossa equipa são entregues com
+      garantia por escrito. O período de garantia varia consoante o tipo de
+      intervenção e os materiais aplicados, e é indicado no orçamento e na
+      documentação de entrega da obra. A garantia não cobre danos resultantes
+      de utilização indevida, de intervenções de terceiros posteriores à
+      entrega, nem de causas alheias à execução. Ficam ressalvados os direitos
+      que a lei portuguesa confere ao consumidor, que não são afectados por
+      estas condições.
+    </p>
+  </section>
+
+  <section id="conteudo">
+    <h2>Conteúdo do site</h2>
+    <p>
+      As descrições de serviços, textos e imagens deste site têm finalidade
+      informativa e podem ser actualizados a qualquer momento, sem aviso
+      prévio. As imagens são ilustrativas e não representam obras concretas.
+      Esforçamo-nos por manter a informação correcta e actual, mas ela não
+      substitui a avaliação técnica feita no local nem o orçamento escrito.
+    </p>
+    <p>
+      Este site pode conter ligações para sítios de terceiros — por exemplo, a
+      plataforma WhatsApp. Não controlamos esses sítios nem respondemos pelo
+      seu conteúdo ou pelas suas práticas de privacidade.
+    </p>
+  </section>
+
+  <section id="propriedade">
+    <h2>Propriedade intelectual</h2>
+    <p>
+      A marca, o logótipo, os textos e as imagens deste site são propriedade
+      da {SITE.legalName} ou são usados por si com autorização, e não podem ser
+      reproduzidos, copiados ou usados para outros fins sem consentimento
+      escrito. O desenvolvimento do site é da autoria da{' '}
+      <a href="https://www.reesearch64.tech" rel="noopener">ReeseArch64</a>.
+    </p>
+  </section>
+
+  <section id="reclamacoes">
+    <h2>Reclamações e litígios</h2>
+    <p>
+      Reclamações podem ser apresentadas directamente para{' '}
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>, ou através do{' '}
+      <a href="https://www.livroreclamacoes.pt" rel="noopener"
+        >Livro de Reclamações Electrónico</a
+      >.
+    </p>
+    <p>
+      Em caso de litígio de consumo, o consumidor pode recorrer a uma entidade
+      de resolução alternativa de litígios, nos termos da Lei n.º 144/2015, de
+      8 de Setembro. A lista actualizada das entidades disponíveis pode ser
+      consultada no Portal do Consumidor
+      (<a href="https://www.consumidor.gov.pt" rel="noopener"
+        >www.consumidor.gov.pt</a
+      >).
+    </p>
+    <p class="legal__pendente">
+      <Icon name="aviso" size={16} />
+      <span>
+        <strong>Por confirmar:</strong> a entidade de resolução alternativa de
+        litígios competente depende da sede da empresa e do valor em causa.
+        Será identificada pelo nome neste ponto assim que a sede estiver
+        definida.
+      </span>
+    </p>
+  </section>
+
+  <section id="lei">
+    <h2>Lei aplicável</h2>
+    <p>
+      Estas condições regem-se pela lei portuguesa. Para a resolução de
+      qualquer litígio delas emergente é competente o foro do tribunal da
+      comarca da sede da empresa, sem prejuízo das regras imperativas
+      aplicáveis aos contratos com consumidores.
+    </p>
+  </section>
+</LegalLayout>

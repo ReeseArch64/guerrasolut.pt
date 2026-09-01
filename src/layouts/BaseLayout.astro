@@ -1,11 +1,12 @@
 ---
 /**
- * Esqueleto de todas as páginas: documento, metadados e a calha do topo.
- * O rodapé e os CTAs flutuantes entram quando forem construídos.
+ * Esqueleto de todas as páginas: documento, metadados, a calha do topo e o
+ * rodapé. Os CTAs flutuantes entram quando forem construídos.
  */
 import type { ComponentProps } from 'astro/types';
 import BaseHead from '../components/BaseHead.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { SITE } from '../config/site';
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -22,5 +23,6 @@ type Props = ComponentProps<typeof BaseHead>;
   <body>
     <SiteHeader />
     <slot />
+    <SiteFooter />
   </body>
 </html>

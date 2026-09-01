@@ -175,3 +175,24 @@ export function faqSchema(items: { question: string; answer: string }[]) {
     })),
   };
 }
+
+/**
+ * O índice de serviços como lista ordenada de itens. Só faz sentido em
+ * `/servicos/`, onde os oito serviços estão visíveis no HTML.
+ */
+export function serviceListSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Serviços da Guerra Solut',
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    numberOfItems: SERVICES.length,
+    itemListElement: SERVICES.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: service.name,
+      description: service.description,
+      url: absoluteUrl(`/servicos/${service.slug}`),
+    })),
+  };
+}

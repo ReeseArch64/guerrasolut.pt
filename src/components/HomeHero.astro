@@ -66,17 +66,17 @@ const PROVAS = [
       </ul>
 
       <div class="hero__actions">
-        <a class="acao acao--cheia" href="/contactos/">
+        <a class="gs-btn gs-btn--cheia" href="/contactos/">
           Descrever o meu projecto
         </a>
-        <a class="acao acao--traco" href="/servicos/">
+        <a class="gs-btn gs-btn--traco" href="/servicos/">
           Ver serviços
           <Icon name="seta-direita" size={18} />
         </a>
       </div>
 
       <p class="hero__telefone">
-        Ou ligue já:
+        Ou ligue já:{' '}
         <a href={`tel:${CONTACT.phone}`}>{phoneLocal}</a>
         <span class="hero__horario">{horario}</span>
       </p>
@@ -226,65 +226,6 @@ const PROVAS = [
     flex-wrap: wrap;
     gap: var(--gs-space-3);
     margin-block-start: var(--gs-space-8);
-  }
-
-  .acao {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--gs-space-2);
-    min-block-size: 3.25rem;
-    padding-inline: var(--gs-space-6);
-    border: 1px solid transparent;
-    border-radius: var(--gs-radius-sm);
-    font-family: var(--gs-font-title);
-    font-size: var(--gs-size-md);
-    font-weight: 700;
-    text-decoration: none;
-    white-space: nowrap;
-    transition:
-      background var(--gs-dur-fast) var(--gs-ease),
-      border-color var(--gs-dur-fast) var(--gs-ease),
-      color var(--gs-dur-fast) var(--gs-ease),
-      translate var(--gs-dur-fast) var(--gs-ease);
-  }
-
-  .acao--cheia {
-    background: var(--gs-brand);
-    color: var(--gs-on-brand);
-  }
-
-  .acao--cheia:hover {
-    background: var(--gs-brand-hover);
-  }
-
-  .acao--cheia:active {
-    background: var(--gs-brand-active);
-    translate: 0 1px;
-  }
-
-  .acao--traco {
-    border-color: var(--gs-border-strong);
-    color: var(--gs-text);
-  }
-
-  .acao--traco:hover {
-    background: var(--gs-surface-sunken);
-    border-color: var(--gs-text);
-  }
-
-  .acao--traco:active {
-    translate: 0 1px;
-  }
-
-  .acao--traco :global(svg) {
-    color: var(--gs-text-subtle);
-    transition: translate var(--gs-dur) var(--gs-ease);
-  }
-
-  .acao--traco:hover :global(svg) {
-    translate: 0.2rem 0;
-    color: var(--gs-accent);
   }
 
   /* Em coluna estreita as duas acções ficam à mesma largura: é a diferença
@@ -511,13 +452,6 @@ const PROVAS = [
   @keyframes corrente-y {
     from {
       scale: 1 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .acao,
-    .acao :global(svg) {
-      transition-duration: 1ms;
     }
   }
 </style>

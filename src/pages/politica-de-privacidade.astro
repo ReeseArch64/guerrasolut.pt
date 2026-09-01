@@ -1,0 +1,189 @@
+---
+/**
+ * Política de privacidade (`/politica-de-privacidade/`) — `PRODUCTS.md` §6.7.
+ *
+ * O texto descreve o que este site faz de facto: é estático, não tem
+ * backend, não usa cookies nem analítica, e o formulário compõe uma mensagem
+ * de WhatsApp em vez de submeter dados para um servidor (§7).
+ *
+ * O que a lei exige e o cliente ainda não forneceu — sede e NIF (§14.1) — e
+ * o que ainda não está decidido — alojamento (§14.7) e analítica (§14.6) —
+ * fica assinalado em `.legal__pendente`, não inventado.
+ */
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Icon from '../components/Icon.astro';
+import { CONTACT, SITE } from '../config/site';
+
+const sections = [
+  { id: 'responsavel', label: 'Quem trata os seus dados' },
+  { id: 'dados', label: 'Que dados tratamos' },
+  { id: 'finalidades', label: 'Para que os usamos' },
+  { id: 'whatsapp', label: 'O formulário e o WhatsApp' },
+  { id: 'conservacao', label: 'Durante quanto tempo' },
+  { id: 'destinatarios', label: 'Com quem são partilhados' },
+  { id: 'cookies', label: 'Cookies e medição de audiência' },
+  { id: 'direitos', label: 'Os seus direitos' },
+];
+---
+
+<LegalLayout
+  title="Política de privacidade"
+  description="Como a Guerra Solut trata os dados pessoais de quem a contacta: que dados recolhe, para quê, durante quanto tempo e quais são os seus direitos ao abrigo do RGPD."
+  lead="Este site não tem formulários que submetam dados para um servidor, não usa cookies e não faz medição de audiência. Os dados que tratamos são os que nos envia quando fala connosco."
+  path="/politica-de-privacidade/"
+  updated="2026-09-01"
+  sections={sections}
+>
+  <section id="responsavel">
+    <h2>Quem trata os seus dados</h2>
+    <p>
+      O responsável pelo tratamento dos dados pessoais recolhidos através deste
+      site e dos canais de contacto nele indicados é a{' '}
+      <strong>{SITE.legalName}</strong>, que explora o site{' '}
+      <strong>{SITE.url.replace('https://', '')}</strong>.
+    </p>
+    <p>
+      Contactos para assuntos de protecção de dados:{' '}
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> ·{' '}
+      <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
+    </p>
+    <p class="legal__pendente">
+      <Icon name="aviso" size={16} />
+      <span>
+        <strong>Por confirmar:</strong> a sede social e o número de
+        identificação fiscal da empresa ainda não foram publicados. A
+        identificação completa do responsável pelo tratamento é exigida pelo
+        RGPD e será acrescentada a este ponto assim que estiver disponível.
+      </span>
+    </p>
+  </section>
+
+  <section id="dados">
+    <h2>Que dados tratamos</h2>
+    <p>
+      Só tratamos os dados que nos fornece por sua iniciativa, quando nos
+      contacta a pedir um orçamento ou uma intervenção:
+    </p>
+    <ul>
+      <li>
+        <strong>Identificação e contacto</strong> — nome, número de telefone e,
+        se nos escrever por e-mail, o endereço de e-mail.
+      </li>
+      <li>
+        <strong>Descrição do trabalho</strong> — o que precisa de fazer, a
+        morada ou localidade da obra e quaisquer fotografias ou documentos que
+        decida enviar-nos.
+      </li>
+      <li>
+        <strong>Dados de facturação</strong> — apenas se a obra avançar, e
+        apenas os exigidos para emitir factura nos termos da lei fiscal.
+      </li>
+    </ul>
+    <p>
+      A navegação neste site, por si só, não gera qualquer registo da nossa
+      parte: não há conta de utilizador, não há formulário submetido para um
+      servidor nosso e não há perfil de visitante.
+    </p>
+  </section>
+
+  <section id="finalidades">
+    <h2>Para que os usamos</h2>
+    <p>
+      Usamos estes dados exclusivamente para responder ao seu pedido, agendar a
+      visita técnica, elaborar e enviar o orçamento e, se houver adjudicação,
+      executar a obra, emitir factura e prestar a garantia acordada.
+    </p>
+    <p>
+      O fundamento legal é a <strong>execução de diligências
+      pré-contratuais e do contrato</strong> a seu pedido (artigo 6.º, n.º 1,
+      alínea b) do RGPD) e, no caso da facturação e conservação de documentos
+      contabilísticos, o <strong>cumprimento de obrigações legais</strong>
+      (artigo 6.º, n.º 1, alínea c)). Não usamos os seus dados para marketing
+      nem os cedemos para esse fim.
+    </p>
+  </section>
+
+  <section id="whatsapp">
+    <h2>O formulário e o WhatsApp</h2>
+    <p>
+      O formulário desta página não envia nada para um servidor nosso. Ao
+      carregar em <strong>Enviar por WhatsApp</strong>, o que escreveu é
+      montado numa mensagem e o WhatsApp abre com essa mensagem já preenchida —
+      o envio só acontece se for você a carregar em enviar, dentro do WhatsApp.
+    </p>
+    <p>
+      A partir desse momento a conversa decorre na plataforma WhatsApp, operada
+      pela Meta Platforms Ireland Limited, e está sujeita aos termos e à
+      política de privacidade dessa plataforma, que não controlamos. Se
+      preferir não usar o WhatsApp, pode ligar-nos ou escrever-nos por e-mail —
+      os dois canais estão na página de <a href="/contactos/">contactos</a>.
+    </p>
+  </section>
+
+  <section id="conservacao">
+    <h2>Durante quanto tempo</h2>
+    <p>
+      Pedidos que não deram origem a obra são conservados apenas enquanto forem
+      úteis para lhe responder e para acompanhar a proposta, e eliminados
+      depois disso. Dados relativos a obras executadas são conservados durante o
+      período de garantia e, no caso dos documentos de facturação, durante o
+      prazo mínimo exigido pela legislação fiscal e contabilística portuguesa.
+    </p>
+  </section>
+
+  <section id="destinatarios">
+    <h2>Com quem são partilhados</h2>
+    <p>
+      Não vendemos nem cedemos dados pessoais a terceiros. Os seus dados podem
+      ser tratados por entidades que nos prestam serviços indispensáveis —
+      alojamento do site, correio electrónico, contabilidade e a plataforma de
+      mensagens que escolher para falar connosco —, sempre limitados ao
+      estritamente necessário. Podem ainda ser comunicados a autoridades
+      públicas quando a lei o imponha.
+    </p>
+    <p class="legal__pendente">
+      <Icon name="aviso" size={16} />
+      <span>
+        <strong>Por confirmar:</strong> o fornecedor de alojamento deste site
+        ainda não está decidido. Assim que estiver, será identificado aqui,
+        com indicação do país onde os dados ficam alojados.
+      </span>
+    </p>
+  </section>
+
+  <section id="cookies">
+    <h2>Cookies e medição de audiência</h2>
+    <p>
+      Este site <strong>não utiliza cookies</strong> e não integra ferramentas
+      de analítica, publicidade ou redes sociais. Não há qualquer banner de
+      consentimento porque não há nada a consentir: nenhuma informação é
+      guardada no seu dispositivo nem enviada para terceiros ao visitar estas
+      páginas.
+    </p>
+    <p>
+      Se no futuro passarmos a medir audiência, este ponto será actualizado
+      antes de essa medição começar, e a ferramenta escolhida será identificada
+      pelo nome.
+    </p>
+  </section>
+
+  <section id="direitos">
+    <h2>Os seus direitos</h2>
+    <p>
+      Nos termos do RGPD, tem direito a solicitar o acesso aos seus dados
+      pessoais, a sua rectificação, o seu apagamento, a limitação do
+      tratamento, a portabilidade, e a opor-se ao tratamento. Pode exercer
+      qualquer destes direitos escrevendo para{' '}
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>; podemos precisar
+      de confirmar a sua identidade antes de responder.
+    </p>
+    <p>
+      Se entender que o tratamento dos seus dados viola a lei, tem também o
+      direito de apresentar reclamação à autoridade de controlo nacional — a
+      Comissão Nacional de Protecção de Dados (<a
+        href="https://www.cnpd.pt"
+        rel="noopener">www.cnpd.pt</a
+      >).
+    </p>
+  </section>
+</LegalLayout>

@@ -1,0 +1,150 @@
+---
+/**
+ * Bloco de CTA final — «o bloco invertido».
+ *
+ * A secção preta que corta a página clara antes do rodapé. Fecha todas as
+ * rotas excepto `/contactos/`, onde o formulário já é o fim do caminho.
+ *
+ * Copy de `PRODUCTS.md` §6.1 («CTA final»). Zero JavaScript: as três acções
+ * são ligações reais — página de contacto, WhatsApp e telefone.
+ */
+import Icon from './Icon.astro';
+import { CONTACT } from '../config/site';
+import { whatsappUrl } from '../lib/whatsapp';
+
+interface Props {
+  title?: string;
+  text?: string;
+  /** Mensagem já composta para o WhatsApp (usada nas páginas de serviço). */
+  whatsappMessage?: string;
+}
+
+const {
+  title = 'Pronto para começar a sua obra?',
+  text = 'Conte-nos o que precisa de fazer. Respondemos em menos de 2 horas e agendamos a visita técnica — gratuita e sem compromisso.',
+  whatsappMessage,
+} = Astro.props;
+
+const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
+---
+
+<section class="cta" aria-labelledby="cta-final-titulo">
+  <div class="gs-shell cta__grid">
+    <div class="cta__texto">
+      <h2 class="cta__title" id="cta-final-titulo">{title}</h2>
+      <p class="cta__lead">{text}</p>
+    </div>
+
+    <div class="cta__acoes">
+      <a class="gs-btn gs-btn--cheia" href="/contactos/">
+        Descrever o meu projecto
+      </a>
+      <a
+        class="gs-btn gs-btn--whatsapp"
+        href={whatsappUrl(whatsappMessage)}
+        target="_blank"
+        rel="noopener"
+      >
+        <Icon name="whatsapp" size={19} />
+        WhatsApp
+      </a>
+      <a class="cta__telefone" href={`tel:${CONTACT.phone}`}>
+        <Icon name="telefone" size={18} />
+        {phoneLocal}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background: var(--gs-inverse-bg);
+    color: var(--gs-inverse-text);
+    border-block-start: 2px solid var(--gs-brand);
+  }
+
+  .cta__grid {
+    display: grid;
+    gap: var(--gs-space-8);
+    padding-block: var(--gs-section-y);
+  }
+
+  .cta__title {
+    margin: 0;
+    font-size: var(--gs-size-h2);
+    letter-spacing: var(--gs-track-tight);
+    max-inline-size: 18ch;
+  }
+
+  .cta__lead {
+    margin: var(--gs-space-4) 0 0;
+    max-inline-size: 52ch;
+    font-size: var(--gs-size-lead);
+    line-height: var(--gs-leading-snug);
+    color: var(--gs-inverse-text-muted);
+  }
+
+  .cta__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gs-space-3);
+    align-content: center;
+  }
+
+  /* O telefone é a terceira via: sem preenchimento, com o traço do bloco. */
+  .cta__telefone {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    min-block-size: 3.25rem;
+    padding-inline: var(--gs-space-5);
+    border: 1px solid var(--gs-inverse-border);
+    border-radius: var(--gs-radius-sm);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-md);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    color: var(--gs-inverse-text);
+    text-decoration: none;
+    transition:
+      border-color var(--gs-dur-fast) var(--gs-ease),
+      color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .cta__telefone:hover {
+    border-color: var(--gs-inverse-accent);
+    color: var(--gs-inverse-accent);
+  }
+
+  .cta__telefone:active {
+    translate: 0 1px;
+  }
+
+  @media (max-width: 29.99rem) {
+    .cta__acoes {
+      display: grid;
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .cta__grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--gs-space-12);
+    }
+
+    .cta__acoes {
+      justify-content: flex-end;
+      max-inline-size: 22rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta__telefone {
+      transition-duration: 1ms;
+    }
+  }
+</style>

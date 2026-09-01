@@ -43,6 +43,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       changefreq: 'weekly',
+      // `/pesquisa/` é `noindex`: uma página de resultados não pertence ao
+      // sitemap, mesmo continuando alcançável a partir do cabeçalho.
+      filter: (page) => !page.startsWith(`${SITE.url}/pesquisa/`),
       lastmod: new Date(),
       serialize(item) {
         // A home é a página com maior prioridade; as de serviço vêm a seguir.

@@ -1,0 +1,383 @@
+---
+/**
+ * Rodapé global — «o esquema do quadro».
+ *
+ * A última peça de cada página: a lista completa de circuitos (serviços),
+ * a empresa, os contactos accionáveis e a área coberta. Divisórias a fio,
+ * nomes em Archivo, e um único segmento vermelho a abrir a chapa.
+ *
+ * Copy de `PRODUCTS.md` §6.8. Zero JavaScript — o ano é resolvido no build.
+ */
+import { Image } from 'astro:assets';
+import marca from '../assets/marca-guerra-solut.png';
+import Icon from './Icon.astro';
+import { CONTACT, DISTRICTS, SITE } from '../config/site';
+import { SERVICES } from '../config/services';
+import { whatsappUrl } from '../lib/whatsapp';
+
+const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
+const ano = new Date().getFullYear();
+
+const EMPRESA = [
+  { label: 'Sobre nós', href: '/sobre/' },
+  { label: 'Perguntas frequentes', href: '/faq/' },
+  { label: 'Contactos', href: '/contactos/' },
+  { label: 'Pesquisar no site', href: '/pesquisa/' },
+];
+
+const LEGAIS = [
+  { label: 'Política de privacidade', href: '/politica-de-privacidade/' },
+  { label: 'Termos e condições', href: '/termos/' },
+];
+---
+
+<footer class="foot">
+  <div class="gs-shell">
+    <div class="foot__grid">
+      <div class="foot__marca">
+        <a class="foot__brand" href="/" aria-label={`${SITE.name} — página inicial`}>
+          <Image
+            class="foot__mark"
+            src={marca}
+            alt=""
+            width={40}
+            height={40}
+            densities={[1, 2]}
+            loading="lazy"
+          />
+          <span class="foot__word" aria-hidden="true"
+            >Guerra<span class="foot__word-accent">Solut</span></span
+          >
+        </a>
+
+        <p class="foot__sobre">
+          Especialistas em instalações elétricas, construção civil e
+          remodelação. Rigor, prazos cumpridos e garantia por escrito desde {
+            SITE.foundingDate
+          }.
+        </p>
+
+        <a class="gs-btn gs-btn--whatsapp foot__whatsapp" href={whatsappUrl()} target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={19} />
+          Falar por WhatsApp
+        </a>
+      </div>
+
+      <nav class="foot__col" aria-labelledby="foot-servicos">
+        <h2 class="foot__titulo" id="foot-servicos">Serviços</h2>
+        <ul class="foot__list">
+          {
+            SERVICES.map((servico) => (
+              <li>
+                <a class="foot__link" href={`/servicos/${servico.slug}/`}>
+                  {servico.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav class="foot__col" aria-labelledby="foot-empresa">
+        <h2 class="foot__titulo" id="foot-empresa">Empresa</h2>
+        <ul class="foot__list">
+          {
+            [...EMPRESA, ...LEGAIS].map((item) => (
+              <li>
+                <a class="foot__link" href={item.href}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="foot__col">
+        <h2 class="foot__titulo">Contactos</h2>
+        <ul class="foot__list foot__list--contactos">
+          <li>
+            <a class="foot__contacto" href={`tel:${CONTACT.phone}`}>
+              <Icon name="telefone" size={18} class="foot__icon" />
+              <span class="foot__numero">{phoneLocal}</span>
+            </a>
+          </li>
+          <li>
+            <a class="foot__contacto" href={`mailto:${CONTACT.email}`}>
+              <Icon name="email" size={18} class="foot__icon" />
+              {CONTACT.email}
+            </a>
+          </li>
+          <li class="foot__facto">
+            <Icon name="relogio" size={18} class="foot__icon" />
+            <span>
+              Seg–Dom, {CONTACT.opens.slice(0, 2)}h–{CONTACT.closes.slice(0, 2)}h
+              <span class="foot__nota">Urgências 24h, 7 dias por semana</span>
+            </span>
+          </li>
+          <li class="foot__facto">
+            <Icon name="local" size={18} class="foot__icon" />
+            <span>Portugal continental</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="zonas" aria-labelledby="foot-zonas">
+      <h2 class="foot__titulo" id="foot-zonas">Onde trabalhamos</h2>
+      <ul class="zonas__list">
+        {DISTRICTS.map((distrito) => <li class="zonas__item">{distrito}</li>)}
+      </ul>
+      <p class="zonas__nota">
+        Equipas com base em Lisboa, Porto e Braga. Fora destas zonas, a
+        deslocação é confirmada no orçamento.
+      </p>
+    </section>
+
+    <div class="foot__base">
+      <p class="foot__copy">
+        © {ano} <a href="https://www.reesearch64.tech" rel="noopener"
+          >ReeseArch64</a
+        > · Todos os direitos reservados.
+      </p>
+      <p class="foot__legal">
+        {
+          LEGAIS.map((item, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              <a href={item.href}>{item.label}</a>
+            </>
+          ))
+        }
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    border-block-start: 1px solid var(--gs-border);
+    background: var(--gs-bg-subtle);
+  }
+
+  .foot__grid {
+    display: grid;
+    gap: var(--gs-space-10);
+    padding-block: var(--gs-section-y) var(--gs-space-10);
+  }
+
+  /* ── Marca ───────────────────────────────────────────────────────────── */
+
+  .foot__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    text-decoration: none;
+    color: var(--gs-text);
+  }
+
+  .foot__brand :global(.foot__mark) {
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    transition: rotate var(--gs-dur) var(--gs-ease);
+  }
+
+  .foot__brand:hover :global(.foot__mark) {
+    rotate: -10deg;
+  }
+
+  .foot__word {
+    font-family: var(--gs-font-title);
+    font-weight: 800;
+    font-size: 1.0625rem;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .foot__word-accent {
+    color: var(--gs-accent);
+    margin-inline-start: 0.3em;
+  }
+
+  .foot__sobre {
+    margin: var(--gs-space-4) 0 var(--gs-space-6);
+    max-inline-size: 38ch;
+    font-size: var(--gs-size-base);
+    color: var(--gs-text-muted);
+  }
+
+  .foot__whatsapp {
+    min-block-size: var(--gs-tap);
+    padding-inline: var(--gs-space-5);
+    font-size: var(--gs-size-base);
+  }
+
+  /* ── Colunas ─────────────────────────────────────────────────────────── */
+
+  .foot__titulo {
+    margin: 0 0 var(--gs-space-4);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-text-subtle);
+  }
+
+  .foot__list {
+    display: grid;
+    gap: var(--gs-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--gs-size-base);
+  }
+
+  .foot__link {
+    display: inline-block;
+    padding-block: 0.15rem;
+    color: var(--gs-text-muted);
+    text-decoration: none;
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .foot__link:hover {
+    color: var(--gs-accent);
+  }
+
+  .foot__list--contactos {
+    gap: var(--gs-space-4);
+  }
+
+  .foot__contacto,
+  .foot__facto {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gs-space-3);
+    color: var(--gs-text-muted);
+    text-decoration: none;
+  }
+
+  .foot__contacto {
+    color: var(--gs-text);
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .foot__contacto:hover {
+    color: var(--gs-accent);
+  }
+
+  .foot :global(.foot__icon) {
+    flex: none;
+    margin-block-start: 0.15rem;
+    color: var(--gs-accent);
+  }
+
+  .foot__numero {
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-lg);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+
+  .foot__nota {
+    display: block;
+    font-size: var(--gs-size-xs);
+    color: var(--gs-text-subtle);
+  }
+
+  /* ── Onde trabalhamos ────────────────────────────────────────────────── */
+
+  .zonas {
+    padding-block: var(--gs-space-6);
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .zonas__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gs-space-2) var(--gs-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Etiquetas rectas, como as chapas de identificação de um quadro. */
+  .zonas__item {
+    padding: 0.3rem var(--gs-space-3);
+    border: 1px solid var(--gs-border);
+    border-radius: var(--gs-radius-sm);
+    background: var(--gs-surface);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--gs-text-muted);
+  }
+
+  .zonas__nota {
+    margin: var(--gs-space-4) 0 0;
+    max-inline-size: 60ch;
+    font-size: var(--gs-size-sm);
+    color: var(--gs-text-subtle);
+  }
+
+  /* ── Base ────────────────────────────────────────────────────────────── */
+
+  .foot__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--gs-space-2) var(--gs-space-6);
+    padding-block: var(--gs-space-5) var(--gs-space-8);
+    border-block-start: 1px solid var(--gs-border);
+    font-size: var(--gs-size-sm);
+    color: var(--gs-text-subtle);
+  }
+
+  .foot__base p {
+    margin: 0;
+  }
+
+  .foot__base a {
+    color: var(--gs-text-muted);
+    text-decoration: none;
+    text-underline-offset: 0.25em;
+  }
+
+  .foot__base a:hover {
+    color: var(--gs-accent);
+    text-decoration: underline;
+  }
+
+  /* Em ecrã pequeno as duas ligações legais repetidas na base são ruído. */
+  .foot__legal {
+    display: none;
+  }
+
+  @media (min-width: 40rem) {
+    .foot__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .foot__legal {
+      display: block;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .foot__grid {
+      grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+      gap: var(--gs-space-12);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .foot__brand :global(.foot__mark),
+    .foot__link,
+    .foot__contacto {
+      transition-duration: 1ms;
+    }
+  }
+</style>

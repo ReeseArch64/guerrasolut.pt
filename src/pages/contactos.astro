@@ -1,0 +1,335 @@
+---
+/**
+ * Contactos (`/contactos/`) — `PRODUCTS.md` §6.5.
+ *
+ * NAP completo com cada canal accionável (`tel:`, `mailto:`, `wa.me`), o
+ * formulário da §7 em página e a área de actuação. É a única rota do site
+ * sem bloco de CTA final: o fim do caminho já está aqui.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Icon from '../components/Icon.astro';
+import { CONTACT, DISTRICTS } from '../config/site';
+import { breadcrumbSchema } from '../lib/schema';
+import { whatsappUrl } from '../lib/whatsapp';
+
+const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
+const abre = CONTACT.opens.slice(0, 2);
+const fecha = CONTACT.closes.slice(0, 2);
+
+const title = 'Falar com a Guerra Solut';
+const description =
+  'Telefone, WhatsApp e e-mail da Guerra Solut. Resposta em menos de 2 horas, urgências 24h e visita técnica gratuita em todo o Portugal continental.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  schemas={[
+    breadcrumbSchema([
+      { name: 'Início', path: '/' },
+      { name: 'Contactos', path: '/contactos/' },
+    ]),
+  ]}
+>
+  <main id="conteudo">
+    <PageHeader
+      title={title}
+      lead="Diga-nos o que precisa de fazer por telefone, WhatsApp ou e-mail. Respondemos em menos de 2 horas e agendamos a visita técnica — gratuita e sem compromisso."
+      crumbs={[{ name: 'Contactos' }]}
+      meta={`Seg–Dom · ${abre}–${fecha} h`}
+    />
+
+    <div class="gs-shell painel">
+      <section class="canais" aria-labelledby="canais-titulo">
+        <h2 class="gs-sr-only" id="canais-titulo">Canais de contacto</h2>
+
+        <a class="canal canal--primeiro" href={`tel:${CONTACT.phone}`}>
+          <span class="canal__fio" aria-hidden="true"></span>
+          <Icon name="telefone" size={20} class="canal__icon" />
+          <span class="canal__corpo">
+            <span class="canal__label">Telefone</span>
+            <span class="canal__valor canal__valor--numero">{phoneLocal}</span>
+            <span class="canal__nota">
+              Indicativo +351 · chamada para a rede móvel nacional
+            </span>
+          </span>
+        </a>
+
+        <a
+          class="canal"
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon name="whatsapp" size={20} class="canal__icon canal__icon--verde" />
+          <span class="canal__corpo">
+            <span class="canal__label">WhatsApp</span>
+            <span class="canal__valor">Abrir conversa</span>
+            <span class="canal__nota">
+              A forma mais rápida de nos enviar fotografias do local.
+            </span>
+          </span>
+        </a>
+
+        <a class="canal" href={`mailto:${CONTACT.email}`}>
+          <Icon name="email" size={20} class="canal__icon" />
+          <span class="canal__corpo">
+            <span class="canal__label">E-mail</span>
+            <span class="canal__valor canal__valor--email">{CONTACT.email}</span>
+            <span class="canal__nota">
+              Para propostas a empresas e condomínios, com anexos.
+            </span>
+          </span>
+        </a>
+
+        <div class="canal canal--facto">
+          <Icon name="relogio" size={20} class="canal__icon" />
+          <span class="canal__corpo">
+            <span class="canal__label">Horário</span>
+            <span class="canal__valor">
+              Segunda a domingo, {abre}h–{fecha}h
+            </span>
+            <span class="canal__nota">
+              Urgências atendidas 24 h por dia, 7 dias por semana.
+            </span>
+          </span>
+        </div>
+
+        <div class="canal canal--facto">
+          <Icon name="local" size={20} class="canal__icon" />
+          <span class="canal__corpo">
+            <span class="canal__label">Área de actuação</span>
+            <span class="canal__valor">Portugal continental</span>
+            <span class="canal__nota">
+              Equipas com base em Lisboa, Porto e Braga.
+            </span>
+          </span>
+        </div>
+      </section>
+
+      <section class="pedido" aria-labelledby="pedido-titulo">
+        <h2 class="pedido__titulo" id="pedido-titulo">
+          Fale-nos do seu projecto
+        </h2>
+        <p class="pedido__lead">
+          Descreva a necessidade. Respondemos em menos de 2 horas.
+        </p>
+        <ContactForm labelledby="pedido-titulo" />
+      </section>
+    </div>
+
+    <section class="zonas gs-section" aria-labelledby="zonas-titulo">
+      <div class="gs-shell">
+        <p class="gs-label">Onde trabalhamos</p>
+        <h2 class="zonas__titulo" id="zonas-titulo">
+          Todo o continente, com <span class="accent">bases a norte, centro e sul</span>
+        </h2>
+        <p class="zonas__lead">
+          Estes são os distritos onde intervimos com mais frequência. Para
+          obras fora destas zonas a deslocação é confirmada no orçamento, antes
+          de a obra começar.
+        </p>
+
+        <ul class="zonas__list">
+          {DISTRICTS.map((distrito) => <li class="zonas__item">{distrito}</li>)}
+        </ul>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .painel {
+    display: grid;
+    gap: var(--gs-space-10);
+  }
+
+  /* ── Canais ──────────────────────────────────────────────────────────── */
+
+  .canais {
+    display: grid;
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .canal {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: var(--gs-space-4);
+    padding-block: var(--gs-space-5);
+    border-block-end: 1px solid var(--gs-border);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* O deslize é do conteúdo, não da linha: o fio vermelho tem de ficar
+     colado à aresta, e `translate` não obriga o browser a refazer o layout. */
+  .canal :global(.canal__icon),
+  .canal__corpo {
+    transition: translate var(--gs-dur) var(--gs-ease);
+  }
+
+  a.canal:hover :global(.canal__icon),
+  a.canal:hover .canal__corpo {
+    translate: var(--gs-space-3) 0;
+  }
+
+  /* A corrente marca o canal que a empresa quer que use primeiro. */
+  .canal__fio {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 2px;
+    background: var(--gs-brand);
+    transform-origin: top center;
+  }
+
+  .canal--primeiro {
+    padding-inline-start: var(--gs-space-5);
+  }
+
+  .canais :global(.canal__icon) {
+    margin-block-start: 0.35rem;
+    color: var(--gs-accent);
+  }
+
+  .canais :global(.canal__icon--verde) {
+    color: var(--gs-success);
+  }
+
+  .canal__corpo {
+    display: grid;
+    gap: var(--gs-space-1);
+  }
+
+  .canal__label {
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-text-subtle);
+  }
+
+  .canal__valor {
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-lg);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-tight);
+    color: var(--gs-text);
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  /* Um telefone que muda de largura conforme os dígitos parece mal composto. */
+  .canal__valor--numero {
+    font-size: 1.5rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+
+  /* O e-mail é longo: em ecrã estreito parte-se em vez de transbordar. */
+  .canal__valor--email {
+    font-size: var(--gs-size-md);
+    overflow-wrap: anywhere;
+  }
+
+  a.canal:hover .canal__valor {
+    color: var(--gs-accent);
+  }
+
+  .canal__nota {
+    font-size: var(--gs-size-sm);
+    color: var(--gs-text-subtle);
+  }
+
+  /* ── Pedido ──────────────────────────────────────────────────────────── */
+
+  .pedido {
+    padding: var(--gs-space-6);
+    border: 1px solid var(--gs-border);
+    border-block-start: 2px solid var(--gs-brand);
+    border-radius: var(--gs-radius-lg);
+    background: var(--gs-surface);
+  }
+
+  .pedido__titulo {
+    margin: 0;
+    font-size: 1.75rem;
+  }
+
+  .pedido__lead {
+    margin: var(--gs-space-2) 0 var(--gs-space-6);
+    max-inline-size: 46ch;
+    color: var(--gs-text-muted);
+  }
+
+  @media (min-width: 40rem) {
+    .pedido {
+      padding: var(--gs-space-8);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .painel {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--gs-space-12);
+      align-items: start;
+    }
+  }
+
+  /* ── Zonas ───────────────────────────────────────────────────────────── */
+
+  .zonas {
+    margin-block-start: var(--gs-section-y);
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .zonas__titulo {
+    margin: 0;
+    font-size: var(--gs-size-h2);
+    max-inline-size: 20ch;
+  }
+
+  .accent {
+    color: var(--gs-accent);
+  }
+
+  .zonas__lead {
+    margin: var(--gs-space-4) 0 var(--gs-space-8);
+    max-inline-size: 58ch;
+    font-size: var(--gs-size-lead);
+    line-height: var(--gs-leading-snug);
+    color: var(--gs-text-muted);
+  }
+
+  .zonas__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gs-space-2) var(--gs-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .zonas__item {
+    padding: var(--gs-space-2) var(--gs-space-4);
+    border: 1px solid var(--gs-border);
+    border-radius: var(--gs-radius-sm);
+    background: var(--gs-surface);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-base);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--gs-text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .canal :global(.canal__icon),
+    .canal__corpo,
+    .canal__valor {
+      transition-duration: 1ms;
+    }
+  }
+</style>
