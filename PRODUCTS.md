@@ -138,61 +138,128 @@ Cartão de apoio: **"Ficou alguma dúvida?"** — Explique-nos o caso e damos-lh
 
 ---
 
-## 6. Copy das secções
+## 6. Copy das páginas
 
-### Herói (`#topo`)
+> **Este site é multipágina, não uma landing page com âncoras.** Cada rota da
+> §11 é uma página real, com `<h1>` próprio, `title`/`description` próprios,
+> canónico próprio e entrada no sitemap. As âncoras (`#servicos`, `#faq`, …)
+> deixam de existir como arquitectura: usam-se apenas para saltar dentro da
+> página onde já se está (por exemplo, o link «saltar para o conteúdo»).
+>
+> A home deixa de conter «tudo». Passa a ser uma página de entrada que
+> apresenta cada tema em resumo e encaminha para a página respectiva.
+
+### 6.1 Home (`/`)
+
+#### Herói
 
 - **Eyebrow:** Especialistas em instalações elétricas
 - **H1:** A solução certa para a **sua obra**
 - **Subtítulo:** Especialistas em **instalações elétricas** — e, a partir daí, construção civil, remodelação e todas as restantes especialidades na mesma equipa.
 - **CTA primário:** `Descrever o meu projecto` → abre modal de contacto
-- **CTA secundário:** `Ver serviços` → `#servicos`
+- **CTA secundário:** `Ver serviços` → `/servicos/`
 - **Faixa destacada:** "Resposta a pedidos em menos de 2 horas" / "Urgências atendidas 24h por dia, 7 dias por semana."
-- **Marquee:** lista rolante com os 8 serviços
+- **Marquee:** lista rolante com os 8 serviços, cada item ligado à sua página
 
-### Serviços (`#servicos`)
+#### Serviços (resumo)
 
 - **Eyebrow:** Os nossos serviços
 - **H2:** Tudo o que a sua obra precisa, **numa só equipa**
 - **Descrição:** A eletricidade é o nosso ramo principal — e à volta dela coordenamos internamente todas as restantes especialidades, para não ter de andar atrás de vários prestadores.
 - Etiqueta no cartão âncora: `Especialidade principal`
+- Cada cartão liga a `/servicos/{slug}/`; no fim da grelha, `Ver todos os serviços` → `/servicos/`
 
-### Processo (`#processo`)
+#### Processo (resumo)
 
 - **Eyebrow:** Como trabalhamos
 - **H2:** Do primeiro contacto à **entrega da obra**
 - **Descrição:** Um processo simples e transparente, para saber sempre em que ponto está o seu projecto.
+- Os quatro passos da §4 ficam completos na home (é conteúdo curto e converte); não têm página própria.
 
-### Porquê nós (`#porque-nos`)
+#### Porquê nós
 
 - **Eyebrow:** Porquê a Guerra Solut
 - **H2:** O compromisso que nos **distingue**
 - **Descrição:** Cinco razões pelas quais condomínios, empresas e famílias voltam a contratar-nos.
 - **Cartão CTA:** "Ainda tem dúvidas sobre a sua obra?"
 
-### Sobre (`#sobre`)
+#### Sobre (resumo)
 
 - **Eyebrow:** Sobre a Guerra Solut
 - **H2:** Mais de uma década **ao seu serviço**
 - **P1:** A **Guerra Solut** nasceu das instalações elétricas e é hoje uma empresa portuguesa de serviços técnicos e construção civil, ao serviço de particulares, empresas e condomínios em todo o território continental desde 2012.
 - **P2:** Com equipa própria e multidisciplinar, entregamos obras completas — do projecto ao acabamento — com o mesmo rigor numa pequena reparação ou numa remodelação integral.
+- **Link:** `Conhecer a empresa` → `/sobre/`
 
-### FAQ (`#faq`)
+#### FAQ (resumo)
 
 - **Eyebrow:** Perguntas frequentes
 - **H2:** As dúvidas que nos **colocam mais vezes**
 - **Descrição:** Se a sua pergunta não estiver aqui, fale connosco — respondemos no próprio dia.
+- Mostra **as 3 primeiras** perguntas da §5, com `Ver todas as perguntas` → `/faq/`.
+- **`FAQPage` só na página `/faq/`**, onde as seis perguntas estão visíveis no HTML.
 
-### CTA final
+#### CTA final
 
 - **H2:** Pronto para começar a sua obra?
 - **P:** Conte-nos o que precisa de fazer. Respondemos em menos de 2 horas e agendamos a visita técnica — gratuita e sem compromisso.
 - **CTAs:** `Descrever o meu projecto` · `WhatsApp` · `+351 964 148 843`
 
-### Rodapé
+### 6.2 Índice de serviços (`/servicos/`)
+
+- **H1:** Serviços de eletricidade, construção e remodelação
+- **Intro:** Uma equipa própria para toda a obra — da instalação elétrica ao acabamento final. Escolha o serviço para perceber o que fazemos e pedir orçamento.
+- Grelha com os 8 serviços da §2 (descrição + tags), cada um a ligar para a sua página.
+- Termina com o bloco CTA final.
+
+### 6.3 Página de serviço (`/servicos/{slug}/`)
+
+Estrutura comum às oito páginas — o conteúdo específico de cada uma escreve-se
+a partir da §2 e das palavras-chave da §12:
+
+1. **H1:** nome do serviço + intenção (ex.: `Instalações elétricas certificadas`)
+2. Parágrafo de abertura (descrição da §2, desenvolvida)
+3. **O que fazemos** — lista de trabalhos concretos (a partir das tags)
+4. **Como trabalhamos** — os quatro passos da §4, resumidos
+5. **Onde trabalhamos** — Portugal continental, com os distritos da §1
+6. **Perguntas frequentes** — 2 a 3 perguntas específicas do serviço (só com
+   `FAQPage` se estiverem visíveis)
+7. **CTA final** — modal · WhatsApp · telefone
+8. `Service` + `BreadcrumbList` em JSON-LD; ligações cruzadas para 2–3 serviços relacionados
+
+### 6.4 Sobre (`/sobre/`)
+
+- **H1:** Mais de uma década ao serviço da sua obra
+- Desenvolve os dois parágrafos de 6.1 com: história desde 2012, equipa própria
+  por especialidade, certificações e seguro, âmbito geográfico.
+- Inclui os diferenciadores da §3 e os bullets da §3.
+- Fotografias reais quando existirem (§13).
+
+### 6.5 Contactos (`/contactos/`)
+
+- **H1:** Falar com a Guerra Solut
+- NAP completo disponível (telefone, e-mail, horário, área de actuação), cada
+  canal como link accionável (`tel:`, `mailto:`, `wa.me`).
+- Formulário da §7 **em página**, não só em modal.
+- Bloco "Onde trabalhamos" com os 10 distritos.
+
+### 6.6 FAQ (`/faq/`)
+
+- **H1:** Perguntas frequentes
+- As seis perguntas da §5, completas e visíveis no HTML, em acordeão (com o
+  conteúdo presente sem JS).
+- Cartão de apoio "Ficou alguma dúvida?" → `Perguntar`.
+- `FAQPage` + `BreadcrumbList`.
+
+### 6.7 Páginas legais
+
+- `/politica-de-privacidade/` e `/termos/` — texto simples, sem CTA agressivo,
+  com data de última actualização.
+
+### 6.8 Rodapé (em todas as páginas)
 
 - **Descrição:** Especialistas em instalações elétricas, construção civil e remodelação. Rigor, prazos cumpridos e garantia por escrito desde 2012.
-- **Colunas:** Serviços (8 links) · Empresa (nav) · Contactos (telefone, email, horário, "Portugal continental")
+- **Colunas:** Serviços (8 links para `/servicos/{slug}/`) · Empresa (`/sobre/`, `/faq/`, `/contactos/`, legais) · Contactos (telefone, email, horário, "Portugal continental")
 - **Bloco:** "Onde trabalhamos" com os 10 distritos
 - **Copyright:** © {ano} [ReeseArch64](https://www.reesearch64.tech) · Todos os direitos reservados.
   **Decisão:** o crédito de desenvolvimento é da ReeseArch64 e mantém-se. Ano dinâmico.
@@ -201,8 +268,10 @@ Cartão de apoio: **"Ficou alguma dúvida?"** — Explique-nos o caso e damos-lh
 
 ## 7. Formulário de contacto
 
-Modal ("drawer" em mobile, diálogo em desktop) que **não submete para servidor** —
-compõe uma mensagem e abre o WhatsApp.
+Disponível em dois sítios com o mesmo conteúdo: **modal** ("drawer" em mobile,
+diálogo em desktop), aberto pelos CTAs de qualquer página, e **em página** em
+`/contactos/`. **Não submete para servidor** — compõe uma mensagem e abre o
+WhatsApp.
 
 - **Título:** Fale-nos do seu projecto
 - **Subtítulo:** Descreva a necessidade. Respondemos em menos de 2 horas.
@@ -215,6 +284,9 @@ compõe uma mensagem e abre o WhatsApp.
 
 - **Botão:** `Enviar por WhatsApp`
 - **Nota legal:** Abrimos o WhatsApp com a mensagem já preenchida. Depois de perceber o trabalho, agendamos a visita técnica — o orçamento é apresentado nessa fase, sem qualquer custo.
+
+> Numa página de serviço, o campo `servico` chega pré-seleccionado com o serviço
+> dessa página.
 
 **Template da mensagem WhatsApp:**
 
@@ -239,18 +311,25 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 
 ## 8. Navegação e CTAs persistentes
 
-**Navegação principal** (`aria-label="Navegação principal"`):
+**Navegação principal** (`aria-label="Navegação principal"`) — ligações entre
+páginas, não âncoras:
 
-| Label | Âncora |
+| Label | Rota |
 | --- | --- |
-| Serviços | `#servicos` |
-| Como Trabalhamos | `#processo` |
-| Sobre Nós | `#sobre` |
-| Perguntas | `#faq` |
+| Serviços | `/servicos/` |
+| Sobre Nós | `/sobre/` |
+| Perguntas | `/faq/` |
+| Contactos | `/contactos/` |
 
+- O item activo é marcado com `aria-current="page"`.
+- Em desktop, `Serviços` pode abrir um submenu com os 8 serviços — o link do
+  próprio item continua a ir para `/servicos/` (funciona sem JS).
+- **CTA do header:** `Pedir orçamento` → abre o modal de contacto.
 - Header fixo com `backdrop-blur`, transparente no topo e com borda/sombra após scroll.
-- Menu mobile em "sheet" lateral (`Abrir menu`).
+- Menu mobile em "sheet" lateral (`Abrir menu`), com a lista de serviços incluída.
 - Toggle de tema claro/escuro.
+- **Migalhas (`BreadcrumbList`)** visíveis em todas as páginas internas:
+  `Início › Serviços › Instalações Elétricas`.
 
 **CTAs flutuantes:**
 
@@ -361,7 +440,7 @@ já validadas que não valia a pena repensar do zero.
 
 | Rota | Objectivo |
 | --- | --- |
-| `/` | Landing principal — todas as secções |
+| `/` | Home — resumo de cada tema, com encaminhamento para a página respectiva |
 | `/servicos/` | Índice de serviços |
 | `/servicos/instalacoes-eletricas/` | Página dedicada — serviço âncora |
 | `/servicos/construcao-civil/` | Página dedicada |
@@ -494,3 +573,4 @@ pedido pelos clientes nesse caminho fixo.
 | 3 | **Copyright do rodapé mantém-se ReeseArch64** (autoria do desenvolvimento), com ano dinâmico. | 2026-09-01 |
 | 4 | **URLs com barra final** (`trailingSlash: 'always'`, `build.format: 'directory'`). Canónicos, sitemap e ligações internas seguem esta forma. | 2026-09-01 |
 | 5 | **`sameAs` fica vazio** até o cliente confirmar os perfis oficiais — não se inventam links de redes sociais. | 2026-09-01 |
+| 6 | **Site multipágina, não landing page com âncoras.** Cada tema tem rota própria (§11) com `<h1>`, metadados, canónico e entrada no sitemap próprios. A home resume e encaminha; a navegação principal aponta para páginas, não para `#`. | 2026-09-01 |
