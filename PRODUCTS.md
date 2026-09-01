@@ -1,14 +1,18 @@
 # Guerra Solut — Especificação de Produto
 
-Documento de referência para a reconstrução do site **guerrasolut.pt** em Astro,
-com foco em **SEO** e **responsividade**.
+Documento de referência do site **guerrasolut.pt** — este repositório é o site,
+construído em Astro com foco em **SEO** e **responsividade**.
 
-> **O site actual é apenas fonte de dados da empresa**, não uma base de design
-> nem de estrutura. O novo site é uma construção de raiz — o material abaixo
-> serve para não perder informação, não para ser replicado.
+> **Este projecto substitui a versão anterior do site no mesmo domínio**
+> (`https://www.guerrasolut.pt/`). A versão anterior — uma SPA React/Vite — foi
+> apenas fonte dos dados da empresa, não base de design nem de estrutura: a
+> construção é de raiz.
 >
-> Extraído de `https://www.guerrasolut.pt/` (bundle JavaScript, `manifest.json`
-> e JSON-LD do `index.html`) em 2026-09-01.
+> Todo o conteúdo abaixo é a **especificação viva deste site**, não a descrição
+> de um site externo. Os dados foram extraídos da versão anterior (bundle
+> JavaScript, `manifest.json` e JSON-LD do `index.html`) em 2026-09-01 e, a
+> partir daqui, a fonte de verdade é este documento em conjunto com
+> `src/config/site.ts`.
 
 ---
 
@@ -18,7 +22,7 @@ com foco em **SEO** e **responsividade**.
 | --- | --- |
 | Nome comercial | Guerra Solut |
 | Razão social | Guerra Solut, Unipessoal Lda. |
-| Domínio | `https://www.guerrasolut.pt/` |
+| Domínio | `https://www.guerrasolut.pt/` (este site — ver `SITE.url` em `src/config/site.ts`) |
 | Ano de fundação | 2012 |
 | Sector | Instalações elétricas + construção civil (`Electrician`, `GeneralContractor`) |
 | Especialidade de origem | Instalações elétricas |
@@ -257,10 +261,11 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 
 ## 9. Design system
 
-> **Referência, não obrigação.** Os valores abaixo são os do site antigo,
+> **Referência, não obrigação.** Os valores abaixo vêm da versão anterior,
 > registados para preservar a identidade cromática da marca (vermelho + âmbar
-> de sinalética de obra). O novo design é livre de divergir; o que deve
-> sobreviver é a marca, não a implementação.
+> de sinalética de obra). Este design é livre de divergir; o que deve
+> sobreviver é a marca, não a implementação. Os tokens efectivamente em uso
+> estão em `src/styles/tokens.css` e em `DESIGN.md`.
 
 ### Cores (OKLCH, tema claro / tema escuro)
 
@@ -285,7 +290,7 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 - Fallback: `ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif`
 
 > ⚠️ Actualmente carregadas do Google Fonts com `@import` bloqueante.
-> **Na reconstrução: self-host** (subset latin + latin-ext, `woff2`,
+> **Neste site: self-host** (subset latin + latin-ext, `woff2`,
 > `font-display: swap`, `preload` do peso principal). Elimina 2 ligações
 > externas e melhora LCP/CLS.
 
@@ -302,15 +307,17 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 
 ---
 
-## 10. Estado actual — diagnóstico
+## 10. Ponto de partida — diagnóstico da versão anterior
 
-O que motiva a reconstrução.
+O que motivou a reconstrução. Tudo nesta secção descreve a **versão anterior do
+site**, já substituída por este projecto — serve de registo dos problemas que
+não podem voltar a aparecer, e não do estado actual do domínio.
 
 ### ❌ SEO
 
 | Problema | Impacto |
 | --- | --- |
-| **SPA React/Vite sem SSR** — o HTML servido tem apenas `<div id="app"></div>`; todo o conteúdo é injectado por JS | Crítico. O conteúdo depende de renderização JS para ser indexado; crawlers secundários (Bing, redes sociais, LLMs) não veem nada |
+| **SPA React/Vite sem SSR** — o HTML servido tinha apenas `<div id="app"></div>`; todo o conteúdo era injectado por JS | Crítico. O conteúdo depende de renderização JS para ser indexado; crawlers secundários (Bing, redes sociais, LLMs) não veem nada |
 | **Página única** — tudo em `/` com âncoras | Impossível ranquear para "eletricista Lisboa", "remodelação Porto", etc. Não há URLs para intenções específicas |
 | **Sem `sitemap.xml`** (404) | Descoberta de URLs deficiente |
 | **Sem `robots.txt`** verificado | A confirmar |
@@ -326,10 +333,10 @@ O que motiva a reconstrução.
 - Google Fonts externo bloqueante (`fonts.googleapis.com` + `fonts.gstatic.com`).
 - Imagens PNG sem `srcset` / formatos modernos.
 
-### ✅ O que vale a pena aproveitar
+### ✅ O que se manteve
 
-Não como código a reutilizar — o site é reconstruído de raiz — mas como
-decisões já validadas que não vale a pena repensar do zero.
+Não como código reutilizado — o site é construído de raiz — mas como decisões
+já validadas que não valia a pena repensar do zero.
 
 - Metadados base (`title`, `description`, `canonical`, OG, Twitter) bem escritos.
 - Conjunto completo de favicons + `manifest.json` PWA.
@@ -340,7 +347,7 @@ decisões já validadas que não vale a pena repensar do zero.
 
 ---
 
-## 11. Objectivos da reconstrução
+## 11. Objectivos deste site
 
 ### Stack
 
@@ -455,13 +462,13 @@ pedido pelos clientes nesse caminho fixo.
 
 ### Em falta — a pedir ao cliente
 
-- [ ] **Fotografias reais de obras** — o site actual não tem uma única foto. É a maior lacuna, tanto para conversão como para `ImageObject` no schema.
+- [ ] **Fotografias reais de obras** — não existe uma única foto da empresa. É a maior lacuna, tanto para conversão como para `ImageObject` no schema.
 - [ ] Fotos da equipa e de viaturas com marca
 - [ ] Cópias de certificações e apólice de seguro (para a página "Sobre")
 - [ ] NIF e morada de sede (obrigatório para `LocalBusiness` e para cumprimento legal em PT)
 - [ ] Links de redes sociais (`sameAs`) — Facebook, Instagram, LinkedIn
 - [ ] URL do Google Business Profile
-- [ ] Imagem OG dedicada (1200×630) com fotografia real — a actual é o
+- [ ] Imagem OG dedicada (1200×630) com fotografia real — a que está em uso é o
       logótipo sobre fundo escuro, suficiente para arrancar mas fraca em CTR
 
 ---
@@ -482,7 +489,7 @@ pedido pelos clientes nesse caminho fixo.
 
 | # | Decisão | Data |
 | --- | --- | --- |
-| 1 | O site antigo é **fonte de dados da empresa apenas** — não é base de design nem de estrutura. Construção de raiz. | 2026-09-01 |
+| 1 | A versão anterior do site é **fonte de dados da empresa apenas** — não é base de design nem de estrutura. Construção de raiz, a publicar no mesmo domínio, substituindo-a. | 2026-09-01 |
 | 2 | **Sem secção de testemunhos** e **sem bloco de estatísticas** (500+ clientes, 1000+ obras, 4,9★). Nenhum número não verificável entra no site. Prova social por certificações, garantia por escrito e fotografias reais de obras. Sem `Review`/`AggregateRating`. | 2026-09-01 |
 | 3 | **Copyright do rodapé mantém-se ReeseArch64** (autoria do desenvolvimento), com ano dinâmico. | 2026-09-01 |
 | 4 | **URLs com barra final** (`trailingSlash: 'always'`, `build.format: 'directory'`). Canónicos, sitemap e ligações internas seguem esta forma. | 2026-09-01 |
