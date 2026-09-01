@@ -97,6 +97,18 @@
   --gs-inverse-border: var(--gs-ink-900);
   --gs-inverse-accent: var(--gs-red-400);
 
+  /* A chapa fotográfica — ESCURA NOS DOIS TEMAS, e por isso declarada uma
+     única vez: os blocos do tema escuro abaixo não a redeclaram, tal como
+     não redeclaram `--gs-brand`. As fotografias da empresa são recortes de
+     figura clara (capacete e camisa brancos); sobre uma chapa clara a figura
+     dissolvia-se. Não confundir com `--gs-inverse-*`, que inverte com o
+     tema — esta não inverte, é sempre a chapa preta. */
+  --gs-plate: var(--gs-ink-1000);
+  --gs-plate-edge: var(--gs-ink-800);
+  --gs-plate-line: rgb(255 255 255 / 0.05);
+  --gs-plate-text: var(--gs-ink-50);
+  --gs-plate-text-muted: var(--gs-ink-400);
+
   /* Estado */
   --gs-focus: var(--gs-red-500);
   --gs-success: var(--gs-green-whatsapp);
@@ -133,13 +145,22 @@
   --gs-size-md: 1rem;
   --gs-size-lg: 1.125rem;
 
+  /* Escala editorial. Fluida porque um título de cartaz não pode saltar de
+     degrau em degrau: cresce com a coluna, entre o telemóvel e o 1440. */
+  --gs-size-xl: 1.25rem;
+  --gs-size-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  --gs-size-h2: clamp(1.875rem, 1.35rem + 2.4vw, 2.75rem);
+  --gs-size-h1: clamp(2.375rem, 1.5rem + 3.9vw, 4rem);
+
   --gs-leading-tight: 1.1;
+  --gs-leading-display: 1.02;
   --gs-leading-snug: 1.35;
   --gs-leading-normal: 1.6;
 
   /* O tracking negativo pára em -0,03em; a etiqueta em maiúsculas é o
      único sítio onde o espacejamento abre, porque as maiúsculas pedem. */
   --gs-track-tight: -0.02em;
+  --gs-track-display: -0.03em;
   --gs-track-label: 0.08em;
 
   /* Espaço — base de 4px. */
@@ -152,6 +173,11 @@
   --gs-space-8: 2rem;
   --gs-space-10: 2.5rem;
   --gs-space-12: 3rem;
+  --gs-space-16: 4rem;
+  --gs-space-20: 5rem;
+
+  /* Respiração vertical de uma secção de página. */
+  --gs-section-y: clamp(2.75rem, 6vw, 5rem);
 
   /* Raios. Controlos pequenos são quase rectos — são interruptores de
      painel, não pastilhas. O painel suspenso é a única peça com 12px. */

@@ -12,7 +12,9 @@ export type IconName =
   | 'seta-baixo'
   | 'seta-direita'
   | 'menu'
-  | 'fechar';
+  | 'fechar'
+  | 'visto'
+  | 'relampago';
 
 interface Props {
   name: IconName;
@@ -33,6 +35,8 @@ const PATHS: Record<IconName, string[]> = {
   'seta-direita': ['M4 12h15.5', 'm13.5 6 6 6-6 6'],
   menu: ['M3.5 7h17', 'M3.5 12h17', 'M3.5 17h17'],
   fechar: ['m6 6 12 12', 'm18 6-12 12'],
+  visto: ['m4.5 12.5 5 5 10-11'],
+  relampago: ['M13.5 3 5.5 13.5h5.2l-.7 7.5 8-10.5h-5.2z'],
 };
 ---
 

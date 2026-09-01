@@ -39,8 +39,8 @@ fonts:
 
 <!-- Cor, tipografia, espaço, forma e movimento estão resolvidos e
      implementados em `src/styles/tokens.css` e `src/styles/base.css`. O
-     catálogo de componentes tem só o cabeçalho; cresce à medida que as
-     páginas forem construídas. -->
+     catálogo de componentes tem o cabeçalho e o herói da home; cresce à medida
+     que as páginas forem construídas. -->
 
 # Design System: Guerra Solut
 
@@ -178,6 +178,22 @@ na frontmatter e em `src/styles/tokens.css`.
 | `--gs-selection-bg` | Selecção de texto | `red-500` | `red-500` |
 | `--gs-caret` | Cursor de escrita | `red-600` | `red-400` |
 
+**A chapa fotográfica.** Um segundo grupo de tokens não inverte com o tema — é
+escuro sempre, como `--gs-brand` é vermelho sempre:
+
+| Token | Papel | Claro | Escuro |
+| --- | --- | --- | --- |
+| `--gs-plate` | Fundo da chapa de fotografia | `ink-1000` | `ink-1000` |
+| `--gs-plate-edge` | Contorno e divisórias dentro da chapa | `ink-800` | `ink-800` |
+| `--gs-plate-line` | Grelha técnica sobre a chapa | branco a 5% | branco a 5% |
+| `--gs-plate-text` | Texto sobre a chapa | `ink-50` | `ink-50` |
+| `--gs-plate-text-muted` | Legenda sobre a chapa | `ink-400` | `ink-400` |
+
+A razão é fotográfica, não estética: os recortes da empresa são figuras de
+capacete e camisa brancos. Sobre uma chapa clara a figura dissolvia-se, e o
+tema escuro deixaria de ser onde a marca está em casa. Não confundir com
+`--gs-inverse-*`, que **inverte** com o tema; a chapa não inverte.
+
 ### Contraste verificado
 
 Rácios WCAG 2.1 medidos, não estimados. Todos os pares abaixo são AA para texto
@@ -224,8 +240,18 @@ Inter perde a autoridade.
 | `--gs-size-base` | 15px | Interface: ligações de navegação, campos |
 | `--gs-size-md` | 16px | Texto corrente e botões |
 | `--gs-size-lg` | 18px | Linhas de menu em ecrã pequeno |
+| `--gs-size-xl` | 20px | Reserva editorial |
+| `--gs-size-lead` | 17→20px | Parágrafo de entrada de uma secção |
+| `--gs-size-h2` | 30→44px | Títulos de secção |
+| `--gs-size-h1` | 38→64px | Título de página |
 | `--gs-track-tight` | −0,02em | Títulos e linhas grandes |
+| `--gs-track-display` | −0,03em | Só o `h1`, onde o corpo é grande o bastante |
 | `--gs-track-label` | +0,08em | O único sítio onde o espacejamento abre: maiúsculas |
+
+Os três degraus editoriais são fluidos (`clamp()`) e não escalonados: um título
+de cartaz cresce com a coluna em vez de saltar no ponto de rotura. `h1` leva
+`--gs-leading-display` (1,02) — abaixo disso as maiúsculas acentuadas do
+português («Ã», «Ç») começam a tocar na linha de cima.
 
 Os números — telefone, medidas, preços — levam sempre
 `font-variant-numeric: tabular-nums`. Um telefone que muda de largura conforme
@@ -233,7 +259,10 @@ os dígitos é um telefone que parece mal composto.
 
 ## Space & Layout
 
-Escala de 4px (`--gs-space-1` a `--gs-space-12`). A largura útil é
+Escala de 4px (`--gs-space-1` a `--gs-space-20`). A respiração vertical de uma
+secção de página é `--gs-section-y` (`clamp(2.75rem, 6vw, 5rem)`) — uma só
+medida, para que duas secções seguidas nunca respirem de forma diferente. A
+largura útil é
 `--gs-page-max` (1320px) com goteira fluida `--gs-page-pad`
 (`clamp(1rem, 4vw, 2.5rem)`), aplicada pela classe `.gs-shell`. Todas as
 secções do site partilham esta goteira: é o que alinha o logótipo, os títulos e
@@ -270,6 +299,10 @@ No cabeçalho, esse movimento é **o fio**: o segmento sob cada ligação cresce
 vermelho e já aberto na página onde estamos. Nada mais na barra se anima por
 gosto; a rotação da marca e do chevron são consequências do mesmo gesto.
 
+No herói, é **a corrente a chegar**: o mesmo fio, desta vez a entrar — em
+`scaleX` sob a sobrancelha e em `scaleY` na aresta da chapa. Nenhum texto entra
+por opacidade: o que o LCP mede tem de estar legível no primeiro frame.
+
 Todas as transições colapsam para 1ms sob
 `@media (prefers-reduced-motion: reduce)`, e a sombra de scroll só existe onde
 há `animation-timeline: scroll()` **e** o utilizador não pediu menos movimento.
@@ -302,6 +335,44 @@ divisórias a fio, e a corrente vermelha a marcar exactamente onde estamos.
 O cabeçalho é o gabarito dos restantes componentes: uma superfície é delimitada
 por um traço, um estado é marcado por um segmento vermelho, e o texto que nomeia
 é Archivo.
+
+### Herói da home — «a chapa» (`src/components/HomeHero.astro`)
+
+Duas metades com pesos opostos: à esquerda a folha branca com o argumento; à
+direita uma **chapa preta** com a fotografia, montada como uma peça de
+equipamento e não como uma imagem decorativa.
+
+- **A chapa.** Fundo `--gs-plate`, contorno de 1px, canto de 12px (é uma
+  superfície que se ergue), grelha técnica de 2,5rem em branco a 5% esbatida
+  por máscara radial, e **a corrente**: 2px de `--gs-brand` colados à aresta
+  esquerda, a mesma marcação que o cabeçalho usa para dizer onde estamos.
+- **Bloco de título.** No topo da chapa, uma faixa fechada por um fio de 1px
+  com a legenda em Archivo maiúsculo — o bloco de título de um desenho
+  técnico. A figura começa por baixo dessa faixa, e por isso a legenda nunca
+  cai por cima do capacete em coluna estreita.
+- **Recorte, não fotografia emoldurada.** A figura é PNG com transparência,
+  `object-fit: contain` alinhado ao canto inferior direito: a pessoa **assenta**
+  na chapa em vez de ser recortada por ela. Um segundo plano — a obra — entra
+  como cartão sobreposto no canto inferior esquerdo, com aresta superior
+  vermelha de 2px.
+- **Nunca duas vezes a mesma pessoa.** O plano de detalhe é um recorte só do
+  estaleiro. Ver a mesma figura na chapa e no cartão lê-se como erro, não como
+  composição.
+- **Movimento.** Um só gesto: a corrente a chegar. O fio da sobrancelha abre em
+  `scaleX` e o fio da chapa desce em `scaleY`, ambos a partir de um estado já
+  visível. Nenhum texto entra por opacidade — o `h1` está legível no primeiro
+  frame, que é o que o LCP mede.
+- **Acções.** `--gs-brand` preenche uma única acção (`Descrever o meu
+  projecto`); a segunda é traço. Abaixo de 30rem as duas passam a largura
+  total — a diferença entre um alvo confortável e meio polegar.
+- **Faixa de resposta.** Fecha o herói de aresta a aresta em `--gs-wash`, com
+  fios em cima e em baixo. Vermelho lavado, não vermelho cheio: com o botão
+  primário já em `--gs-brand`, uma segunda faixa cheia gastaria a Regra do Fio
+  Único.
+
+A chapa é o gabarito de qualquer superfície com fotografia: fundo escuro
+constante, bloco de título com fio, corrente na aresta, e a imagem a assentar
+em vez de ser emoldurada.
 
 ## Do's and Don'ts
 
