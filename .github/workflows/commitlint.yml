@@ -1,0 +1,30 @@
+name: Commitlint
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  commitlint:
+    name: Validar as mensagens de commit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obter o repositório com o histórico completo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.12'
+          cache: npm
+
+      - name: Instalar as dependências
+        run: npm ci
+
+      - name: Validar o histórico
+        run: npx commitlint --from=$(git rev-list --max-parents=0 HEAD) --to=HEAD --verbose
