@@ -83,40 +83,18 @@ de execução.
 - **`FAQPage` e `BreadcrumbList`** só em páginas onde o conteúdo correspondente
   está visível no HTML.
 - **Imagens** via `astro:assets` (AVIF/WebP + `srcset`), sempre com `alt`.
-- **Português europeu** (pt-PT) no site, na documentação e nas mensagens de
-  commit — a norma anterior ao acordo ortográfico, como no resto do repositório
-  («projecto», «objectivo», «actual»).
+- **Português europeu** (pt-PT) no site e na documentação — a norma anterior ao
+  acordo ortográfico, como no resto do repositório («projecto», «objectivo»,
+  «actual»).
 - Perguntas por responder pelo cliente estão em `PRODUCTS.md` §14 — não as
   resolver por invenção; registar a dúvida.
 
-## Convenção de commits
+## Contribuição
 
-As mensagens seguem os **Conventional Commits**, validadas pelo commitlint
-(`commitlint.config.cjs`, sobre `@commitlint/config-conventional`). O formato é:
-
-```text
-<tipo>(<âmbito opcional>): <assunto>
-```
-
-- **Tipos permitidos:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`,
-  `test`, `build`, `ci`, `chore`, `revert`. O tipo é obrigatório e escreve-se
-  em minúsculas.
-- **Âmbito** opcional, em minúsculas (`feat(home):`, `chore(deploy):`).
-- **Assunto** obrigatório, sem ponto final.
-- **Cabeçalho** com um máximo de 100 caracteres.
-- **Português europeu**, no imperativo, como no resto do repositório.
-- **Sem co-autoria.** As mensagens não levam linhas `Co-Authored-By:` nem
-  qualquer outra atribuição a agentes ou ferramentas.
-
-Validar o histórico completo localmente, tal como faz a integração contínua:
-
-```
-npx commitlint --from=$(git rev-list --max-parents=0 HEAD) --to=HEAD --verbose
-```
-
-O workflow `.github/workflows/commitlint.yml` corre este mesmo comando em cada
-`push` e `pull_request` — **todo** o histórico tem de passar, não apenas os
-commits novos.
+As regras de **ramos** (só `main` e `develop`, sem ramos por funcionalidade) e
+a **convenção de mensagens de commit** (Conventional Commits, validados pelo
+commitlint) vivem no `CONTRIBUTING.md`. É a fonte única dessas regras — ler
+antes do primeiro commit e alterar apenas lá.
 
 ## Desenvolvimento
 
