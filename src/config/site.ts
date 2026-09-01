@@ -27,7 +27,7 @@ export const SITE = {
 
   themeColor: { light: '#ffffff', dark: '#0a0a0a' },
   /** Cor do tile do Windows e cor da marca. */
-  brandColor: '#dc2626',
+  brandColor: '#ed0000',
 } as const;
 
 export const CONTACT = {

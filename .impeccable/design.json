@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-01T20:34:05.686Z",
+  "title": "Design System: Guerra Solut",
+  "extensions": {
+    "colorMeta": {
+      "red-500": {
+        "role": "primary",
+        "displayName": "Vermelho Guerra",
+        "tonalRamp": [
+          "#340000",
+          "#550000",
+          "#790000",
+          "#9f0000",
+          "#c20000",
+          "#ed0000",
+          "#ff8575",
+          "#ffe4e0"
+        ]
+      },
+      "red-600": {
+        "role": "primary",
+        "displayName": "Vermelho de Acção (claro)",
+        "tonalRamp": [
+          "#340000",
+          "#550000",
+          "#790000",
+          "#9f0000",
+          "#c20000",
+          "#ed0000",
+          "#ff8575",
+          "#ffe4e0"
+        ]
+      },
+      "red-400": {
+        "role": "primary",
+        "displayName": "Vermelho de Acção (escuro)",
+        "tonalRamp": [
+          "#340000",
+          "#550000",
+          "#790000",
+          "#9f0000",
+          "#c20000",
+          "#ed0000",
+          "#ff8575",
+          "#ffe4e0"
+        ]
+      },
+      "red-50": {
+        "role": "primary",
+        "displayName": "Vermelho Lavado",
+        "tonalRamp": [
+          "#340000",
+          "#550000",
+          "#790000",
+          "#9f0000",
+          "#c20000",
+          "#ed0000",
+          "#ff8575",
+          "#ffe4e0"
+        ]
+      },
+      "red-wash-dark": {
+        "role": "primary",
+        "displayName": "Brasa (lavado escuro)",
+        "tonalRamp": [
+          "#340000",
+          "#550000",
+          "#790000",
+          "#9f0000",
+          "#c20000",
+          "#ed0000",
+          "#ff8575",
+          "#ffe4e0"
+        ]
+      },
+      "ink-0": {
+        "role": "neutral",
+        "displayName": "Branco Técnico",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#1e1e1e",
+          "#3d3d3d",
+          "#525252",
+          "#8a8a8a",
+          "#d4d4d4",
+          "#f5f5f5",
+          "#ffffff"
+        ]
+      },
+      "ink-1000": {
+        "role": "neutral",
+        "displayName": "Preto de Obra",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#1e1e1e",
+          "#3d3d3d",
+          "#525252",
+          "#8a8a8a",
+          "#d4d4d4",
+          "#f5f5f5",
+          "#ffffff"
+        ]
+      },
+      "ink-700": {
+        "role": "neutral",
+        "displayName": "Cinzento de Legenda",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#1e1e1e",
+          "#3d3d3d",
+          "#525252",
+          "#8a8a8a",
+          "#d4d4d4",
+          "#f5f5f5",
+          "#ffffff"
+        ]
+      },
+      "ink-400": {
+        "role": "neutral",
+        "displayName": "Cinzento de Legenda (escuro)",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#1e1e1e",
+          "#3d3d3d",
+          "#525252",
+          "#8a8a8a",
+          "#d4d4d4",
+          "#f5f5f5",
+          "#ffffff"
+        ]
+      },
+      "ink-200": {
+        "role": "neutral",
+        "displayName": "Traço Claro",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#1e1e1e",
+          "#3d3d3d",
+          "#525252",
+          "#8a8a8a",
+          "#d4d4d4",
+          "#f5f5f5",
+          "#ffffff"
+        ]
+      },
+      "ink-900": {
+        "role": "neutral",
+        "displayName": "Traço Escuro",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#1e1e1e",
+          "#3d3d3d",
+          "#525252",
+          "#8a8a8a",
+          "#d4d4d4",
+          "#f5f5f5",
+          "#ffffff"
+        ]
+      },
+      "green-whatsapp": {
+        "role": "tertiary",
+        "displayName": "Verde WhatsApp (emprestado)",
+        "tonalRamp": [
+          "#04220f",
+          "#07401c",
+          "#0b6a2e",
+          "#0f8a3d",
+          "#1cb453",
+          "#25d366",
+          "#7ee8a5",
+          "#d6f9e3"
+        ]
+      },
+      "amber-600": {
+        "role": "tertiary",
+        "displayName": "Âmbar de Alerta",
+        "tonalRamp": [
+          "#2a1302",
+          "#4a2305",
+          "#6d3607",
+          "#8f4708",
+          "#b45309",
+          "#e08b1a",
+          "#fbbf24",
+          "#fde9b3"
+        ]
+      }
+    }
+  },
+  "narrative": {
+    "northStar": "O Quadro Elétrico",
+    "overview": "Um quadro elétrico aberto é o objecto mais honesto desta empresa: uma chapa branca, calhas pretas, e um único fio vermelho que indica onde está a corrente. Nada é decorativo. Tudo está lá porque tem função, e a cor mais forte do conjunto é a que sinaliza perigo e energia — usada uma vez, no sítio certo.\n\nO sistema tem três cores e recusa uma quarta. O vermelho é o do logótipo: matiz 0 puro, sem laranja e sem rosa, o vermelho da sinalética de obra e do botão de emergência. O branco não é um branco quente de papel de livro — é a folha de um caderno técnico, com cinzentos rigorosamente acromáticos por cima. O preto não é um azul-escuro disfarçado de preto: é #0a0a0a, com degraus neutros até ao cinzento. A ausência de temperatura nos neutros é o que faz o vermelho arder.\n\nO tema escuro não é uma cortesia — é onde a marca está em casa. O lettering do logótipo é branco, desenhado para fundo escuro, e o vermelho puro atinge o seu contraste máximo sobre #0a0a0a. O tema claro é a leitura diurna, no telemóvel, ao sol, em cima de um andaime; o tema escuro é a identidade.",
+    "keyCharacteristics": [
+      "Três cores de marca. Não há quarta. O âmbar do site anterior foi eliminado.",
+      "Vermelho de matiz 29,2° em OKLCH — a matiz exacta amostrada do logótipo.",
+      "Neutros de cromaticidade zero. Nenhum cinzento é temperado.",
+      "Dois vermelhos operacionais que o olho lê como um só: um para preenchimentos, outro para texto. A distinção existe apenas onde o contraste a obriga.",
+      "Todos os pares texto/fundo do sistema passam WCAG AA nos dois temas."
+    ],
+    "rules": [
+      {
+        "name": "A Regra dos Dois Vermelhos",
+        "section": "colors",
+        "body": "Há dois vermelhos operacionais e uma linha que os separa: --gs-brand preenche, --gs-accent escreve. Vermelho como cor de texto, ícone abaixo de 24px ou traço fino usa sempre --gs-accent. Vermelho como fundo de botão, faixa, badge ou bloco usa sempre --gs-brand. Trocar os dois não parte o design — parte a acessibilidade, silenciosamente."
+      },
+      {
+        "name": "A Regra do Fio Único",
+        "section": "colors",
+        "body": "O vermelho ocupa no máximo 10% da área de qualquer ecrã. Um ecrã com dois blocos vermelhos grandes já não tem cor de destaque: tem fundo vermelho. Se um segundo elemento pede vermelho, um dos dois está a pedir a coisa errada."
+      },
+      {
+        "name": "A Regra do Cinzento Frio",
+        "section": "colors",
+        "body": "Nenhum neutro é temperado com vermelho. Quem quiser aquecer uma superfície usa --gs-wash (vermelho lavado), não um cinzento avermelhado. Um cinzento com 2% de cromaticidade lê-se como um vermelho mal calibrado, e rouba impacto ao verdadeiro."
+      },
+      {
+        "name": "A Regra do Vermelho Único",
+        "section": "colors",
+        "body": "O vermelho de marca e o vermelho de erro são o mesmo vermelho. É uma consequência assumida de uma paleta de três cores: um estado de erro nunca se distingue por matiz. Distingue-se por --gs-danger-wash como fundo, por um ícone e pela frase."
+      },
+      {
+        "name": "A Regra do Verde Emprestado",
+        "section": "colors",
+        "body": "--gs-success (#25d366) é o verde do WhatsApp, imposto pela plataforma e não é cor de marca. Aparece apenas em controlos que abrem o WhatsApp. Leva sempre texto preto — branco sobre este verde dá 1,98:1 e é ilegível."
+      },
+      {
+        "name": "A Regra do Âmbar Proibido",
+        "section": "colors",
+        "body": "O âmbar do site anterior (#f5b301) foi eliminado da marca. amber-600 / amber-400 existem só para alertas de sistema. As faixas de obra são vermelho sobre preto."
+      }
+    ],
+    "dos": [
+      "Do usar --gs-brand para preencher e --gs-accent para escrever. É a única distinção entre os dois vermelhos e a razão por que o sistema passa AA.",
+      "Do manter red-500 igual nos dois temas em qualquer preenchimento. A constância do vermelho é o que torna a marca reconhecível entre temas.",
+      "Do consumir sempre tokens semânticos (--gs-* sem número). Um degrau de escala escrito directamente num componente não muda com o tema.",
+      "Do pôr texto preto em cima do verde do WhatsApp, sem excepção.",
+      "Do desenhar as superfícies que o browser desenharia sozinho: selecção, cursor, barra de deslocamento e anel de foco.",
+      "Do dar ao anel de foco 2px de espessura e 2px de afastamento. Sobre um botão vermelho é o afastamento — não a cor — que o torna visível."
+    ],
+    "donts": [
+      "Don't introduzir uma quarta cor de marca. O âmbar já foi removido uma vez; laranja, azul e verde-de-sucesso são a mesma tentação com outro nome.",
+      "Don't temperar os neutros. Cinzento com matiz vermelha anula o contraste crómico de que a paleta vive.",
+      "Don't usar red-500 como cor de texto sobre branco em tamanho corrente (4,56:1 sem folga). Esse é o trabalho do --gs-accent.",
+      "Don't distinguir erro de marca por matiz. São o mesmo vermelho por desenho: o erro identifica-se por lavado, ícone e frase.",
+      "Don't usar o verde do WhatsApp como cor genérica de sucesso.",
+      "Don't encher mais de 10% de um ecrã com vermelho.",
+      "Don't aplicar opacidade a texto sobre vermelho ou sobre preto para o atenuar. Existem --gs-text-muted e --gs-inverse-text-muted para isso."
+    ]
+  }
+}
