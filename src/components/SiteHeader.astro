@@ -1,0 +1,880 @@
+---
+/**
+ * Cabeçalho global — «a calha».
+ *
+ * Uma barra fixa com divisórias a fio e um único segmento vermelho a marcar
+ * a página actual, como a corrente num quadro elétrico. Zero JavaScript: o
+ * painel de serviços abre por `:hover` / `:focus-within` e a folha mobile é
+ * um `<details>`.
+ *
+ * Ver `PRODUCTS.md` §8 e `.impeccable/surfaces/src-components-siteheader-astro.md`.
+ */
+import { Image } from 'astro:assets';
+import marca from '../assets/marca-guerra-solut.png';
+import Icon from './Icon.astro';
+import { CONTACT } from '../config/site';
+import { SERVICES } from '../config/services';
+import { NAV, SEARCH, isActive } from '../config/nav';
+
+const path = Astro.url.pathname;
+
+/** «+351 964 148 843» → «964 148 843», que é como se lê em Portugal. */
+const phoneLocal = CONTACT.phoneDisplay.replace(/^\+351\s*/, '');
+const horario = `Seg–Dom · ${CONTACT.opens.slice(0, 2)}–${CONTACT.closes.slice(0, 2)} h`;
+---
+
+<a class="gs-skip" href="#conteudo">Saltar para o conteúdo</a>
+
+<header class="rail">
+  <div class="gs-shell rail__shell">
+    <a
+      class="brand"
+      href="/"
+      aria-label="Guerra Solut — página inicial"
+      aria-current={path === '/' ? 'page' : undefined}
+    >
+      <Image
+        class="brand__mark"
+        src={marca}
+        alt=""
+        width={38}
+        height={38}
+        densities={[1, 2]}
+        loading="eager"
+        fetchpriority="high"
+      />
+      <span class="brand__word" aria-hidden="true"
+        >Guerra<span class="brand__word-accent">Solut</span></span
+      >
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <ul class="nav__list">
+        {
+          NAV.map((item) => {
+            const current = isActive(path, item.href);
+            const temPainel = item.href === '/servicos/';
+            return (
+              <li class:list={['nav__item', temPainel && 'nav__item--panel']}>
+                <a
+                  class="nav__link"
+                  href={item.href}
+                  aria-current={current ? 'page' : undefined}
+                >
+                  {item.label}
+                  {temPainel && (
+                    <Icon name="seta-baixo" size={14} class="nav__chevron" />
+                  )}
+                </a>
+
+                {temPainel && (
+                  <div class="panel">
+                    <ul class="panel__grid">
+                      {SERVICES.map((servico) => (
+                        <li>
+                          <a
+                            class="panel__link"
+                            href={`/servicos/${servico.slug}/`}
+                            aria-current={
+                              path === `/servicos/${servico.slug}/`
+                                ? 'page'
+                                : undefined
+                            }
+                          >
+                            <span class="panel__name">{servico.name}</span>
+                            <span class="panel__tags">
+                              {servico.tags.slice(0, 2).join(' · ')}
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    <a class="panel__all" href="/servicos/">
+                      Ver todos os serviços
+                      <Icon name="seta-direita" size={16} />
+                    </a>
+                  </div>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <form class="search" role="search" action={SEARCH.action} method="get">
+        <label class="gs-sr-only" for="gs-busca">Procurar no site</label>
+        <Icon name="pesquisa" size={17} class="search__icon" />
+        <input
+          class="search__input"
+          id="gs-busca"
+          name={SEARCH.param}
+          type="search"
+          placeholder="Procurar serviço…"
+          autocomplete="off"
+          enterkeyhint="search"
+        />
+      </form>
+
+      <a
+        class="search-link"
+        href={SEARCH.action}
+        aria-label="Procurar no site"
+      >
+        <Icon name="pesquisa" size={19} />
+      </a>
+
+      <a
+        class="phone"
+        href={`tel:${CONTACT.phone}`}
+        aria-label={`Ligar para ${CONTACT.phoneDisplay}`}
+      >
+        <Icon name="telefone" size={18} class="phone__icon" />
+        <span class="phone__stack">
+          <span class="phone__number">{phoneLocal}</span>
+          <span class="phone__hours">{horario}</span>
+        </span>
+      </a>
+
+      <a class="cta" href="/contactos/">Falar connosco</a>
+    </div>
+
+    <a
+      class="handheld-call"
+      href={`tel:${CONTACT.phone}`}
+      aria-label={`Ligar para ${CONTACT.phoneDisplay}`}
+    >
+      <Icon name="telefone" size={20} />
+    </a>
+
+    <details class="sheet" name="gs-sheet">
+      <summary class="sheet__toggle" aria-label="Abrir menu">
+        <Icon name="menu" size={22} class="sheet__icon sheet__icon--open" />
+        <Icon name="fechar" size={22} class="sheet__icon sheet__icon--close" />
+      </summary>
+
+      <div class="sheet__panel">
+        <div class="sheet__inner">
+          <form
+            class="search search--sheet"
+            role="search"
+            action={SEARCH.action}
+            method="get"
+          >
+            <label class="gs-sr-only" for="gs-busca-movel">
+              Procurar no site
+            </label>
+            <Icon name="pesquisa" size={18} class="search__icon" />
+            <input
+              class="search__input"
+              id="gs-busca-movel"
+              name={SEARCH.param}
+              type="search"
+              placeholder="Procurar serviço…"
+              autocomplete="off"
+              enterkeyhint="search"
+            />
+          </form>
+
+          <nav aria-label="Navegação principal (menu)">
+            <ul class="sheet__list">
+              {
+                NAV.map((item) => (
+                  <li>
+                    <a
+                      class="sheet__row"
+                      href={item.href}
+                      aria-current={isActive(path, item.href) ? 'page' : undefined}
+                    >
+                      {item.label}
+                      <Icon name="seta-direita" size={18} />
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+
+            <p class="sheet__label">Os nossos serviços</p>
+            <ul class="sheet__services">
+              {
+                SERVICES.map((servico) => (
+                  <li>
+                    <a
+                      class="sheet__service"
+                      href={`/servicos/${servico.slug}/`}
+                      aria-current={
+                        path === `/servicos/${servico.slug}/` ? 'page' : undefined
+                      }
+                    >
+                      {servico.name}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+
+          <div class="sheet__foot">
+            <a class="sheet__phone" href={`tel:${CONTACT.phone}`}>
+              <Icon name="telefone" size={18} />
+              <span class="phone__number">{phoneLocal}</span>
+              <span class="sheet__hours">{horario}</span>
+            </a>
+            <a class="cta cta--block" href="/contactos/">Falar connosco</a>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* ── A calha ─────────────────────────────────────────────────────────── */
+
+  .rail {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 50;
+    border-block-end: 1px solid var(--gs-border);
+    background: var(--gs-bg);
+  }
+
+  /* O vidro só entra onde o desfoque existe mesmo; sem ele, fundo opaco. */
+  @supports (backdrop-filter: blur(1px)) {
+    .rail {
+      background: color-mix(in srgb, var(--gs-bg) 86%, transparent);
+      backdrop-filter: blur(14px) saturate(1.6);
+    }
+  }
+
+  /* A sombra só aparece depois de a página descolar do topo. */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .rail {
+        animation: rail-descola linear both;
+        animation-timeline: scroll();
+        animation-range: 0 6rem;
+      }
+    }
+  }
+
+  @keyframes rail-descola {
+    from {
+      box-shadow: 0 0 0 0 transparent;
+    }
+    to {
+      box-shadow: var(--gs-shadow-rail);
+    }
+  }
+
+  .rail__shell {
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-4);
+    block-size: var(--gs-header-h);
+  }
+
+  /* ── Marca ───────────────────────────────────────────────────────────── */
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    margin-inline-end: auto;
+    text-decoration: none;
+    color: var(--gs-text);
+  }
+
+  /* `Icon` e `Image` são componentes: o hash de âmbito do Astro não chega
+     aos seus elementos, por isso estes selectores atravessam a fronteira a
+     partir de um elemento que já é local. */
+  .brand :global(.brand__mark) {
+    inline-size: 2.625rem;
+    block-size: 2.625rem;
+    transition: rotate var(--gs-dur) var(--gs-ease);
+  }
+
+  .brand:hover :global(.brand__mark) {
+    rotate: -10deg;
+  }
+
+  .brand__word {
+    font-family: var(--gs-font-title);
+    font-weight: 800;
+    font-size: 1.0625rem;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .brand__word-accent {
+    color: var(--gs-accent);
+    margin-inline-start: 0.3em;
+  }
+
+  /* ── Navegação de secretária ─────────────────────────────────────────── */
+
+  .nav {
+    display: none;
+  }
+
+  .nav__list {
+    display: flex;
+    align-items: stretch;
+    gap: var(--gs-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    block-size: var(--gs-header-h);
+  }
+
+  .nav__item {
+    position: static;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .nav__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding-inline: var(--gs-space-3);
+    font-size: var(--gs-size-base);
+    font-weight: 500;
+    color: var(--gs-text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .nav__link:hover {
+    color: var(--gs-text);
+  }
+
+  .nav__link[aria-current='page'] {
+    color: var(--gs-text);
+    font-weight: 600;
+  }
+
+  /* O fio: cinzento a antecipar, vermelho onde a corrente está mesmo. */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    inset-inline: var(--gs-space-2);
+    inset-block-end: -1px;
+    block-size: 2px;
+    background: var(--gs-border-strong);
+    scale: 0 1;
+    transition: scale var(--gs-dur) var(--gs-ease);
+  }
+
+  .nav__link:hover::after,
+  .nav__item:focus-within .nav__link::after {
+    scale: 1 1;
+  }
+
+  .nav__link[aria-current='page']::after {
+    background: var(--gs-brand);
+    scale: 1 1;
+  }
+
+  .nav__link :global(.nav__chevron) {
+    color: var(--gs-text-subtle);
+    transition: rotate var(--gs-dur) var(--gs-ease);
+  }
+
+  .nav__item--panel:hover :global(.nav__chevron),
+  .nav__item--panel:focus-within :global(.nav__chevron) {
+    rotate: 180deg;
+  }
+
+  /* ── Painel de serviços ──────────────────────────────────────────────── */
+
+  .panel {
+    display: none;
+    position: absolute;
+    inset-inline-start: var(--gs-page-pad);
+    inset-block-start: var(--gs-header-h);
+    translate: 0 -0.375rem;
+    inline-size: min(46rem, calc(100vw - 2 * var(--gs-page-pad)));
+    padding: var(--gs-space-3);
+    border: 1px solid var(--gs-border);
+    border-radius: var(--gs-radius-lg);
+    background: var(--gs-surface-raised);
+    box-shadow: var(--gs-shadow-panel);
+    opacity: 0;
+    transition:
+      opacity var(--gs-dur) var(--gs-ease),
+      translate var(--gs-dur) var(--gs-ease),
+      display var(--gs-dur) allow-discrete;
+  }
+
+  .nav__item--panel:hover > .panel,
+  .nav__item--panel:focus-within > .panel {
+    display: block;
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .nav__item--panel:hover > .panel,
+    .nav__item--panel:focus-within > .panel {
+      opacity: 0;
+      translate: 0 -0.375rem;
+    }
+  }
+
+  .panel__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .panel__link {
+    display: block;
+    padding: var(--gs-space-3);
+    border-radius: var(--gs-radius-md);
+    text-decoration: none;
+    transition: background var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .panel__link:hover {
+    background: var(--gs-surface-sunken);
+  }
+
+  .panel__link[aria-current='page'] {
+    background: var(--gs-wash);
+  }
+
+  .panel__name {
+    display: block;
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-base);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--gs-text);
+  }
+
+  .panel__link[aria-current='page'] .panel__name {
+    color: var(--gs-wash-text);
+  }
+
+  .panel__tags {
+    display: block;
+    margin-block-start: 0.15rem;
+    font-size: var(--gs-size-xs);
+    color: var(--gs-text-subtle);
+  }
+
+  .panel__all {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-block-start: var(--gs-space-3);
+    padding: var(--gs-space-3);
+    border-block-start: 1px solid var(--gs-border);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-sm);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--gs-accent);
+  }
+
+  .panel__all:hover {
+    color: var(--gs-accent-hover);
+  }
+
+  /* ── Ferramentas: pesquisa, telefone, acção ──────────────────────────── */
+
+  .tools {
+    display: none;
+    align-items: center;
+    gap: var(--gs-space-4);
+  }
+
+  .search {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search :global(.search__icon) {
+    position: absolute;
+    inset-inline-start: 0.6875rem;
+    color: var(--gs-text-subtle);
+    pointer-events: none;
+  }
+
+  .search__input {
+    appearance: none;
+    inline-size: 10.5rem;
+    block-size: 2.375rem;
+    padding-inline: 2.125rem var(--gs-space-3);
+    border: 1px solid var(--gs-border);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-surface-sunken);
+    font-size: var(--gs-size-base);
+    transition:
+      border-color var(--gs-dur-fast) var(--gs-ease),
+      background var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .search__input::placeholder {
+    color: var(--gs-text-subtle);
+  }
+
+  .search__input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  .search__input:hover {
+    border-color: var(--gs-border-strong);
+  }
+
+  .search__input:focus {
+    border-color: var(--gs-accent);
+    background: var(--gs-bg);
+  }
+
+  .phone {
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    padding-inline-start: var(--gs-space-4);
+    border-inline-start: 1px solid var(--gs-border);
+    text-decoration: none;
+    color: var(--gs-text);
+  }
+
+  .phone :global(.phone__icon) {
+    color: var(--gs-accent);
+  }
+
+  .phone__stack {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .phone__number {
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-md);
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  .phone:hover .phone__number {
+    color: var(--gs-accent);
+  }
+
+  .phone__hours {
+    font-size: var(--gs-size-xs);
+    line-height: 1.1;
+    color: var(--gs-text-subtle);
+    white-space: nowrap;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    block-size: var(--gs-tap);
+    padding-inline: var(--gs-space-5);
+    border-radius: var(--gs-radius-sm);
+    background: var(--gs-brand);
+    color: var(--gs-on-brand);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-md);
+    font-weight: 700;
+    letter-spacing: 0.005em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background var(--gs-dur-fast) var(--gs-ease),
+      translate var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .cta:hover {
+    background: var(--gs-brand-hover);
+  }
+
+  .cta:active {
+    background: var(--gs-brand-active);
+    translate: 0 1px;
+  }
+
+  .cta--block {
+    inline-size: 100%;
+  }
+
+  /* ── Barra em ecrã pequeno ───────────────────────────────────────────── */
+
+  .search-link {
+    display: none;
+  }
+
+  .search-link,
+  .handheld-call,
+  .sheet__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--gs-tap);
+    block-size: var(--gs-tap);
+    border-radius: var(--gs-radius-md);
+    color: var(--gs-text);
+    text-decoration: none;
+    transition: background var(--gs-dur-fast) var(--gs-ease);
+  }
+
+  .handheld-call {
+    color: var(--gs-accent);
+  }
+
+  .handheld-call:hover,
+  .sheet__toggle:hover {
+    background: var(--gs-surface-sunken);
+  }
+
+  .sheet {
+    margin-inline-end: calc(var(--gs-space-3) * -1);
+  }
+
+  .sheet__toggle {
+    list-style: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .sheet__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .sheet__toggle :global(.sheet__icon--close),
+  .sheet[open] .sheet__toggle :global(.sheet__icon--open) {
+    display: none;
+  }
+
+  .sheet[open] .sheet__toggle :global(.sheet__icon--close) {
+    display: block;
+  }
+
+  .sheet__panel {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    max-block-size: calc(100dvh - var(--gs-header-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-block-end: 1px solid var(--gs-border);
+    background: var(--gs-bg);
+    box-shadow: var(--gs-shadow-panel);
+  }
+
+  .sheet__inner {
+    max-inline-size: var(--gs-page-max);
+    margin-inline: auto;
+    padding: var(--gs-space-4) var(--gs-page-pad) var(--gs-space-6);
+  }
+
+  .search--sheet {
+    margin-block-end: var(--gs-space-4);
+  }
+
+  .search--sheet .search__input {
+    inline-size: 100%;
+    block-size: var(--gs-tap);
+  }
+
+  .sheet__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--gs-border);
+  }
+
+  .sheet__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-block-size: 3.25rem;
+    border-block-end: 1px solid var(--gs-border);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-lg);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-tight);
+    color: var(--gs-text);
+    text-decoration: none;
+  }
+
+  .sheet__row :global(svg) {
+    color: var(--gs-text-subtle);
+  }
+
+  .sheet__row[aria-current='page'] {
+    color: var(--gs-accent);
+    box-shadow: inset 0 -2px 0 0 var(--gs-brand);
+  }
+
+  .sheet__label {
+    margin: var(--gs-space-6) 0 var(--gs-space-3);
+    font-family: var(--gs-font-title);
+    font-size: var(--gs-size-xs);
+    font-weight: 700;
+    letter-spacing: var(--gs-track-label);
+    text-transform: uppercase;
+    color: var(--gs-text-subtle);
+  }
+
+  .sheet__services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sheet__service {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--gs-tap);
+    padding-inline: var(--gs-space-3);
+    border-radius: var(--gs-radius-md);
+    background: var(--gs-surface-sunken);
+    font-size: var(--gs-size-base);
+    font-weight: 500;
+    color: var(--gs-text-muted);
+    text-decoration: none;
+  }
+
+  .sheet__service[aria-current='page'] {
+    background: var(--gs-wash);
+    color: var(--gs-wash-text);
+  }
+
+  .sheet__foot {
+    margin-block-start: var(--gs-space-6);
+    padding-block-start: var(--gs-space-5);
+    border-block-start: 1px solid var(--gs-border);
+    display: grid;
+    gap: var(--gs-space-3);
+  }
+
+  .sheet__phone {
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    min-block-size: var(--gs-tap);
+    color: var(--gs-text);
+    text-decoration: none;
+  }
+
+  .sheet__phone :global(svg) {
+    color: var(--gs-accent);
+  }
+
+  .sheet__hours {
+    margin-inline-start: auto;
+    font-size: var(--gs-size-xs);
+    color: var(--gs-text-subtle);
+  }
+
+  /* ── A partir de 64rem a calha abre ──────────────────────────────────── */
+
+  @media (min-width: 64rem) {
+    .nav,
+    .tools {
+      display: flex;
+    }
+
+    .search-link {
+      display: inline-flex;
+    }
+
+    .brand {
+      margin-inline-end: var(--gs-space-5);
+    }
+
+    .nav {
+      margin-inline-end: auto;
+    }
+
+    .nav__link {
+      padding-inline: var(--gs-space-2);
+    }
+
+    .tools {
+      gap: var(--gs-space-2);
+    }
+
+    .search,
+    .phone__hours {
+      display: none;
+    }
+
+    .phone {
+      gap: var(--gs-space-2);
+      padding-inline: var(--gs-space-2);
+      border-inline-start: 0;
+    }
+
+    .handheld-call,
+    .sheet {
+      display: none;
+    }
+  }
+
+  /* Com largura a sobrar, a barra ganha o campo de pesquisa e o horário. */
+  @media (min-width: 80rem) {
+    .nav__link {
+      padding-inline: var(--gs-space-3);
+    }
+
+    .tools {
+      gap: var(--gs-space-4);
+    }
+
+    .search,
+    .phone__hours {
+      display: block;
+    }
+
+    .search {
+      display: flex;
+    }
+
+    .search-link {
+      display: none;
+    }
+
+    .phone {
+      padding-inline: var(--gs-space-4) 0;
+      border-inline-start: 1px solid var(--gs-border);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rail,
+    .brand :global(.brand__mark),
+    .nav__link,
+    .nav__link::after,
+    .nav__link :global(.nav__chevron),
+    .panel,
+    .search__input,
+    .cta {
+      transition-duration: 1ms;
+      animation: none;
+    }
+  }
+</style>
