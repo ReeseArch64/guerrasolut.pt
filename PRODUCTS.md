@@ -3,9 +3,12 @@
 Documento de referência para a reconstrução do site **guerrasolut.pt** em Astro,
 com foco em **SEO** e **responsividade**.
 
-> Fonte dos dados: extração do site atual (`https://www.guerrasolut.pt/`), do seu
-> bundle JavaScript, do `manifest.json` e do JSON-LD embutido no `index.html`.
-> Datado de 2026-09-01.
+> **O site actual é apenas fonte de dados da empresa**, não uma base de design
+> nem de estrutura. O novo site é uma construção de raiz — o material abaixo
+> serve para não perder informação, não para ser replicado.
+>
+> Extraído de `https://www.guerrasolut.pt/` (bundle JavaScript, `manifest.json`
+> e JSON-LD do `index.html`) em 2026-09-01.
 
 ---
 
@@ -69,6 +72,9 @@ Opção adicional no formulário de contacto: **Outro serviço**.
 
 ## 3. Prova social e números
 
+**Decisão:** o site **não terá secção de testemunhos.** A prova social assenta
+em números, certificações, garantia por escrito e fotografias reais de obras.
+
 ### Estatísticas (bloco do herói)
 
 | Valor | Legenda |
@@ -78,27 +84,14 @@ Opção adicional no formulário de contacto: **Outro serviço**.
 | `1000+` | Obras concluídas |
 | `<2h` | Resposta a pedidos |
 
-Classificação exibida: **4,9** ★ (5 estrelas).
 Selos flutuantes na secção "Sobre": `+1000 obras concluídas` e `Desde 2012 a construir em Portugal`.
 
-### Testemunhos
+> ⚠️ **A validar com o cliente:** estes números vêm do site antigo e não estão
+> verificados. Números não verificáveis não devem ir para dados estruturados.
 
-| Nome | Papel | Texto | ★ |
-| --- | --- | --- | --- |
-| Ana Rodrigues | Proprietária de apartamento, Lisboa | Excelente profissionalismo! Fizeram a remodelação completa da minha casa de banho em apenas 3 dias. Trabalho impecável e preço justo. | 5 |
-| Carlos Mendes | Gestor de condomínio, Porto | A Guerra Solut gere toda a manutenção do nosso condomínio há 5 anos. Sempre pontuais, eficientes e com preços transparentes. | 5 |
-| Sofia Costa | Proprietária de restaurante, Braga | Instalaram o sistema de climatização e fizeram toda a parte elétrica do meu restaurante. Cumpriram prazos e orçamento. Muito recomendado! | 5 |
-| Miguel Ferreira | Proprietário de moradia, Setúbal | Trabalho de pintura exterior excelente. Vieram no dia combinado, limparam tudo no final e o resultado ficou melhor do que esperava. | 5 |
-| Mariana Alves | Directora de empresa, Lisboa | Trataram de toda a remodelação do nosso escritório durante o fim-de-semana para não interromper o trabalho. Profissionalismo total. | 5 |
-| Rui Santos | Administrador de condomínio, Braga | Resolveram uma fuga de água às 22h sem cobrar urgência extra. Atendimento rápido e preço justo. São os nossos parceiros de manutenção. | 5 |
-| Inês Monteiro | Proprietária de loja, Porto | Instalação do portão automático e videoporteiro feitos num dia. Explicaram tudo e deixaram a funcionar na perfeição. | 5 |
-
-> ⚠️ **A validar com o cliente:** estes testemunhos e números não estão
-> verificados. Só devem ser marcados com `AggregateRating`/`Review` no
-> schema.org se forem reais e verificáveis — caso contrário é uma violação das
-> políticas de rich results da Google e pode gerar penalização manual.
-
----
+> ℹ️ O site antigo exibia um badge de **4,9 ★**. Sem testemunhos, uma
+> classificação sem origem visível não se sustenta. Só faz sentido se vier de
+> avaliações reais do Google Business Profile — ver §15.
 
 ## 4. Diferenciadores ("Porquê a Guerra Solut")
 
@@ -203,10 +196,6 @@ Cartão de apoio: **"Ficou alguma dúvida?"** — Explique-nos o caso e damos-lh
 - **P1:** A **Guerra Solut** nasceu das instalações elétricas e é hoje uma empresa portuguesa de serviços técnicos e construção civil, ao serviço de particulares, empresas e condomínios em todo o território continental desde 2012.
 - **P2:** Com equipa própria e multidisciplinar, entregamos obras completas — do projecto ao acabamento — com o mesmo rigor numa pequena reparação ou numa remodelação integral.
 
-### Testemunhos (`#testemunhos`)
-
-Carrossel horizontal de cartões (largura `min(88vw, 22rem)`).
-
 ### FAQ (`#faq`)
 
 - **Eyebrow:** Perguntas frequentes
@@ -224,7 +213,8 @@ Carrossel horizontal de cartões (largura `min(88vw, 22rem)`).
 - **Descrição:** Especialistas em instalações elétricas, construção civil e remodelação. Rigor, prazos cumpridos e garantia por escrito desde 2012.
 - **Colunas:** Serviços (8 links) · Empresa (nav) · Contactos (telefone, email, horário, "Portugal continental")
 - **Bloco:** "Onde trabalhamos" com os 10 distritos
-- **Copyright:** © 2025 [ReeseArch64](https://www.reesearch64.tech) · Todos os direitos reservados.
+- **Copyright:** © {ano} [ReeseArch64](https://www.reesearch64.tech) · Todos os direitos reservados.
+  **Decisão:** o crédito de desenvolvimento é da ReeseArch64 e mantém-se. Ano dinâmico.
 
 ---
 
@@ -275,7 +265,6 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 | Serviços | `#servicos` |
 | Como Trabalhamos | `#processo` |
 | Sobre Nós | `#sobre` |
-| Testemunhos | `#testemunhos` |
 | Perguntas | `#faq` |
 
 - Header fixo com `backdrop-blur`, transparente no topo e com borda/sombra após scroll.
@@ -290,6 +279,11 @@ Gostaria de agendar uma visita técnica para avaliarem o trabalho.
 ---
 
 ## 10. Design system
+
+> **Referência, não obrigação.** Os valores abaixo são os do site antigo,
+> registados para preservar a identidade cromática da marca (vermelho + âmbar
+> de sinalética de obra). O novo design é livre de divergir; o que deve
+> sobreviver é a marca, não a implementação.
 
 ### Cores (OKLCH, tema claro / tema escuro)
 
@@ -355,7 +349,10 @@ O que motiva a reconstrução.
 - Google Fonts externo bloqueante (`fonts.googleapis.com` + `fonts.gstatic.com`).
 - Imagens PNG sem `srcset` / formatos modernos.
 
-### ✅ O que está bom e deve ser preservado
+### ✅ O que vale a pena aproveitar
+
+Não como código a reutilizar — o site é reconstruído de raiz — mas como
+decisões já validadas que não vale a pena repensar do zero.
 
 - Metadados base (`title`, `description`, `canonical`, OG, Twitter) bem escritos.
 - Conjunto completo de favicons + `manifest.json` PWA.
@@ -371,7 +368,7 @@ O que motiva a reconstrução.
 ### Stack
 
 - **Astro 7** com output estático (`output: 'static'`) — HTML completo servido ao crawler, zero JS por defeito.
-- Ilhas de interactividade apenas onde é preciso: menu mobile, modal de contacto, acordeão FAQ, carrossel de testemunhos, toggle de tema.
+- Ilhas de interactividade apenas onde é preciso: menu mobile, modal de contacto, acordeão FAQ, toggle de tema.
 - `astro:assets` para optimização de imagens (AVIF/WebP + `srcset`).
 - `@astrojs/sitemap` para `sitemap.xml` automático.
 - Content Collections para os serviços e (futuro) blog.
@@ -419,7 +416,7 @@ tratadas como *doorway pages* pela Google.
 - `FAQPage` — nas páginas com FAQ
 - `BreadcrumbList` — em todas as páginas internas
 - `WebSite` + `SearchAction` — se houver pesquisa
-- `AggregateRating` / `Review` — **apenas se os testemunhos forem verificáveis**
+- ~~`AggregateRating` / `Review`~~ — **fora de âmbito**: não haverá testemunhos no site
 
 ### Responsividade
 
@@ -481,8 +478,7 @@ tratadas como *doorway pages* pela Google.
 - [ ] NIF e morada de sede (obrigatório para `LocalBusiness` e para cumprimento legal em PT)
 - [ ] Links de redes sociais (`sameAs`) — Facebook, Instagram, LinkedIn
 - [ ] URL do Google Business Profile
-- [ ] Confirmação dos números (500+ clientes, 1000+ obras, 4,9★)
-- [ ] Autorização/verificação dos testemunhos
+- [ ] Confirmação dos números (500+ clientes, 1000+ obras)
 - [ ] Imagem OG dedicada (1200×630) diferente do logótipo
 
 ---
@@ -490,10 +486,19 @@ tratadas como *doorway pages* pela Google.
 ## 15. Questões em aberto
 
 1. **Morada e NIF** — sem morada pública não há SEO local a sério nem ficha de empresa completa. É deliberado ou uma omissão?
-2. **Testemunhos** — são reais? Podem ser marcados como `Review`?
-3. **Formulário** — manter só WhatsApp ou acrescentar submissão real (email/CRM) para capturar leads fora do horário?
+2. **Formulário** — manter só WhatsApp ou acrescentar submissão real (email/CRM) para capturar leads fora do horário?
+3. **Google Business Profile** — existe? Se tiver avaliações reais, é a via correcta para mostrar classificação (e para `AggregateRating`), já que não haverá testemunhos no site.
 4. **Blog/conteúdo** — há disponibilidade para produzir conteúdo editorial? É a alavanca principal de cauda longa.
 5. **Multilíngue** — só pt-PT ou também EN (expatriados no Algarve/Lisboa)?
 6. **Analytics** — que ferramenta? (Recomendação: solução sem cookies para evitar banner RGPD.)
 7. **Hosting** — onde vai ficar alojado? (Estático: Vercel / Netlify / Cloudflare Pages.)
-8. **Rodapé** — o copyright é da ReeseArch64 e não da Guerra Solut. Manter?
+
+---
+
+## 16. Decisões tomadas
+
+| # | Decisão | Data |
+| --- | --- | --- |
+| 1 | O site antigo é **fonte de dados da empresa apenas** — não é base de design nem de estrutura. Construção de raiz. | 2026-09-01 |
+| 2 | **Sem secção de testemunhos.** Prova social por números, certificações, garantia e fotografias reais. Sem `Review`/`AggregateRating`. | 2026-09-01 |
+| 3 | **Copyright do rodapé mantém-se ReeseArch64** (autoria do desenvolvimento), com ano dinâmico. | 2026-09-01 |
